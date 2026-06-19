@@ -1,0 +1,1992 @@
+﻿code_edi;tableau_nom;libelle_ligne;label_col1;label_col2;label_col3
+497;Table 1;Immobilisations en non valeurs (A);Valeur 1;Valeur 2;Valeur 3
+498;Table 1;Immobilisations en non valeurs (A);Valeur 1;Valeur 2;Valeur 3
+499;Table 1;Immobilisations en non valeurs (A);Valeur 1;Valeur 2;Valeur 3
+500;Table 1;Immobilisations en non valeurs (A);Valeur 1;Valeur 2;Valeur 3
+238;Table 1;Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+241;Table 1;Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+244;Table 1;Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+247;Table 1;Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+239;Table 1;Charges à répartir sur plusieurs exercices;Valeur 1;Valeur 2;Valeur 3
+242;Table 1;Charges à répartir sur plusieurs exercices;Valeur 1;Valeur 2;Valeur 3
+245;Table 1;Charges à répartir sur plusieurs exercices;Valeur 1;Valeur 2;Valeur 3
+248;Table 1;Charges à répartir sur plusieurs exercices;Valeur 1;Valeur 2;Valeur 3
+240;Table 1;Primes de remboursement des obligations;Valeur 1;Valeur 2;Valeur 3
+243;Table 1;Primes de remboursement des obligations;Valeur 1;Valeur 2;Valeur 3
+246;Table 1;Primes de remboursement des obligations;Valeur 1;Valeur 2;Valeur 3
+249;Table 1;Primes de remboursement des obligations;Valeur 1;Valeur 2;Valeur 3
+502;Table 1;Immobilisations incorporelles (B);Valeur 1;Valeur 2;Valeur 3
+503;Table 1;Immobilisations incorporelles (B);Valeur 1;Valeur 2;Valeur 3
+504;Table 1;Immobilisations incorporelles (B);Valeur 1;Valeur 2;Valeur 3
+505;Table 1;Immobilisations incorporelles (B);Valeur 1;Valeur 2;Valeur 3
+274;Table 1;Immobilisations en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+278;Table 1;Immobilisations en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+282;Table 1;Immobilisations en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+286;Table 1;Immobilisations en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+275;Table 1;Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+279;Table 1;Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+283;Table 1;Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+287;Table 1;Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+276;Table 1;Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+280;Table 1;Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+284;Table 1;Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+288;Table 1;Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+277;Table 1;Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+281;Table 1;Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+285;Table 1;Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+289;Table 1;Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+507;Table 1;Immobilisations corporelles (C);Valeur 1;Valeur 2;Valeur 3
+508;Table 1;Immobilisations corporelles (C);Valeur 1;Valeur 2;Valeur 3
+509;Table 1;Immobilisations corporelles (C);Valeur 1;Valeur 2;Valeur 3
+510;Table 1;Immobilisations corporelles (C);Valeur 1;Valeur 2;Valeur 3
+207;Table 1;Terrains;Valeur 1;Valeur 2;Valeur 3
+214;Table 1;Terrains;Valeur 1;Valeur 2;Valeur 3
+221;Table 1;Terrains;Valeur 1;Valeur 2;Valeur 3
+228;Table 1;Terrains;Valeur 1;Valeur 2;Valeur 3
+208;Table 1;Constructions;Valeur 1;Valeur 2;Valeur 3
+215;Table 1;Constructions;Valeur 1;Valeur 2;Valeur 3
+222;Table 1;Constructions;Valeur 1;Valeur 2;Valeur 3
+229;Table 1;Constructions;Valeur 1;Valeur 2;Valeur 3
+209;Table 1;Installations techniques, matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+216;Table 1;Installations techniques, matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+223;Table 1;Installations techniques, matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+230;Table 1;Installations techniques, matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+210;Table 1;Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+217;Table 1;Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+224;Table 1;Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+231;Table 1;Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+211;Table 1;Mobilier, Matériel de bureau et aménagement divers;Valeur 1;Valeur 2;Valeur 3
+218;Table 1;Mobilier, Matériel de bureau et aménagement divers;Valeur 1;Valeur 2;Valeur 3
+225;Table 1;Mobilier, Matériel de bureau et aménagement divers;Valeur 1;Valeur 2;Valeur 3
+232;Table 1;Mobilier, Matériel de bureau et aménagement divers;Valeur 1;Valeur 2;Valeur 3
+212;Table 1;Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+219;Table 1;Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+226;Table 1;Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+233;Table 1;Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+213;Table 1;Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+220;Table 1;Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+227;Table 1;Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+234;Table 1;Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+512;Table 1;Immobilisations financières (D);Valeur 1;Valeur 2;Valeur 3
+513;Table 1;Immobilisations financières (D);Valeur 1;Valeur 2;Valeur 3
+514;Table 1;Immobilisations financières (D);Valeur 1;Valeur 2;Valeur 3
+515;Table 1;Immobilisations financières (D);Valeur 1;Valeur 2;Valeur 3
+254;Table 1;Prêts immobilisés;Valeur 1;Valeur 2;Valeur 3
+258;Table 1;Prêts immobilisés;Valeur 1;Valeur 2;Valeur 3
+262;Table 1;Prêts immobilisés;Valeur 1;Valeur 2;Valeur 3
+266;Table 1;Prêts immobilisés;Valeur 1;Valeur 2;Valeur 3
+255;Table 1;Autres créances financières;Valeur 1;Valeur 2;Valeur 3
+259;Table 1;Autres créances financières;Valeur 1;Valeur 2;Valeur 3
+263;Table 1;Autres créances financières;Valeur 1;Valeur 2;Valeur 3
+267;Table 1;Autres créances financières;Valeur 1;Valeur 2;Valeur 3
+256;Table 1;Titres de participation;Valeur 1;Valeur 2;Valeur 3
+260;Table 1;Titres de participation;Valeur 1;Valeur 2;Valeur 3
+264;Table 1;Titres de participation;Valeur 1;Valeur 2;Valeur 3
+268;Table 1;Titres de participation;Valeur 1;Valeur 2;Valeur 3
+257;Table 1;Autres titres immobilisés;Valeur 1;Valeur 2;Valeur 3
+261;Table 1;Autres titres immobilisés;Valeur 1;Valeur 2;Valeur 3
+265;Table 1;Autres titres immobilisés;Valeur 1;Valeur 2;Valeur 3
+269;Table 1;Autres titres immobilisés;Valeur 1;Valeur 2;Valeur 3
+517;Table 1;Ecarts de conversion actif (E);Valeur 1;Valeur 2;Valeur 3
+518;Table 1;Ecarts de conversion actif (E);Valeur 1;Valeur 2;Valeur 3
+519;Table 1;Ecarts de conversion actif (E);Valeur 1;Valeur 2;Valeur 3
+520;Table 1;Ecarts de conversion actif (E);Valeur 1;Valeur 2;Valeur 3
+192;Table 1;Diminution des créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+194;Table 1;Diminution des créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+196;Table 1;Diminution des créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+198;Table 1;Diminution des créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+193;Table 1;Augmentations des dettes de financement;Valeur 1;Valeur 2;Valeur 3
+195;Table 1;Augmentations des dettes de financement;Valeur 1;Valeur 2;Valeur 3
+197;Table 1;Augmentations des dettes de financement;Valeur 1;Valeur 2;Valeur 3
+199;Table 1;Augmentations des dettes de financement;Valeur 1;Valeur 2;Valeur 3
+291;Table 1;TOTAL I (A+B+C+D+E);Valeur 1;Valeur 2;Valeur 3
+292;Table 1;TOTAL I (A+B+C+D+E);Valeur 1;Valeur 2;Valeur 3
+293;Table 1;TOTAL I (A+B+C+D+E);Valeur 1;Valeur 2;Valeur 3
+294;Table 1;TOTAL I (A+B+C+D+E);Valeur 1;Valeur 2;Valeur 3
+522;Table 1;Stocks (F);Valeur 1;Valeur 2;Valeur 3
+523;Table 1;Stocks (F);Valeur 1;Valeur 2;Valeur 3
+524;Table 1;Stocks (F);Valeur 1;Valeur 2;Valeur 3
+525;Table 1;Stocks (F);Valeur 1;Valeur 2;Valeur 3
+160;Table 1;Marchandises;Valeur 1;Valeur 2;Valeur 3
+165;Table 1;Marchandises;Valeur 1;Valeur 2;Valeur 3
+170;Table 1;Marchandises;Valeur 1;Valeur 2;Valeur 3
+175;Table 1;Marchandises;Valeur 1;Valeur 2;Valeur 3
+161;Table 1;Matières et fournitures consommables;Valeur 1;Valeur 2;Valeur 3
+166;Table 1;Matières et fournitures consommables;Valeur 1;Valeur 2;Valeur 3
+171;Table 1;Matières et fournitures consommables;Valeur 1;Valeur 2;Valeur 3
+176;Table 1;Matières et fournitures consommables;Valeur 1;Valeur 2;Valeur 3
+162;Table 1;Produits en cours;Valeur 1;Valeur 2;Valeur 3
+167;Table 1;Produits en cours;Valeur 1;Valeur 2;Valeur 3
+172;Table 1;Produits en cours;Valeur 1;Valeur 2;Valeur 3
+177;Table 1;Produits en cours;Valeur 1;Valeur 2;Valeur 3
+163;Table 1;Produits intermédiaires et produits résiduels;Valeur 1;Valeur 2;Valeur 3
+168;Table 1;Produits intermédiaires et produits résiduels;Valeur 1;Valeur 2;Valeur 3
+173;Table 1;Produits intermédiaires et produits résiduels;Valeur 1;Valeur 2;Valeur 3
+178;Table 1;Produits intermédiaires et produits résiduels;Valeur 1;Valeur 2;Valeur 3
+164;Table 1;Produits finis;Valeur 1;Valeur 2;Valeur 3
+169;Table 1;Produits finis;Valeur 1;Valeur 2;Valeur 3
+174;Table 1;Produits finis;Valeur 1;Valeur 2;Valeur 3
+179;Table 1;Produits finis;Valeur 1;Valeur 2;Valeur 3
+527;Table 1;Créances de l'actif circulant (G);Valeur 1;Valeur 2;Valeur 3
+528;Table 1;Créances de l'actif circulant (G);Valeur 1;Valeur 2;Valeur 3
+529;Table 1;Créances de l'actif circulant (G);Valeur 1;Valeur 2;Valeur 3
+530;Table 1;Créances de l'actif circulant (G);Valeur 1;Valeur 2;Valeur 3
+122;Table 1;Fournis. débiteurs, avances et;Valeur 1;Valeur 2;Valeur 3
+129;Table 1;Fournis. débiteurs, avances et;Valeur 1;Valeur 2;Valeur 3
+136;Table 1;Fournis. débiteurs, avances et;Valeur 1;Valeur 2;Valeur 3
+143;Table 1;Fournis. débiteurs, avances et;Valeur 1;Valeur 2;Valeur 3
+123;Table 1;Clients et comptes rattachés;Valeur 1;Valeur 2;Valeur 3
+130;Table 1;Clients et comptes rattachés;Valeur 1;Valeur 2;Valeur 3
+137;Table 1;Clients et comptes rattachés;Valeur 1;Valeur 2;Valeur 3
+144;Table 1;Clients et comptes rattachés;Valeur 1;Valeur 2;Valeur 3
+124;Table 1;Personnel;Valeur 1;Valeur 2;Valeur 3
+131;Table 1;Personnel;Valeur 1;Valeur 2;Valeur 3
+138;Table 1;Personnel;Valeur 1;Valeur 2;Valeur 3
+145;Table 1;Personnel;Valeur 1;Valeur 2;Valeur 3
+125;Table 1;Etat;Valeur 1;Valeur 2;Valeur 3
+132;Table 1;Etat;Valeur 1;Valeur 2;Valeur 3
+139;Table 1;Etat;Valeur 1;Valeur 2;Valeur 3
+146;Table 1;Etat;Valeur 1;Valeur 2;Valeur 3
+126;Table 1;Comptes d'associés;Valeur 1;Valeur 2;Valeur 3
+133;Table 1;Comptes d'associés;Valeur 1;Valeur 2;Valeur 3
+140;Table 1;Comptes d'associés;Valeur 1;Valeur 2;Valeur 3
+147;Table 1;Comptes d'associés;Valeur 1;Valeur 2;Valeur 3
+127;Table 1;Autres débiteurs;Valeur 1;Valeur 2;Valeur 3
+134;Table 1;Autres débiteurs;Valeur 1;Valeur 2;Valeur 3
+141;Table 1;Autres débiteurs;Valeur 1;Valeur 2;Valeur 3
+148;Table 1;Autres débiteurs;Valeur 1;Valeur 2;Valeur 3
+128;Table 1;Comptes de régularisation- Actif;Valeur 1;Valeur 2;Valeur 3
+135;Table 1;Comptes de régularisation- Actif;Valeur 1;Valeur 2;Valeur 3
+142;Table 1;Comptes de régularisation- Actif;Valeur 1;Valeur 2;Valeur 3
+149;Table 1;Comptes de régularisation- Actif;Valeur 1;Valeur 2;Valeur 3
+181;Table 1;Titres valeurs de placement (H);Valeur 1;Valeur 2;Valeur 3
+182;Table 1;Titres valeurs de placement (H);Valeur 1;Valeur 2;Valeur 3
+183;Table 1;Titres valeurs de placement (H);Valeur 1;Valeur 2;Valeur 3
+184;Table 1;Titres valeurs de placement (H);Valeur 1;Valeur 2;Valeur 3
+151;Table 1;Ecarts de conversion actif (I) Eléments circulants;Valeur 1;Valeur 2;Valeur 3
+152;Table 1;Ecarts de conversion actif (I) Eléments circulants;Valeur 1;Valeur 2;Valeur 3
+153;Table 1;Ecarts de conversion actif (I) Eléments circulants;Valeur 1;Valeur 2;Valeur 3
+154;Table 1;Ecarts de conversion actif (I) Eléments circulants;Valeur 1;Valeur 2;Valeur 3
+296;Table 1;TOTAL II (F+G+H+I);Valeur 1;Valeur 2;Valeur 3
+297;Table 1;TOTAL II (F+G+H+I);Valeur 1;Valeur 2;Valeur 3
+298;Table 1;TOTAL II (F+G+H+I);Valeur 1;Valeur 2;Valeur 3
+299;Table 1;TOTAL II (F+G+H+I);Valeur 1;Valeur 2;Valeur 3
+532;Table 1;Trésorerie-Actif;Valeur 1;Valeur 2;Valeur 3
+533;Table 1;Trésorerie-Actif;Valeur 1;Valeur 2;Valeur 3
+534;Table 1;Trésorerie-Actif;Valeur 1;Valeur 2;Valeur 3
+535;Table 1;Trésorerie-Actif;Valeur 1;Valeur 2;Valeur 3
+303;Table 1;Chèques et valeurs à encaisser;Valeur 1;Valeur 2;Valeur 3
+306;Table 1;Chèques et valeurs à encaisser;Valeur 1;Valeur 2;Valeur 3
+309;Table 1;Chèques et valeurs à encaisser;Valeur 1;Valeur 2;Valeur 3
+312;Table 1;Chèques et valeurs à encaisser;Valeur 1;Valeur 2;Valeur 3
+304;Table 1;Banques, T.G et C.C.P;Valeur 1;Valeur 2;Valeur 3
+307;Table 1;Banques, T.G et C.C.P;Valeur 1;Valeur 2;Valeur 3
+310;Table 1;Banques, T.G et C.C.P;Valeur 1;Valeur 2;Valeur 3
+313;Table 1;Banques, T.G et C.C.P;Valeur 1;Valeur 2;Valeur 3
+305;Table 1;Caisse, Régie d'avances et accréditifs;Valeur 1;Valeur 2;Valeur 3
+308;Table 1;Caisse, Régie d'avances et accréditifs;Valeur 1;Valeur 2;Valeur 3
+311;Table 1;Caisse, Régie d'avances et accréditifs;Valeur 1;Valeur 2;Valeur 3
+314;Table 1;Caisse, Régie d'avances et accréditifs;Valeur 1;Valeur 2;Valeur 3
+316;Table 1;TOTAL III;Valeur 1;Valeur 2;Valeur 3
+317;Table 1;TOTAL III;Valeur 1;Valeur 2;Valeur 3
+318;Table 1;TOTAL III;Valeur 1;Valeur 2;Valeur 3
+319;Table 1;TOTAL III;Valeur 1;Valeur 2;Valeur 3
+186;Table 1;TOTAL GENERAL I+II+III;Valeur 1;Valeur 2;Valeur 3
+187;Table 1;TOTAL GENERAL I+II+III;Valeur 1;Valeur 2;Valeur 3
+188;Table 1;TOTAL GENERAL I+II+III;Valeur 1;Valeur 2;Valeur 3
+189;Table 1;TOTAL GENERAL I+II+III;Valeur 1;Valeur 2;Valeur 3
+13400;Table 1;Capital social ou personnel (1);Valeur 1;Valeur 2;Valeur 3
+13411;Table 1;Capital social ou personnel (1);Valeur 1;Valeur 2;Valeur 3
+13401;Table 1;Moins : actionnaires, capital souscrit non appelé;Valeur 1;Valeur 2;Valeur 3
+13412;Table 1;Moins : actionnaires, capital souscrit non appelé;Valeur 1;Valeur 2;Valeur 3
+13402;Table 1;Moins : Capital appelé;Valeur 1;Valeur 2;Valeur 3
+13413;Table 1;Moins : Capital appelé;Valeur 1;Valeur 2;Valeur 3
+13403;Table 1;Moins : Dont versé;Valeur 1;Valeur 2;Valeur 3
+13414;Table 1;Moins : Dont versé;Valeur 1;Valeur 2;Valeur 3
+13404;Table 1;Prime d'émission, de fusion, d'apport;Valeur 1;Valeur 2;Valeur 3
+13415;Table 1;Prime d'émission, de fusion, d'apport;Valeur 1;Valeur 2;Valeur 3
+13405;Table 1;Ecarts de réévaluation;Valeur 1;Valeur 2;Valeur 3
+13416;Table 1;Ecarts de réévaluation;Valeur 1;Valeur 2;Valeur 3
+13406;Table 1;Réserve légale;Valeur 1;Valeur 2;Valeur 3
+13417;Table 1;Réserve légale;Valeur 1;Valeur 2;Valeur 3
+13407;Table 1;Autres réserves;Valeur 1;Valeur 2;Valeur 3
+13418;Table 1;Autres réserves;Valeur 1;Valeur 2;Valeur 3
+13408;Table 1;Report à nouveau (2);Valeur 1;Valeur 2;Valeur 3
+13419;Table 1;Report à nouveau (2);Valeur 1;Valeur 2;Valeur 3
+14001;Table 1;Résultats nets en instance d'affectation (2);Valeur 1;Valeur 2;Valeur 3
+14002;Table 1;Résultats nets en instance d'affectation (2);Valeur 1;Valeur 2;Valeur 3
+13409;Table 1;Résultat net de l'exercice (2);Valeur 1;Valeur 2;Valeur 3
+13420;Table 1;Résultat net de l'exercice (2);Valeur 1;Valeur 2;Valeur 3
+13410;Table 1;Total des capitaux propres (A);Valeur 1;Valeur 2;Valeur 3
+13421;Table 1;Total des capitaux propres (A);Valeur 1;Valeur 2;Valeur 3
+13397;Table 1;Capitaux propres assimilés (B);Valeur 1;Valeur 2;Valeur 3
+13422;Table 1;Capitaux propres assimilés (B);Valeur 1;Valeur 2;Valeur 3
+13398;Table 1;Subvention d'investissement;Valeur 1;Valeur 2;Valeur 3
+13423;Table 1;Subvention d'investissement;Valeur 1;Valeur 2;Valeur 3
+13399;Table 1;Provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+13424;Table 1;Provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+13339;Table 1;(code = 13339) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+13396;Table 1;(code = 13339) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+13425;Table 1;(code = 13339) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+13393;Table 1;Dettes de financement (C);Valeur 1;Valeur 2;Valeur 3
+13426;Table 1;Dettes de financement (C);Valeur 1;Valeur 2;Valeur 3
+13394;Table 1;Emprunts obligataires;Valeur 1;Valeur 2;Valeur 3
+13427;Table 1;Emprunts obligataires;Valeur 1;Valeur 2;Valeur 3
+13395;Table 1;Autres dettes de financement;Valeur 1;Valeur 2;Valeur 3
+13428;Table 1;Autres dettes de financement;Valeur 1;Valeur 2;Valeur 3
+13343;Table 1;(code = 13343) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+13392;Table 1;(code = 13343) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+13429;Table 1;(code = 13343) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+13389;Table 1;Provisions durables pour risques et charges (D);Valeur 1;Valeur 2;Valeur 3
+13430;Table 1;Provisions durables pour risques et charges (D);Valeur 1;Valeur 2;Valeur 3
+13390;Table 1;Provisions pour risques;Valeur 1;Valeur 2;Valeur 3
+13431;Table 1;Provisions pour risques;Valeur 1;Valeur 2;Valeur 3
+13391;Table 1;Provisions pour charges;Valeur 1;Valeur 2;Valeur 3
+13432;Table 1;Provisions pour charges;Valeur 1;Valeur 2;Valeur 3
+13386;Table 1;Ecarts de conversion-passif (E);Valeur 1;Valeur 2;Valeur 3
+13433;Table 1;Ecarts de conversion-passif (E);Valeur 1;Valeur 2;Valeur 3
+13387;Table 1;Augmentation des créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+13434;Table 1;Augmentation des créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+13388;Table 1;Diminution des dettes de financement;Valeur 1;Valeur 2;Valeur 3
+13435;Table 1;Diminution des dettes de financement;Valeur 1;Valeur 2;Valeur 3
+13385;Table 1;TOTAL I (A+B+C+D+E);Valeur 1;Valeur 2;Valeur 3
+13436;Table 1;TOTAL I (A+B+C+D+E);Valeur 1;Valeur 2;Valeur 3
+13376;Table 1;Dettes du passif circulant (F);Valeur 1;Valeur 2;Valeur 3
+13437;Table 1;Dettes du passif circulant (F);Valeur 1;Valeur 2;Valeur 3
+13377;Table 1;Fournisseurs et comptes rattachés;Valeur 1;Valeur 2;Valeur 3
+13438;Table 1;Fournisseurs et comptes rattachés;Valeur 1;Valeur 2;Valeur 3
+13378;Table 1;Clients créditeurs, avances et acomptes;Valeur 1;Valeur 2;Valeur 3
+13439;Table 1;Clients créditeurs, avances et acomptes;Valeur 1;Valeur 2;Valeur 3
+13379;Table 1;Personnel;Valeur 1;Valeur 2;Valeur 3
+13440;Table 1;Personnel;Valeur 1;Valeur 2;Valeur 3
+13380;Table 1;Organismes sociaux;Valeur 1;Valeur 2;Valeur 3
+13441;Table 1;Organismes sociaux;Valeur 1;Valeur 2;Valeur 3
+13381;Table 1;Etat;Valeur 1;Valeur 2;Valeur 3
+13442;Table 1;Etat;Valeur 1;Valeur 2;Valeur 3
+13382;Table 1;Comptes d'associés;Valeur 1;Valeur 2;Valeur 3
+13443;Table 1;Comptes d'associés;Valeur 1;Valeur 2;Valeur 3
+13383;Table 1;Autres créanciers;Valeur 1;Valeur 2;Valeur 3
+13444;Table 1;Autres créanciers;Valeur 1;Valeur 2;Valeur 3
+13384;Table 1;Comptes de régularisation passif;Valeur 1;Valeur 2;Valeur 3
+13445;Table 1;Comptes de régularisation passif;Valeur 1;Valeur 2;Valeur 3
+13375;Table 1;Autres provisions pour risques et charges (G);Valeur 1;Valeur 2;Valeur 3
+13446;Table 1;Autres provisions pour risques et charges (G);Valeur 1;Valeur 2;Valeur 3
+13374;Table 1;Ecarts de conversion - passif (Eléments circulants) (H);Valeur 1;Valeur 2;Valeur 3
+13447;Table 1;Ecarts de conversion - passif (Eléments circulants) (H);Valeur 1;Valeur 2;Valeur 3
+13373;Table 1;TOTAL II (F+G+H);Valeur 1;Valeur 2;Valeur 3
+13448;Table 1;TOTAL II (F+G+H);Valeur 1;Valeur 2;Valeur 3
+13370;Table 1;Crédits d'escompte;Valeur 1;Valeur 2;Valeur 3
+13449;Table 1;Crédits d'escompte;Valeur 1;Valeur 2;Valeur 3
+13371;Table 1;Crédits de trésorerie;Valeur 1;Valeur 2;Valeur 3
+13450;Table 1;Crédits de trésorerie;Valeur 1;Valeur 2;Valeur 3
+13372;Table 1;Banques (soldes créditeurs);Valeur 1;Valeur 2;Valeur 3
+13451;Table 1;Banques (soldes créditeurs);Valeur 1;Valeur 2;Valeur 3
+13369;Table 1;TOTAL III;Valeur 1;Valeur 2;Valeur 3
+13452;Table 1;TOTAL III;Valeur 1;Valeur 2;Valeur 3
+13368;Table 1;TOTAL GENERAL I+II+III;Valeur 1;Valeur 2;Valeur 3
+13453;Table 1;TOTAL GENERAL I+II+III;Valeur 1;Valeur 2;Valeur 3
+11176;Table 1;I. PRODUITS D'EXPLOITATION;Valeur 1;Valeur 2;Valeur 3
+11177;Table 1;I. PRODUITS D'EXPLOITATION;Valeur 1;Valeur 2;Valeur 3
+11178;Table 1;I. PRODUITS D'EXPLOITATION;Valeur 1;Valeur 2;Valeur 3
+11179;Table 1;I. PRODUITS D'EXPLOITATION;Valeur 1;Valeur 2;Valeur 3
+11181;Table 1;* Ventes de marchandises (en l'état);Valeur 1;Valeur 2;Valeur 3
+11182;Table 1;* Ventes de marchandises (en l'état);Valeur 1;Valeur 2;Valeur 3
+11183;Table 1;* Ventes de marchandises (en l'état);Valeur 1;Valeur 2;Valeur 3
+11184;Table 1;* Ventes de marchandises (en l'état);Valeur 1;Valeur 2;Valeur 3
+11186;Table 1;* Ventes de biens et services produits;Valeur 1;Valeur 2;Valeur 3
+11187;Table 1;* Ventes de biens et services produits;Valeur 1;Valeur 2;Valeur 3
+11188;Table 1;* Ventes de biens et services produits;Valeur 1;Valeur 2;Valeur 3
+11189;Table 1;* Ventes de biens et services produits;Valeur 1;Valeur 2;Valeur 3
+14021;Table 1;* Chiffres d'affaires;Valeur 1;Valeur 2;Valeur 3
+14022;Table 1;* Chiffres d'affaires;Valeur 1;Valeur 2;Valeur 3
+14023;Table 1;* Chiffres d'affaires;Valeur 1;Valeur 2;Valeur 3
+14024;Table 1;* Chiffres d'affaires;Valeur 1;Valeur 2;Valeur 3
+11191;Table 1;* Variation de stocks de produits (1);Valeur 1;Valeur 2;Valeur 3
+11192;Table 1;* Variation de stocks de produits (1);Valeur 1;Valeur 2;Valeur 3
+11193;Table 1;* Variation de stocks de produits (1);Valeur 1;Valeur 2;Valeur 3
+11194;Table 1;* Variation de stocks de produits (1);Valeur 1;Valeur 2;Valeur 3
+11196;Table 1;* Immobilisations produites par l'entreprise pour elle-même;Valeur 1;Valeur 2;Valeur 3
+11197;Table 1;* Immobilisations produites par l'entreprise pour elle-même;Valeur 1;Valeur 2;Valeur 3
+11198;Table 1;* Immobilisations produites par l'entreprise pour elle-même;Valeur 1;Valeur 2;Valeur 3
+11199;Table 1;* Immobilisations produites par l'entreprise pour elle-même;Valeur 1;Valeur 2;Valeur 3
+11201;Table 1;* Subventions d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11202;Table 1;* Subventions d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11203;Table 1;* Subventions d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11204;Table 1;* Subventions d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11206;Table 1;* Autres produits d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11207;Table 1;* Autres produits d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11208;Table 1;* Autres produits d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11209;Table 1;* Autres produits d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11211;Table 1;* Reprises d'exploitation : transferts de charges;Valeur 1;Valeur 2;Valeur 3
+11212;Table 1;* Reprises d'exploitation : transferts de charges;Valeur 1;Valeur 2;Valeur 3
+11213;Table 1;* Reprises d'exploitation : transferts de charges;Valeur 1;Valeur 2;Valeur 3
+11214;Table 1;* Reprises d'exploitation : transferts de charges;Valeur 1;Valeur 2;Valeur 3
+11216;Table 1;Total I;Valeur 1;Valeur 2;Valeur 3
+11217;Table 1;Total I;Valeur 1;Valeur 2;Valeur 3
+11218;Table 1;Total I;Valeur 1;Valeur 2;Valeur 3
+11219;Table 1;Total I;Valeur 1;Valeur 2;Valeur 3
+11226;Table 1;II. CHARGES D'EXPLOITATION;Valeur 1;Valeur 2;Valeur 3
+11227;Table 1;II. CHARGES D'EXPLOITATION;Valeur 1;Valeur 2;Valeur 3
+11228;Table 1;II. CHARGES D'EXPLOITATION;Valeur 1;Valeur 2;Valeur 3
+11229;Table 1;II. CHARGES D'EXPLOITATION;Valeur 1;Valeur 2;Valeur 3
+11221;Table 1;* Achats revendus(2) de marchandises;Valeur 1;Valeur 2;Valeur 3
+11222;Table 1;* Achats revendus(2) de marchandises;Valeur 1;Valeur 2;Valeur 3
+11223;Table 1;* Achats revendus(2) de marchandises;Valeur 1;Valeur 2;Valeur 3
+11224;Table 1;* Achats revendus(2) de marchandises;Valeur 1;Valeur 2;Valeur 3
+11256;Table 1;* Achats consommés(2) de matières et fournitures;Valeur 1;Valeur 2;Valeur 3
+11257;Table 1;* Achats consommés(2) de matières et fournitures;Valeur 1;Valeur 2;Valeur 3
+11258;Table 1;* Achats consommés(2) de matières et fournitures;Valeur 1;Valeur 2;Valeur 3
+11259;Table 1;* Achats consommés(2) de matières et fournitures;Valeur 1;Valeur 2;Valeur 3
+11261;Table 1;* Autres charges externes;Valeur 1;Valeur 2;Valeur 3
+11262;Table 1;* Autres charges externes;Valeur 1;Valeur 2;Valeur 3
+11263;Table 1;* Autres charges externes;Valeur 1;Valeur 2;Valeur 3
+11264;Table 1;* Autres charges externes;Valeur 1;Valeur 2;Valeur 3
+11251;Table 1;* Impôts et taxes;Valeur 1;Valeur 2;Valeur 3
+11252;Table 1;* Impôts et taxes;Valeur 1;Valeur 2;Valeur 3
+11253;Table 1;* Impôts et taxes;Valeur 1;Valeur 2;Valeur 3
+11254;Table 1;* Impôts et taxes;Valeur 1;Valeur 2;Valeur 3
+11266;Table 1;* Charges de personnel;Valeur 1;Valeur 2;Valeur 3
+11267;Table 1;* Charges de personnel;Valeur 1;Valeur 2;Valeur 3
+11268;Table 1;* Charges de personnel;Valeur 1;Valeur 2;Valeur 3
+11269;Table 1;* Charges de personnel;Valeur 1;Valeur 2;Valeur 3
+11246;Table 1;* Autres charges d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11247;Table 1;* Autres charges d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11248;Table 1;* Autres charges d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11249;Table 1;* Autres charges d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11241;Table 1;* Dotations d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11242;Table 1;* Dotations d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11243;Table 1;* Dotations d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11244;Table 1;* Dotations d'exploitation;Valeur 1;Valeur 2;Valeur 3
+11236;Table 1;Total II;Valeur 1;Valeur 2;Valeur 3
+11237;Table 1;Total II;Valeur 1;Valeur 2;Valeur 3
+11238;Table 1;Total II;Valeur 1;Valeur 2;Valeur 3
+11239;Table 1;Total II;Valeur 1;Valeur 2;Valeur 3
+11231;Table 1;III. RESULTAT D'EXPLOITATION (I- II);Valeur 1;Valeur 2;Valeur 3
+11232;Table 1;III. RESULTAT D'EXPLOITATION (I- II);Valeur 1;Valeur 2;Valeur 3
+11233;Table 1;III. RESULTAT D'EXPLOITATION (I- II);Valeur 1;Valeur 2;Valeur 3
+11234;Table 1;III. RESULTAT D'EXPLOITATION (I- II);Valeur 1;Valeur 2;Valeur 3
+11326;Table 1;IV. PRODUITS FINANCIERS;Valeur 1;Valeur 2;Valeur 3
+11327;Table 1;IV. PRODUITS FINANCIERS;Valeur 1;Valeur 2;Valeur 3
+11328;Table 1;IV. PRODUITS FINANCIERS;Valeur 1;Valeur 2;Valeur 3
+11329;Table 1;IV. PRODUITS FINANCIERS;Valeur 1;Valeur 2;Valeur 3
+11271;Table 1;* Produits des titres de partic. et autres titres immobilisés;Valeur 1;Valeur 2;Valeur 3
+11272;Table 1;* Produits des titres de partic. et autres titres immobilisés;Valeur 1;Valeur 2;Valeur 3
+11273;Table 1;* Produits des titres de partic. et autres titres immobilisés;Valeur 1;Valeur 2;Valeur 3
+11274;Table 1;* Produits des titres de partic. et autres titres immobilisés;Valeur 1;Valeur 2;Valeur 3
+11276;Table 1;* Gains de change;Valeur 1;Valeur 2;Valeur 3
+11277;Table 1;* Gains de change;Valeur 1;Valeur 2;Valeur 3
+11278;Table 1;* Gains de change;Valeur 1;Valeur 2;Valeur 3
+11279;Table 1;* Gains de change;Valeur 1;Valeur 2;Valeur 3
+11281;Table 1;* Intérêts et autres produits financiers;Valeur 1;Valeur 2;Valeur 3
+11282;Table 1;* Intérêts et autres produits financiers;Valeur 1;Valeur 2;Valeur 3
+11283;Table 1;* Intérêts et autres produits financiers;Valeur 1;Valeur 2;Valeur 3
+11284;Table 1;* Intérêts et autres produits financiers;Valeur 1;Valeur 2;Valeur 3
+11286;Table 1;* Reprises financier : transfert charges;Valeur 1;Valeur 2;Valeur 3
+11287;Table 1;* Reprises financier : transfert charges;Valeur 1;Valeur 2;Valeur 3
+11288;Table 1;* Reprises financier : transfert charges;Valeur 1;Valeur 2;Valeur 3
+11289;Table 1;* Reprises financier : transfert charges;Valeur 1;Valeur 2;Valeur 3
+11291;Table 1;. Total IV;Valeur 1;Valeur 2;Valeur 3
+11292;Table 1;. Total IV;Valeur 1;Valeur 2;Valeur 3
+11293;Table 1;. Total IV;Valeur 1;Valeur 2;Valeur 3
+11294;Table 1;. Total IV;Valeur 1;Valeur 2;Valeur 3
+11321;Table 1;V. CHARGES FINANCIERES;Valeur 1;Valeur 2;Valeur 3
+11322;Table 1;V. CHARGES FINANCIERES;Valeur 1;Valeur 2;Valeur 3
+11323;Table 1;V. CHARGES FINANCIERES;Valeur 1;Valeur 2;Valeur 3
+11324;Table 1;V. CHARGES FINANCIERES;Valeur 1;Valeur 2;Valeur 3
+11296;Table 1;* Charges d'intérêts;Valeur 1;Valeur 2;Valeur 3
+11297;Table 1;* Charges d'intérêts;Valeur 1;Valeur 2;Valeur 3
+11298;Table 1;* Charges d'intérêts;Valeur 1;Valeur 2;Valeur 3
+11299;Table 1;* Charges d'intérêts;Valeur 1;Valeur 2;Valeur 3
+11301;Table 1;* Pertes de change;Valeur 1;Valeur 2;Valeur 3
+11302;Table 1;* Pertes de change;Valeur 1;Valeur 2;Valeur 3
+11303;Table 1;* Pertes de change;Valeur 1;Valeur 2;Valeur 3
+11304;Table 1;* Pertes de change;Valeur 1;Valeur 2;Valeur 3
+11306;Table 1;* Autres charges financières;Valeur 1;Valeur 2;Valeur 3
+11307;Table 1;* Autres charges financières;Valeur 1;Valeur 2;Valeur 3
+11308;Table 1;* Autres charges financières;Valeur 1;Valeur 2;Valeur 3
+11309;Table 1;* Autres charges financières;Valeur 1;Valeur 2;Valeur 3
+11311;Table 1;* Dotations financières;Valeur 1;Valeur 2;Valeur 3
+11312;Table 1;* Dotations financières;Valeur 1;Valeur 2;Valeur 3
+11313;Table 1;* Dotations financières;Valeur 1;Valeur 2;Valeur 3
+11314;Table 1;* Dotations financières;Valeur 1;Valeur 2;Valeur 3
+11316;Table 1;Total V;Valeur 1;Valeur 2;Valeur 3
+11317;Table 1;Total V;Valeur 1;Valeur 2;Valeur 3
+11318;Table 1;Total V;Valeur 1;Valeur 2;Valeur 3
+11319;Table 1;Total V;Valeur 1;Valeur 2;Valeur 3
+11331;Table 1;VI. RESULTAT FINANCIER (IV-V);Valeur 1;Valeur 2;Valeur 3
+11332;Table 1;VI. RESULTAT FINANCIER (IV-V);Valeur 1;Valeur 2;Valeur 3
+11333;Table 1;VI. RESULTAT FINANCIER (IV-V);Valeur 1;Valeur 2;Valeur 3
+11334;Table 1;VI. RESULTAT FINANCIER (IV-V);Valeur 1;Valeur 2;Valeur 3
+11336;Table 1;VII. RESULTAT COURANT (III+VI);Valeur 1;Valeur 2;Valeur 3
+11337;Table 1;VII. RESULTAT COURANT (III+VI);Valeur 1;Valeur 2;Valeur 3
+11338;Table 1;VII. RESULTAT COURANT (III+VI);Valeur 1;Valeur 2;Valeur 3
+11339;Table 1;VII. RESULTAT COURANT (III+VI);Valeur 1;Valeur 2;Valeur 3
+11391;Table 1;VIII. PRODUITS NON COURANTS;Valeur 1;Valeur 2;Valeur 3
+11392;Table 1;VIII. PRODUITS NON COURANTS;Valeur 1;Valeur 2;Valeur 3
+11393;Table 1;VIII. PRODUITS NON COURANTS;Valeur 1;Valeur 2;Valeur 3
+11394;Table 1;VIII. PRODUITS NON COURANTS;Valeur 1;Valeur 2;Valeur 3
+11341;Table 1;* Produits des cessions d'immobilisations;Valeur 1;Valeur 2;Valeur 3
+11342;Table 1;* Produits des cessions d'immobilisations;Valeur 1;Valeur 2;Valeur 3
+11343;Table 1;* Produits des cessions d'immobilisations;Valeur 1;Valeur 2;Valeur 3
+11344;Table 1;* Produits des cessions d'immobilisations;Valeur 1;Valeur 2;Valeur 3
+11346;Table 1;* Subventions d'équilibre;Valeur 1;Valeur 2;Valeur 3
+11347;Table 1;* Subventions d'équilibre;Valeur 1;Valeur 2;Valeur 3
+11348;Table 1;* Subventions d'équilibre;Valeur 1;Valeur 2;Valeur 3
+11349;Table 1;* Subventions d'équilibre;Valeur 1;Valeur 2;Valeur 3
+11351;Table 1;* Reprises sur subventions d'investissement;Valeur 1;Valeur 2;Valeur 3
+11352;Table 1;* Reprises sur subventions d'investissement;Valeur 1;Valeur 2;Valeur 3
+11353;Table 1;* Reprises sur subventions d'investissement;Valeur 1;Valeur 2;Valeur 3
+11354;Table 1;* Reprises sur subventions d'investissement;Valeur 1;Valeur 2;Valeur 3
+11356;Table 1;* Autres produits non courants;Valeur 1;Valeur 2;Valeur 3
+11357;Table 1;* Autres produits non courants;Valeur 1;Valeur 2;Valeur 3
+11358;Table 1;* Autres produits non courants;Valeur 1;Valeur 2;Valeur 3
+11359;Table 1;* Autres produits non courants;Valeur 1;Valeur 2;Valeur 3
+11361;Table 1;"* Reprises non courantes ; transferts de charges";Valeur 1;Valeur 2;Valeur 3
+11362;Table 1;"* Reprises non courantes ; transferts de charges";Valeur 1;Valeur 2;Valeur 3
+11363;Table 1;"* Reprises non courantes ; transferts de charges";Valeur 1;Valeur 2;Valeur 3
+11364;Table 1;"* Reprises non courantes ; transferts de charges";Valeur 1;Valeur 2;Valeur 3
+11366;Table 1;Total VIII;Valeur 1;Valeur 2;Valeur 3
+11367;Table 1;Total VIII;Valeur 1;Valeur 2;Valeur 3
+11368;Table 1;Total VIII;Valeur 1;Valeur 2;Valeur 3
+11369;Table 1;Total VIII;Valeur 1;Valeur 2;Valeur 3
+11396;Table 1;IX. CHARGES NON COURANTES;Valeur 1;Valeur 2;Valeur 3
+11397;Table 1;IX. CHARGES NON COURANTES;Valeur 1;Valeur 2;Valeur 3
+11398;Table 1;IX. CHARGES NON COURANTES;Valeur 1;Valeur 2;Valeur 3
+11399;Table 1;IX. CHARGES NON COURANTES;Valeur 1;Valeur 2;Valeur 3
+11371;Table 1;* Valeurs nettes d'amortissements des immobilisations cédées;Valeur 1;Valeur 2;Valeur 3
+11372;Table 1;* Valeurs nettes d'amortissements des immobilisations cédées;Valeur 1;Valeur 2;Valeur 3
+11373;Table 1;* Valeurs nettes d'amortissements des immobilisations cédées;Valeur 1;Valeur 2;Valeur 3
+11374;Table 1;* Valeurs nettes d'amortissements des immobilisations cédées;Valeur 1;Valeur 2;Valeur 3
+11376;Table 1;* Subventions accordées;Valeur 1;Valeur 2;Valeur 3
+11377;Table 1;* Subventions accordées;Valeur 1;Valeur 2;Valeur 3
+11378;Table 1;* Subventions accordées;Valeur 1;Valeur 2;Valeur 3
+11379;Table 1;* Subventions accordées;Valeur 1;Valeur 2;Valeur 3
+11381;Table 1;* Autres charges non courantes;Valeur 1;Valeur 2;Valeur 3
+11382;Table 1;* Autres charges non courantes;Valeur 1;Valeur 2;Valeur 3
+11383;Table 1;* Autres charges non courantes;Valeur 1;Valeur 2;Valeur 3
+11384;Table 1;* Autres charges non courantes;Valeur 1;Valeur 2;Valeur 3
+11386;Table 1;* Dotations non courantes aux amortissements et aux provisions;Valeur 1;Valeur 2;Valeur 3
+11387;Table 1;* Dotations non courantes aux amortissements et aux provisions;Valeur 1;Valeur 2;Valeur 3
+11388;Table 1;* Dotations non courantes aux amortissements et aux provisions;Valeur 1;Valeur 2;Valeur 3
+11389;Table 1;* Dotations non courantes aux amortissements et aux provisions;Valeur 1;Valeur 2;Valeur 3
+11406;Table 1;Total IX;Valeur 1;Valeur 2;Valeur 3
+11407;Table 1;Total IX;Valeur 1;Valeur 2;Valeur 3
+11408;Table 1;Total IX;Valeur 1;Valeur 2;Valeur 3
+11409;Table 1;Total IX;Valeur 1;Valeur 2;Valeur 3
+11401;Table 1;X. RESULTAT NON COURANT (VIII- IX);Valeur 1;Valeur 2;Valeur 3
+11402;Table 1;X. RESULTAT NON COURANT (VIII- IX);Valeur 1;Valeur 2;Valeur 3
+11403;Table 1;X. RESULTAT NON COURANT (VIII- IX);Valeur 1;Valeur 2;Valeur 3
+11404;Table 1;X. RESULTAT NON COURANT (VIII- IX);Valeur 1;Valeur 2;Valeur 3
+11411;Table 1;XI. RESULTAT AVANT IMPOTS (VII+X);Valeur 1;Valeur 2;Valeur 3
+11412;Table 1;XI. RESULTAT AVANT IMPOTS (VII+X);Valeur 1;Valeur 2;Valeur 3
+11413;Table 1;XI. RESULTAT AVANT IMPOTS (VII+X);Valeur 1;Valeur 2;Valeur 3
+11414;Table 1;XI. RESULTAT AVANT IMPOTS (VII+X);Valeur 1;Valeur 2;Valeur 3
+11416;Table 1;XII. IMPOTS SUR LES RESULTATS;Valeur 1;Valeur 2;Valeur 3
+11417;Table 1;XII. IMPOTS SUR LES RESULTATS;Valeur 1;Valeur 2;Valeur 3
+11418;Table 1;XII. IMPOTS SUR LES RESULTATS;Valeur 1;Valeur 2;Valeur 3
+11419;Table 1;XII. IMPOTS SUR LES RESULTATS;Valeur 1;Valeur 2;Valeur 3
+11421;Table 1;RESULTAT NET (XI-XII);Valeur 1;Valeur 2;Valeur 3
+11422;Table 1;RESULTAT NET (XI-XII);Valeur 1;Valeur 2;Valeur 3
+11423;Table 1;RESULTAT NET (XI-XII);Valeur 1;Valeur 2;Valeur 3
+11424;Table 1;RESULTAT NET (XI-XII);Valeur 1;Valeur 2;Valeur 3
+11426;Table 1;XIV. TOTAL DES PRODUITS (I+IV+VIII);Valeur 1;Valeur 2;Valeur 3
+11427;Table 1;XIV. TOTAL DES PRODUITS (I+IV+VIII);Valeur 1;Valeur 2;Valeur 3
+11428;Table 1;XIV. TOTAL DES PRODUITS (I+IV+VIII);Valeur 1;Valeur 2;Valeur 3
+11429;Table 1;XIV. TOTAL DES PRODUITS (I+IV+VIII);Valeur 1;Valeur 2;Valeur 3
+11431;Table 1;XV. TOTAL DES CHARGES (II+V+IX+XII);Valeur 1;Valeur 2;Valeur 3
+11432;Table 1;XV. TOTAL DES CHARGES (II+V+IX+XII);Valeur 1;Valeur 2;Valeur 3
+11433;Table 1;XV. TOTAL DES CHARGES (II+V+IX+XII);Valeur 1;Valeur 2;Valeur 3
+11434;Table 1;XV. TOTAL DES CHARGES (II+V+IX+XII);Valeur 1;Valeur 2;Valeur 3
+11436;Table 1;RESULTAT NET (total des produits- total des charges);Valeur 1;Valeur 2;Valeur 3
+11437;Table 1;RESULTAT NET (total des produits- total des charges);Valeur 1;Valeur 2;Valeur 3
+11438;Table 1;RESULTAT NET (total des produits- total des charges);Valeur 1;Valeur 2;Valeur 3
+11439;Table 1;RESULTAT NET (total des produits- total des charges);Valeur 1;Valeur 2;Valeur 3
+817;Table 1;* Bénéfice net;Valeur 1;Valeur 2;Valeur 3
+819;Table 1;* Bénéfice net;Valeur 1;Valeur 2;Valeur 3
+818;Table 1;* Perte nette;Valeur 1;Valeur 2;Valeur 3
+820;Table 1;* Perte nette;Valeur 1;Valeur 2;Valeur 3
+18009;Table 1;REINTEGRATIONS FISCALES;Valeur 1;Valeur 2;Valeur 3
+18010;Table 1;REINTEGRATIONS FISCALES;Valeur 1;Valeur 2;Valeur 3
+821;Table 1;(code = 821) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+822;Table 1;(code = 821) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+823;Table 1;(code = 821) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+824;Table 1;(code = 824) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+825;Table 1;(code = 824) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+826;Table 1;(code = 824) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+18012;Table 1;DEDUCTIONS FISCALES;Valeur 1;Valeur 2;Valeur 3
+18013;Table 1;DEDUCTIONS FISCALES;Valeur 1;Valeur 2;Valeur 3
+827;Table 1;(code = 827) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+828;Table 1;(code = 827) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+830;Table 1;(code = 827) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+829;Table 1;(code = 829) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+831;Table 1;(code = 829) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+7830;Table 1;(code = 829) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+833;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+834;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+837;Table 1;Bénéfice brut si T1> T2 (A);Valeur 1;Valeur 2;Valeur 3
+839;Table 1;Bénéfice brut si T1> T2 (A);Valeur 1;Valeur 2;Valeur 3
+838;Table 1;Déficit brut fiscal si T2> T1 (B);Valeur 1;Valeur 2;Valeur 3
+840;Table 1;Déficit brut fiscal si T2> T1 (B);Valeur 1;Valeur 2;Valeur 3
+845;Table 1;* Exercice n-4;Valeur 1;Valeur 2;Valeur 3
+849;Table 1;* Exercice n-4;Valeur 1;Valeur 2;Valeur 3
+846;Table 1;* Exercice n-3;Valeur 1;Valeur 2;Valeur 3
+850;Table 1;* Exercice n-3;Valeur 1;Valeur 2;Valeur 3
+847;Table 1;* Exercice n-2;Valeur 1;Valeur 2;Valeur 3
+851;Table 1;* Exercice n-2;Valeur 1;Valeur 2;Valeur 3
+848;Table 1;* Exercice n-1;Valeur 1;Valeur 2;Valeur 3
+852;Table 1;* Exercice n-1;Valeur 1;Valeur 2;Valeur 3
+6872;Table 1;. Bénéfice net fiscal ( A - C) (OU);Valeur 1;Valeur 2;Valeur 3
+6874;Table 1;. Bénéfice net fiscal ( A - C) (OU);Valeur 1;Valeur 2;Valeur 3
+6873;Table 1;. Déficit net fiscal (B);Valeur 1;Valeur 2;Valeur 3
+6875;Table 1;. Déficit net fiscal (B);Valeur 1;Valeur 2;Valeur 3
+854;Table 1;"VII. CUMUL DES AMORTISSEMENTS FISCALEMENT
+DIFFERES";Valeur 1;Valeur 2;Valeur 3
+855;Table 1;"VII. CUMUL DES AMORTISSEMENTS FISCALEMENT
+DIFFERES";Valeur 1;Valeur 2;Valeur 3
+860;Table 1;* Exercice n-4;Valeur 1;Valeur 2;Valeur 3
+864;Table 1;* Exercice n-4;Valeur 1;Valeur 2;Valeur 3
+861;Table 1;* Exercice n-3;Valeur 1;Valeur 2;Valeur 3
+865;Table 1;* Exercice n-3;Valeur 1;Valeur 2;Valeur 3
+862;Table 1;* Exercice n-2;Valeur 1;Valeur 2;Valeur 3
+866;Table 1;* Exercice n-2;Valeur 1;Valeur 2;Valeur 3
+863;Table 1;* Exercice n-1;Valeur 1;Valeur 2;Valeur 3
+867;Table 1;* Exercice n-1;Valeur 1;Valeur 2;Valeur 3
+10064;Table 1;IMMOBILISATI ON EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+10065;Table 1;IMMOBILISATI ON EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+10066;Table 1;IMMOBILISATI ON EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+10067;Table 1;IMMOBILISATI ON EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+10068;Table 1;IMMOBILISATI ON EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+10069;Table 1;IMMOBILISATI ON EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+10070;Table 1;IMMOBILISATI ON EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+10071;Table 1;IMMOBILISATI ON EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+966;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+980;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+994;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+1008;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+1022;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+1036;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+1050;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+1064;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+967;Table 1;"* Charges à répartir sur plusieurs
+exercices";Valeur 1;Valeur 2;Valeur 3
+981;Table 1;"* Charges à répartir sur plusieurs
+exercices";Valeur 1;Valeur 2;Valeur 3
+995;Table 1;"* Charges à répartir sur plusieurs
+exercices";Valeur 1;Valeur 2;Valeur 3
+1009;Table 1;"* Charges à répartir sur plusieurs
+exercices";Valeur 1;Valeur 2;Valeur 3
+1023;Table 1;"* Charges à répartir sur plusieurs
+exercices";Valeur 1;Valeur 2;Valeur 3
+1037;Table 1;"* Charges à répartir sur plusieurs
+exercices";Valeur 1;Valeur 2;Valeur 3
+1051;Table 1;"* Charges à répartir sur plusieurs
+exercices";Valeur 1;Valeur 2;Valeur 3
+1065;Table 1;"* Charges à répartir sur plusieurs
+exercices";Valeur 1;Valeur 2;Valeur 3
+968;Table 1;* Primes de remboursement obligations;Valeur 1;Valeur 2;Valeur 3
+982;Table 1;* Primes de remboursement obligations;Valeur 1;Valeur 2;Valeur 3
+996;Table 1;* Primes de remboursement obligations;Valeur 1;Valeur 2;Valeur 3
+1010;Table 1;* Primes de remboursement obligations;Valeur 1;Valeur 2;Valeur 3
+1024;Table 1;* Primes de remboursement obligations;Valeur 1;Valeur 2;Valeur 3
+1038;Table 1;* Primes de remboursement obligations;Valeur 1;Valeur 2;Valeur 3
+1052;Table 1;* Primes de remboursement obligations;Valeur 1;Valeur 2;Valeur 3
+1066;Table 1;* Primes de remboursement obligations;Valeur 1;Valeur 2;Valeur 3
+13505;Table 1;"(code = 13505)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+13506;Table 1;"(code = 13505)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+13507;Table 1;"(code = 13505)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+13508;Table 1;"(code = 13505)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+13509;Table 1;"(code = 13505)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+13510;Table 1;"(code = 13505)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+13511;Table 1;"(code = 13505)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+13512;Table 1;"(code = 13505)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+13513;Table 1;"(code = 13505)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+10073;Table 1;"IMMOBILISATIO NS INCORPORELLE
+S";Valeur 1;Valeur 2;Valeur 3
+10074;Table 1;"IMMOBILISATIO NS INCORPORELLE
+S";Valeur 1;Valeur 2;Valeur 3
+10075;Table 1;"IMMOBILISATIO NS INCORPORELLE
+S";Valeur 1;Valeur 2;Valeur 3
+10076;Table 1;"IMMOBILISATIO NS INCORPORELLE
+S";Valeur 1;Valeur 2;Valeur 3
+10077;Table 1;"IMMOBILISATIO NS INCORPORELLE
+S";Valeur 1;Valeur 2;Valeur 3
+10078;Table 1;"IMMOBILISATIO NS INCORPORELLE
+S";Valeur 1;Valeur 2;Valeur 3
+10079;Table 1;"IMMOBILISATIO NS INCORPORELLE
+S";Valeur 1;Valeur 2;Valeur 3
+10080;Table 1;"IMMOBILISATIO NS INCORPORELLE
+S";Valeur 1;Valeur 2;Valeur 3
+969;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+983;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+997;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+1011;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+1025;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+1039;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+1053;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+1067;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+970;Table 1;* Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+984;Table 1;* Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+998;Table 1;* Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+1012;Table 1;* Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+1026;Table 1;* Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+1040;Table 1;* Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+1054;Table 1;* Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+1068;Table 1;* Brevets, marques, droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+971;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+985;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+999;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+1013;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+1027;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+1041;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+1055;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+1069;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+972;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+986;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+1000;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+1014;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+1028;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+1042;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+1056;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+1070;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+10082;Table 1;IMMOBILISATIO NS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+10083;Table 1;IMMOBILISATIO NS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+10084;Table 1;IMMOBILISATIO NS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+10085;Table 1;IMMOBILISATIO NS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+10086;Table 1;IMMOBILISATIO NS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+10087;Table 1;IMMOBILISATIO NS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+10088;Table 1;IMMOBILISATIO NS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+10089;Table 1;IMMOBILISATIO NS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+973;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+987;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+1001;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+1015;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+1029;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+1043;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+1057;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+1071;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+974;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+988;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+1002;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+1016;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+1030;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+1044;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+1058;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+1072;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+975;Table 1;"* Installat. techniques, matériel et
+outillage";Valeur 1;Valeur 2;Valeur 3
+989;Table 1;"* Installat. techniques, matériel et
+outillage";Valeur 1;Valeur 2;Valeur 3
+1003;Table 1;"* Installat. techniques, matériel et
+outillage";Valeur 1;Valeur 2;Valeur 3
+1017;Table 1;"* Installat. techniques, matériel et
+outillage";Valeur 1;Valeur 2;Valeur 3
+1031;Table 1;"* Installat. techniques, matériel et
+outillage";Valeur 1;Valeur 2;Valeur 3
+1045;Table 1;"* Installat. techniques, matériel et
+outillage";Valeur 1;Valeur 2;Valeur 3
+1059;Table 1;"* Installat. techniques, matériel et
+outillage";Valeur 1;Valeur 2;Valeur 3
+1073;Table 1;"* Installat. techniques, matériel et
+outillage";Valeur 1;Valeur 2;Valeur 3
+976;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+990;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1004;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1018;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1032;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1046;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1060;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1074;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+978;Table 1;* Mobilier, matériel bureau et aménagements;Valeur 1;Valeur 2;Valeur 3
+992;Table 1;* Mobilier, matériel bureau et aménagements;Valeur 1;Valeur 2;Valeur 3
+1006;Table 1;* Mobilier, matériel bureau et aménagements;Valeur 1;Valeur 2;Valeur 3
+1020;Table 1;* Mobilier, matériel bureau et aménagements;Valeur 1;Valeur 2;Valeur 3
+1034;Table 1;* Mobilier, matériel bureau et aménagements;Valeur 1;Valeur 2;Valeur 3
+1048;Table 1;* Mobilier, matériel bureau et aménagements;Valeur 1;Valeur 2;Valeur 3
+1062;Table 1;* Mobilier, matériel bureau et aménagements;Valeur 1;Valeur 2;Valeur 3
+1076;Table 1;* Mobilier, matériel bureau et aménagements;Valeur 1;Valeur 2;Valeur 3
+979;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+993;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+1007;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+1021;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+1035;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+1049;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+1063;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+1077;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+977;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+991;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+1005;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+1019;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+1033;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+1047;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+1061;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+1075;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+12598;Table 1;* Matériel;Valeur 1;Valeur 2;Valeur 3
+12599;Table 1;* Matériel;Valeur 1;Valeur 2;Valeur 3
+12600;Table 1;* Matériel;Valeur 1;Valeur 2;Valeur 3
+14045;Table 1;TOTAL GENERA L;Valeur 1;Valeur 2;Valeur 3
+14046;Table 1;TOTAL GENERA L;Valeur 1;Valeur 2;Valeur 3
+14047;Table 1;TOTAL GENERA L;Valeur 1;Valeur 2;Valeur 3
+14048;Table 1;TOTAL GENERA L;Valeur 1;Valeur 2;Valeur 3
+14049;Table 1;TOTAL GENERA L;Valeur 1;Valeur 2;Valeur 3
+14050;Table 1;TOTAL GENERA L;Valeur 1;Valeur 2;Valeur 3
+14051;Table 1;TOTAL GENERA L;Valeur 1;Valeur 2;Valeur 3
+14052;Table 1;TOTAL GENERA L;Valeur 1;Valeur 2;Valeur 3
+1308;Table 1;1. Ventes de Marchandises ( en l'état);Valeur 1;Valeur 2;Valeur 3
+1333;Table 1;1. Ventes de Marchandises ( en l'état);Valeur 1;Valeur 2;Valeur 3
+1309;Table 1;2. (-) Achats revendus de marchandises;Valeur 1;Valeur 2;Valeur 3
+1334;Table 1;2. (-) Achats revendus de marchandises;Valeur 1;Valeur 2;Valeur 3
+1310;Table 1;I. (=) MARGE BRUTE SUR VENTES EN L'ETAT;Valeur 1;Valeur 2;Valeur 3
+1335;Table 1;I. (=) MARGE BRUTE SUR VENTES EN L'ETAT;Valeur 1;Valeur 2;Valeur 3
+1311;Table 1;II. (+) PRODUCTION DE L'EXERCICE (3+4+5);Valeur 1;Valeur 2;Valeur 3
+1336;Table 1;II. (+) PRODUCTION DE L'EXERCICE (3+4+5);Valeur 1;Valeur 2;Valeur 3
+1312;Table 1;3. Ventes de biens et services produits;Valeur 1;Valeur 2;Valeur 3
+1337;Table 1;3. Ventes de biens et services produits;Valeur 1;Valeur 2;Valeur 3
+1313;Table 1;4. Variation stocks produits;Valeur 1;Valeur 2;Valeur 3
+1338;Table 1;4. Variation stocks produits;Valeur 1;Valeur 2;Valeur 3
+1314;Table 1;5. Immobilisations produites par l'entreprise pour elle-même;Valeur 1;Valeur 2;Valeur 3
+1339;Table 1;5. Immobilisations produites par l'entreprise pour elle-même;Valeur 1;Valeur 2;Valeur 3
+1315;Table 1;III. (-) CONSOMMATION DE L'EXERCICE (6+7);Valeur 1;Valeur 2;Valeur 3
+1340;Table 1;III. (-) CONSOMMATION DE L'EXERCICE (6+7);Valeur 1;Valeur 2;Valeur 3
+1316;Table 1;6. Achats consommés de matières et fournitures;Valeur 1;Valeur 2;Valeur 3
+1341;Table 1;6. Achats consommés de matières et fournitures;Valeur 1;Valeur 2;Valeur 3
+1317;Table 1;7. Autres charges externes;Valeur 1;Valeur 2;Valeur 3
+1342;Table 1;7. Autres charges externes;Valeur 1;Valeur 2;Valeur 3
+1318;Table 1;IV. (=) VALEUR AJOUTEE (I+II+III);Valeur 1;Valeur 2;Valeur 3
+1343;Table 1;IV. (=) VALEUR AJOUTEE (I+II+III);Valeur 1;Valeur 2;Valeur 3
+1319;Table 1;8. (+) Subventions d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1344;Table 1;8. (+) Subventions d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1320;Table 1;9. (-) Impôts et taxes;Valeur 1;Valeur 2;Valeur 3
+1345;Table 1;9. (-) Impôts et taxes;Valeur 1;Valeur 2;Valeur 3
+1321;Table 1;10. (-) Charges de personnel;Valeur 1;Valeur 2;Valeur 3
+1346;Table 1;10. (-) Charges de personnel;Valeur 1;Valeur 2;Valeur 3
+4063;Table 1;"V. (=) EXCEDENT BRUT D'EXPLOITATION (EBE) OU INSUFFISANCE BRUTE
+D'EXPLOITATION (IBE)";Valeur 1;Valeur 2;Valeur 3
+4064;Table 1;"V. (=) EXCEDENT BRUT D'EXPLOITATION (EBE) OU INSUFFISANCE BRUTE
+D'EXPLOITATION (IBE)";Valeur 1;Valeur 2;Valeur 3
+4066;Table 1;11. (+) Autres produits d'exploitation;Valeur 1;Valeur 2;Valeur 3
+4067;Table 1;11. (+) Autres produits d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1324;Table 1;12. (-) Autres charges d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1349;Table 1;12. (-) Autres charges d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1325;Table 1;13. (+) Reprises d'exploitation, transferts de charges;Valeur 1;Valeur 2;Valeur 3
+1350;Table 1;13. (+) Reprises d'exploitation, transferts de charges;Valeur 1;Valeur 2;Valeur 3
+1326;Table 1;14. (-) Dotations d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1351;Table 1;14. (-) Dotations d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1327;Table 1;VI. (=) RESULTAT D'EXPLOITATION (+ou-);Valeur 1;Valeur 2;Valeur 3
+1352;Table 1;VI. (=) RESULTAT D'EXPLOITATION (+ou-);Valeur 1;Valeur 2;Valeur 3
+1328;Table 1;VII. (+/-) RESULTAT FINANCIER;Valeur 1;Valeur 2;Valeur 3
+1353;Table 1;VII. (+/-) RESULTAT FINANCIER;Valeur 1;Valeur 2;Valeur 3
+1329;Table 1;"VIII. (=) RESULTAT COURANT (+ou-
+)";Valeur 1;Valeur 2;Valeur 3
+1354;Table 1;"VIII. (=) RESULTAT COURANT (+ou-
+)";Valeur 1;Valeur 2;Valeur 3
+1330;Table 1;IX. (+/-) RESULTAT NON COURANT;Valeur 1;Valeur 2;Valeur 3
+1355;Table 1;IX. (+/-) RESULTAT NON COURANT;Valeur 1;Valeur 2;Valeur 3
+1331;Table 1;15. (-) IMPOTS SUR LES RESULTATS;Valeur 1;Valeur 2;Valeur 3
+1356;Table 1;15. (-) IMPOTS SUR LES RESULTATS;Valeur 1;Valeur 2;Valeur 3
+1332;Table 1;X. (=) RESULTAT NET DE L'EXERCICE;Valeur 1;Valeur 2;Valeur 3
+1357;Table 1;X. (=) RESULTAT NET DE L'EXERCICE;Valeur 1;Valeur 2;Valeur 3
+1372;Table 1;1. Résultat net de l'exercice;Valeur 1;Valeur 2;Valeur 3
+1386;Table 1;1. Résultat net de l'exercice;Valeur 1;Valeur 2;Valeur 3
+1373;Table 1;Bénéfice +;Valeur 1;Valeur 2;Valeur 3
+1387;Table 1;Bénéfice +;Valeur 1;Valeur 2;Valeur 3
+1374;Table 1;Perte -;Valeur 1;Valeur 2;Valeur 3
+1388;Table 1;Perte -;Valeur 1;Valeur 2;Valeur 3
+1375;Table 1;2. (+) Dotations d'exploitation (1);Valeur 1;Valeur 2;Valeur 3
+1389;Table 1;2. (+) Dotations d'exploitation (1);Valeur 1;Valeur 2;Valeur 3
+1376;Table 1;3. (+) Dotations financières (1);Valeur 1;Valeur 2;Valeur 3
+1390;Table 1;3. (+) Dotations financières (1);Valeur 1;Valeur 2;Valeur 3
+1377;Table 1;4. (+) Dotations non courantes (1);Valeur 1;Valeur 2;Valeur 3
+1391;Table 1;4. (+) Dotations non courantes (1);Valeur 1;Valeur 2;Valeur 3
+1378;Table 1;5. (-) Reprises d'exploitation (2);Valeur 1;Valeur 2;Valeur 3
+1392;Table 1;5. (-) Reprises d'exploitation (2);Valeur 1;Valeur 2;Valeur 3
+1379;Table 1;6. (-) Reprises financières (2);Valeur 1;Valeur 2;Valeur 3
+1393;Table 1;6. (-) Reprises financières (2);Valeur 1;Valeur 2;Valeur 3
+1380;Table 1;7. (-) Reprises non courantes (2)(3);Valeur 1;Valeur 2;Valeur 3
+1394;Table 1;7. (-) Reprises non courantes (2)(3);Valeur 1;Valeur 2;Valeur 3
+1381;Table 1;8. (-) Produits des cessions d'immobilisations (1);Valeur 1;Valeur 2;Valeur 3
+1395;Table 1;8. (-) Produits des cessions d'immobilisations (1);Valeur 1;Valeur 2;Valeur 3
+1382;Table 1;9. (+) Valeurs nettes d'amortiss. des immo. cédées;Valeur 1;Valeur 2;Valeur 3
+1396;Table 1;9. (+) Valeurs nettes d'amortiss. des immo. cédées;Valeur 1;Valeur 2;Valeur 3
+1383;Table 1;I. CAPACITE D'AUTOFINANCEMENT (C.A.F.);Valeur 1;Valeur 2;Valeur 3
+1397;Table 1;I. CAPACITE D'AUTOFINANCEMENT (C.A.F.);Valeur 1;Valeur 2;Valeur 3
+1384;Table 1;10. (-) Distributions de bénéfices;Valeur 1;Valeur 2;Valeur 3
+1398;Table 1;10. (-) Distributions de bénéfices;Valeur 1;Valeur 2;Valeur 3
+1385;Table 1;II. AUTOFINANCEMENT;Valeur 1;Valeur 2;Valeur 3
+1399;Table 1;II. AUTOFINANCEMENT;Valeur 1;Valeur 2;Valeur 3
+70;Table 1;Exercice clos le: (code = 70)(Type =Date);Valeur 1;Valeur 2;Valeur 3
+1521;Table 1;611 - Achats revendus de marchandises;Valeur 1;Valeur 2;Valeur 3
+1562;Table 1;611 - Achats revendus de marchandises;Valeur 1;Valeur 2;Valeur 3
+1522;Table 1;* Achats de marchandises;Valeur 1;Valeur 2;Valeur 3
+1563;Table 1;* Achats de marchandises;Valeur 1;Valeur 2;Valeur 3
+1523;Table 1;Variation des stocks de marchandises (±);Valeur 1;Valeur 2;Valeur 3
+1564;Table 1;Variation des stocks de marchandises (±);Valeur 1;Valeur 2;Valeur 3
+1524;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1565;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1525;Table 1;612 - Achats consommés de matières et fournitures;Valeur 1;Valeur 2;Valeur 3
+1566;Table 1;612 - Achats consommés de matières et fournitures;Valeur 1;Valeur 2;Valeur 3
+1526;Table 1;* Achat de matières premières;Valeur 1;Valeur 2;Valeur 3
+1567;Table 1;* Achat de matières premières;Valeur 1;Valeur 2;Valeur 3
+1527;Table 1;*Variation des stocks de matières premières (+-);Valeur 1;Valeur 2;Valeur 3
+1568;Table 1;*Variation des stocks de matières premières (+-);Valeur 1;Valeur 2;Valeur 3
+1528;Table 1;* Achats de matières et fournitures consommables et d'emballages;Valeur 1;Valeur 2;Valeur 3
+1569;Table 1;* Achats de matières et fournitures consommables et d'emballages;Valeur 1;Valeur 2;Valeur 3
+1529;Table 1;Variation des stocks de matières, fournitures et emballages (+/-);Valeur 1;Valeur 2;Valeur 3
+1570;Table 1;Variation des stocks de matières, fournitures et emballages (+/-);Valeur 1;Valeur 2;Valeur 3
+1530;Table 1;* Achats non stockés de matières et de fournitures;Valeur 1;Valeur 2;Valeur 3
+1571;Table 1;* Achats non stockés de matières et de fournitures;Valeur 1;Valeur 2;Valeur 3
+1531;Table 1;* Achats de travaux, études et prestations de services;Valeur 1;Valeur 2;Valeur 3
+1572;Table 1;* Achats de travaux, études et prestations de services;Valeur 1;Valeur 2;Valeur 3
+1532;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1573;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1533;Table 1;613/614 - *Autres charges externes;Valeur 1;Valeur 2;Valeur 3
+1574;Table 1;613/614 - *Autres charges externes;Valeur 1;Valeur 2;Valeur 3
+1534;Table 1;* Locations et charges locatives;Valeur 1;Valeur 2;Valeur 3
+1575;Table 1;* Locations et charges locatives;Valeur 1;Valeur 2;Valeur 3
+1535;Table 1;* Redevances de crédit-bail;Valeur 1;Valeur 2;Valeur 3
+1576;Table 1;* Redevances de crédit-bail;Valeur 1;Valeur 2;Valeur 3
+1536;Table 1;* Entretien et réparations;Valeur 1;Valeur 2;Valeur 3
+1577;Table 1;* Entretien et réparations;Valeur 1;Valeur 2;Valeur 3
+1537;Table 1;* Primes d'assurances;Valeur 1;Valeur 2;Valeur 3
+1578;Table 1;* Primes d'assurances;Valeur 1;Valeur 2;Valeur 3
+1538;Table 1;* Rémunérations du personnel extérieur à l'entreprise;Valeur 1;Valeur 2;Valeur 3
+1579;Table 1;* Rémunérations du personnel extérieur à l'entreprise;Valeur 1;Valeur 2;Valeur 3
+1539;Table 1;* Rémunérations d'intermédiaires et honoraires;Valeur 1;Valeur 2;Valeur 3
+10091;Table 1;* Rémunérations d'intermédiaires et honoraires;Valeur 1;Valeur 2;Valeur 3
+1540;Table 1;* Redevances pour brevets, marques, droits.......;Valeur 1;Valeur 2;Valeur 3
+10420;Table 1;* Redevances pour brevets, marques, droits.......;Valeur 1;Valeur 2;Valeur 3
+1541;Table 1;*Transports;Valeur 1;Valeur 2;Valeur 3
+1582;Table 1;*Transports;Valeur 1;Valeur 2;Valeur 3
+1542;Table 1;* Déplacements, missions et réceptions;Valeur 1;Valeur 2;Valeur 3
+1583;Table 1;* Déplacements, missions et réceptions;Valeur 1;Valeur 2;Valeur 3
+1543;Table 1;* Reste du poste des autres charges externes;Valeur 1;Valeur 2;Valeur 3
+1584;Table 1;* Reste du poste des autres charges externes;Valeur 1;Valeur 2;Valeur 3
+1544;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1585;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1545;Table 1;617 - * Charges de personnel;Valeur 1;Valeur 2;Valeur 3
+1586;Table 1;617 - * Charges de personnel;Valeur 1;Valeur 2;Valeur 3
+1546;Table 1;* Rémunération du personnel;Valeur 1;Valeur 2;Valeur 3
+1587;Table 1;* Rémunération du personnel;Valeur 1;Valeur 2;Valeur 3
+1547;Table 1;* Charges sociales;Valeur 1;Valeur 2;Valeur 3
+1588;Table 1;* Charges sociales;Valeur 1;Valeur 2;Valeur 3
+1548;Table 1;* Reste du poste des charges de personnel;Valeur 1;Valeur 2;Valeur 3
+1589;Table 1;* Reste du poste des charges de personnel;Valeur 1;Valeur 2;Valeur 3
+1549;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1590;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1550;Table 1;618 - Autres charges d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1591;Table 1;618 - Autres charges d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1551;Table 1;* Jetons de présence;Valeur 1;Valeur 2;Valeur 3
+1592;Table 1;* Jetons de présence;Valeur 1;Valeur 2;Valeur 3
+1552;Table 1;* Pertes sur créances irrécouvrables;Valeur 1;Valeur 2;Valeur 3
+1593;Table 1;* Pertes sur créances irrécouvrables;Valeur 1;Valeur 2;Valeur 3
+1553;Table 1;* Reste du poste des autres charges d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1594;Table 1;* Reste du poste des autres charges d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1733;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1734;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1764;Table 1;638 *Autres charges financières;Valeur 1;Valeur 2;Valeur 3
+1814;Table 1;638 *Autres charges financières;Valeur 1;Valeur 2;Valeur 3
+1765;Table 1;* Charges nettes sur cessions de;Valeur 1;Valeur 2;Valeur 3
+1815;Table 1;* Charges nettes sur cessions de;Valeur 1;Valeur 2;Valeur 3
+1766;Table 1;* Reste du poste des autres charges financières;Valeur 1;Valeur 2;Valeur 3
+1816;Table 1;* Reste du poste des autres charges financières;Valeur 1;Valeur 2;Valeur 3
+1767;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+1817;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+1792;Table 1;658 - Autres charges non courantes;Valeur 1;Valeur 2;Valeur 3
+1807;Table 1;658 - Autres charges non courantes;Valeur 1;Valeur 2;Valeur 3
+1793;Table 1;* Pénalités sur marchés et dédits;Valeur 1;Valeur 2;Valeur 3
+1808;Table 1;* Pénalités sur marchés et dédits;Valeur 1;Valeur 2;Valeur 3
+1794;Table 1;* Rappels d'impôts (autres qu'impôts sur les résultats);Valeur 1;Valeur 2;Valeur 3
+1809;Table 1;* Rappels d'impôts (autres qu'impôts sur les résultats);Valeur 1;Valeur 2;Valeur 3
+1795;Table 1;* Pénalités et amendes fiscales et pénales;Valeur 1;Valeur 2;Valeur 3
+1810;Table 1;* Pénalités et amendes fiscales et pénales;Valeur 1;Valeur 2;Valeur 3
+1796;Table 1;* Créances devenues irrécouvrables;Valeur 1;Valeur 2;Valeur 3
+1811;Table 1;* Créances devenues irrécouvrables;Valeur 1;Valeur 2;Valeur 3
+1797;Table 1;* Reste du poste des autres charges non courantes;Valeur 1;Valeur 2;Valeur 3
+1812;Table 1;* Reste du poste des autres charges non courantes;Valeur 1;Valeur 2;Valeur 3
+1798;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1813;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1963;Table 1;711 * Ventes de marchandises;Valeur 1;Valeur 2;Valeur 3
+1989;Table 1;711 * Ventes de marchandises;Valeur 1;Valeur 2;Valeur 3
+1964;Table 1;* Ventes de marchandises au Maroc;Valeur 1;Valeur 2;Valeur 3
+1990;Table 1;* Ventes de marchandises au Maroc;Valeur 1;Valeur 2;Valeur 3
+1965;Table 1;* Ventes de marchandises à l'étranger;Valeur 1;Valeur 2;Valeur 3
+1991;Table 1;* Ventes de marchandises à l'étranger;Valeur 1;Valeur 2;Valeur 3
+1966;Table 1;* Reste du poste des ventes de marchandises;Valeur 1;Valeur 2;Valeur 3
+1992;Table 1;* Reste du poste des ventes de marchandises;Valeur 1;Valeur 2;Valeur 3
+1967;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1993;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1968;Table 1;712 * Ventes de biens et services produits;Valeur 1;Valeur 2;Valeur 3
+1994;Table 1;712 * Ventes de biens et services produits;Valeur 1;Valeur 2;Valeur 3
+1969;Table 1;*Ventes de biens au Maroc;Valeur 1;Valeur 2;Valeur 3
+1995;Table 1;*Ventes de biens au Maroc;Valeur 1;Valeur 2;Valeur 3
+1970;Table 1;*Ventes de biens à l'étranger;Valeur 1;Valeur 2;Valeur 3
+1996;Table 1;*Ventes de biens à l'étranger;Valeur 1;Valeur 2;Valeur 3
+1971;Table 1;*Ventes de services au Maroc;Valeur 1;Valeur 2;Valeur 3
+1997;Table 1;*Ventes de services au Maroc;Valeur 1;Valeur 2;Valeur 3
+1972;Table 1;*Ventes de services à l'étranger;Valeur 1;Valeur 2;Valeur 3
+1998;Table 1;*Ventes de services à l'étranger;Valeur 1;Valeur 2;Valeur 3
+1973;Table 1;* Redevances pour brevets, marques, droits..;Valeur 1;Valeur 2;Valeur 3
+1999;Table 1;* Redevances pour brevets, marques, droits..;Valeur 1;Valeur 2;Valeur 3
+1974;Table 1;* Reste du poste des ventes et services produits;Valeur 1;Valeur 2;Valeur 3
+2000;Table 1;* Reste du poste des ventes et services produits;Valeur 1;Valeur 2;Valeur 3
+1975;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+2001;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1976;Table 1;713 *Variation des stocks de produits;Valeur 1;Valeur 2;Valeur 3
+2002;Table 1;713 *Variation des stocks de produits;Valeur 1;Valeur 2;Valeur 3
+1977;Table 1;* Variation des stocks des biens produits (+/-);Valeur 1;Valeur 2;Valeur 3
+2003;Table 1;* Variation des stocks des biens produits (+/-);Valeur 1;Valeur 2;Valeur 3
+1978;Table 1;*Variation des stocks des services produits (+/-);Valeur 1;Valeur 2;Valeur 3
+2004;Table 1;*Variation des stocks des services produits (+/-);Valeur 1;Valeur 2;Valeur 3
+1979;Table 1;*Variation des stocks des produits en cours (+/-);Valeur 1;Valeur 2;Valeur 3
+2005;Table 1;*Variation des stocks des produits en cours (+/-);Valeur 1;Valeur 2;Valeur 3
+1980;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+2006;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1981;Table 1;718 * Autres produits d'exploitation;Valeur 1;Valeur 2;Valeur 3
+2007;Table 1;718 * Autres produits d'exploitation;Valeur 1;Valeur 2;Valeur 3
+1982;Table 1;* Jetons de présence reçus;Valeur 1;Valeur 2;Valeur 3
+2008;Table 1;* Jetons de présence reçus;Valeur 1;Valeur 2;Valeur 3
+1983;Table 1;* Reste du poste (produits divers);Valeur 1;Valeur 2;Valeur 3
+2009;Table 1;* Reste du poste (produits divers);Valeur 1;Valeur 2;Valeur 3
+1984;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+2010;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+1985;Table 1;719 Reprises d'exploitation, transferts de charges;Valeur 1;Valeur 2;Valeur 3
+2011;Table 1;719 Reprises d'exploitation, transferts de charges;Valeur 1;Valeur 2;Valeur 3
+1986;Table 1;* Reprises;Valeur 1;Valeur 2;Valeur 3
+2012;Table 1;* Reprises;Valeur 1;Valeur 2;Valeur 3
+1987;Table 1;*Transferts de charges;Valeur 1;Valeur 2;Valeur 3
+2013;Table 1;*Transferts de charges;Valeur 1;Valeur 2;Valeur 3
+1988;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+2014;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+2022;Table 1;738 * Intérêts et autres produits financiers;Valeur 1;Valeur 2;Valeur 3
+2029;Table 1;738 * Intérêts et autres produits financiers;Valeur 1;Valeur 2;Valeur 3
+2024;Table 1;* Intérêts et produits assimilés;Valeur 1;Valeur 2;Valeur 3
+2031;Table 1;* Intérêts et produits assimilés;Valeur 1;Valeur 2;Valeur 3
+2025;Table 1;* Revenus des créances rattachées à des participations;Valeur 1;Valeur 2;Valeur 3
+2032;Table 1;* Revenus des créances rattachées à des participations;Valeur 1;Valeur 2;Valeur 3
+2026;Table 1;* Produits nets sur cessions de titres et valeurs de placement;Valeur 1;Valeur 2;Valeur 3
+2033;Table 1;* Produits nets sur cessions de titres et valeurs de placement;Valeur 1;Valeur 2;Valeur 3
+2027;Table 1;* Reste du poste intérêts et autres produits financiers;Valeur 1;Valeur 2;Valeur 3
+2034;Table 1;* Reste du poste intérêts et autres produits financiers;Valeur 1;Valeur 2;Valeur 3
+2028;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+2035;Table 1;Total;Valeur 1;Valeur 2;Valeur 3
+53;Table 1;Exercice clos le: (code = 53)(Type =Date);Valeur 1;Valeur 2;Valeur 3
+1098;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1099;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1100;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1101;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1102;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1103;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1104;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1105;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1106;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1107;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1108;Table 1;"(code = 1098)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1231;Table 1;IMMOBILISATION EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+1232;Table 1;IMMOBILISATION EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+1233;Table 1;IMMOBILISATION EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+1234;Table 1;IMMOBILISATION EN NON- VALEURS;Valeur 1;Valeur 2;Valeur 3
+1236;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+1237;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+1238;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+1239;Table 1;* Frais préliminaires;Valeur 1;Valeur 2;Valeur 3
+1241;Table 1;* Charges à répartir sur plusieurs exercices;Valeur 1;Valeur 2;Valeur 3
+1242;Table 1;* Charges à répartir sur plusieurs exercices;Valeur 1;Valeur 2;Valeur 3
+1243;Table 1;* Charges à répartir sur plusieurs exercices;Valeur 1;Valeur 2;Valeur 3
+1244;Table 1;* Charges à répartir sur plusieurs exercices;Valeur 1;Valeur 2;Valeur 3
+1246;Table 1;* Primes de remboursement des obligations;Valeur 1;Valeur 2;Valeur 3
+1247;Table 1;* Primes de remboursement des obligations;Valeur 1;Valeur 2;Valeur 3
+1248;Table 1;* Primes de remboursement des obligations;Valeur 1;Valeur 2;Valeur 3
+1249;Table 1;* Primes de remboursement des obligations;Valeur 1;Valeur 2;Valeur 3
+12121;Table 1;"(code = 12121)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+12122;Table 1;"(code = 12121)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+12123;Table 1;"(code = 12121)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+12124;Table 1;"(code = 12121)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+12125;Table 1;"(code = 12121)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1624;Table 1;IMMOBILISATIONS INCORPORELLES;Valeur 1;Valeur 2;Valeur 3
+1629;Table 1;IMMOBILISATIONS INCORPORELLES;Valeur 1;Valeur 2;Valeur 3
+1650;Table 1;IMMOBILISATIONS INCORPORELLES;Valeur 1;Valeur 2;Valeur 3
+1679;Table 1;IMMOBILISATIONS INCORPORELLES;Valeur 1;Valeur 2;Valeur 3
+1625;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+1630;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+1651;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+1680;Table 1;* Immobilisation en recherche et développement;Valeur 1;Valeur 2;Valeur 3
+1626;Table 1;* Brevets, marques droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+1631;Table 1;* Brevets, marques droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+1652;Table 1;* Brevets, marques droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+1681;Table 1;* Brevets, marques droits et valeurs similaires;Valeur 1;Valeur 2;Valeur 3
+1627;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+1632;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+1653;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+1682;Table 1;* Fonds commercial;Valeur 1;Valeur 2;Valeur 3
+1628;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+1633;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+1654;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+1683;Table 1;* Autres immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+1700;Table 1;IMMOBILISATIONS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+1708;Table 1;IMMOBILISATIONS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+1716;Table 1;IMMOBILISATIONS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+1724;Table 1;IMMOBILISATIONS CORPORELLES;Valeur 1;Valeur 2;Valeur 3
+1701;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+1709;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+1717;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+1725;Table 1;* Terrains;Valeur 1;Valeur 2;Valeur 3
+1702;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+1710;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+1718;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+1726;Table 1;* Constructions;Valeur 1;Valeur 2;Valeur 3
+1703;Table 1;"* Installations techniques; matériel et outillage";Valeur 1;Valeur 2;Valeur 3
+1711;Table 1;"* Installations techniques; matériel et outillage";Valeur 1;Valeur 2;Valeur 3
+1719;Table 1;"* Installations techniques; matériel et outillage";Valeur 1;Valeur 2;Valeur 3
+1727;Table 1;"* Installations techniques; matériel et outillage";Valeur 1;Valeur 2;Valeur 3
+1704;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1712;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1720;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1728;Table 1;* Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1705;Table 1;* Mobilier, matériel de bureau et aménagements divers;Valeur 1;Valeur 2;Valeur 3
+1713;Table 1;* Mobilier, matériel de bureau et aménagements divers;Valeur 1;Valeur 2;Valeur 3
+1721;Table 1;* Mobilier, matériel de bureau et aménagements divers;Valeur 1;Valeur 2;Valeur 3
+1729;Table 1;* Mobilier, matériel de bureau et aménagements divers;Valeur 1;Valeur 2;Valeur 3
+1706;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+1714;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+1722;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+1730;Table 1;* Autres immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+1707;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+1715;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+1723;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+1731;Table 1;* Immobilisations corporelles en cours;Valeur 1;Valeur 2;Valeur 3
+14062;Table 1;TOTAL GENERAL;Valeur 1;Valeur 2;Valeur 3
+14063;Table 1;TOTAL GENERAL;Valeur 1;Valeur 2;Valeur 3
+14064;Table 1;TOTAL GENERAL;Valeur 1;Valeur 2;Valeur 3
+71;Table 1;Exercice clos le: (code = 71)(Type =Date);Valeur 1;Valeur 2;Valeur 3
+1748;Table 1;1. Provisions pour dépréciation de l'actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+1749;Table 1;1. Provisions pour dépréciation de l'actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+1750;Table 1;1. Provisions pour dépréciation de l'actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+1751;Table 1;1. Provisions pour dépréciation de l'actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+1752;Table 1;1. Provisions pour dépréciation de l'actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+1753;Table 1;1. Provisions pour dépréciation de l'actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+1754;Table 1;1. Provisions pour dépréciation de l'actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+1755;Table 1;1. Provisions pour dépréciation de l'actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+1784;Table 1;2. Provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+1785;Table 1;2. Provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+1786;Table 1;2. Provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+1787;Table 1;2. Provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+1788;Table 1;2. Provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+1789;Table 1;2. Provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+1790;Table 1;2. Provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+1791;Table 1;2. Provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+1827;Table 1;3. Provisions durables pour risques et charges;Valeur 1;Valeur 2;Valeur 3
+1828;Table 1;3. Provisions durables pour risques et charges;Valeur 1;Valeur 2;Valeur 3
+1829;Table 1;3. Provisions durables pour risques et charges;Valeur 1;Valeur 2;Valeur 3
+1830;Table 1;3. Provisions durables pour risques et charges;Valeur 1;Valeur 2;Valeur 3
+1831;Table 1;3. Provisions durables pour risques et charges;Valeur 1;Valeur 2;Valeur 3
+1832;Table 1;3. Provisions durables pour risques et charges;Valeur 1;Valeur 2;Valeur 3
+1833;Table 1;3. Provisions durables pour risques et charges;Valeur 1;Valeur 2;Valeur 3
+1834;Table 1;3. Provisions durables pour risques et charges;Valeur 1;Valeur 2;Valeur 3
+1844;Table 1;SOUS TOTAL (A);Valeur 1;Valeur 2;Valeur 3
+1845;Table 1;SOUS TOTAL (A);Valeur 1;Valeur 2;Valeur 3
+1846;Table 1;SOUS TOTAL (A);Valeur 1;Valeur 2;Valeur 3
+1847;Table 1;SOUS TOTAL (A);Valeur 1;Valeur 2;Valeur 3
+1848;Table 1;SOUS TOTAL (A);Valeur 1;Valeur 2;Valeur 3
+1849;Table 1;SOUS TOTAL (A);Valeur 1;Valeur 2;Valeur 3
+1850;Table 1;SOUS TOTAL (A);Valeur 1;Valeur 2;Valeur 3
+1851;Table 1;SOUS TOTAL (A);Valeur 1;Valeur 2;Valeur 3
+1877;Table 1;4. Provisions pour dépréciation de l'actif circulant (hors trésorerie);Valeur 1;Valeur 2;Valeur 3
+1878;Table 1;4. Provisions pour dépréciation de l'actif circulant (hors trésorerie);Valeur 1;Valeur 2;Valeur 3
+1879;Table 1;4. Provisions pour dépréciation de l'actif circulant (hors trésorerie);Valeur 1;Valeur 2;Valeur 3
+1880;Table 1;4. Provisions pour dépréciation de l'actif circulant (hors trésorerie);Valeur 1;Valeur 2;Valeur 3
+1881;Table 1;4. Provisions pour dépréciation de l'actif circulant (hors trésorerie);Valeur 1;Valeur 2;Valeur 3
+1882;Table 1;4. Provisions pour dépréciation de l'actif circulant (hors trésorerie);Valeur 1;Valeur 2;Valeur 3
+1883;Table 1;4. Provisions pour dépréciation de l'actif circulant (hors trésorerie);Valeur 1;Valeur 2;Valeur 3
+1884;Table 1;4. Provisions pour dépréciation de l'actif circulant (hors trésorerie);Valeur 1;Valeur 2;Valeur 3
+1894;Table 1;5. Autres Provisions pour risques et charge;Valeur 1;Valeur 2;Valeur 3
+1895;Table 1;5. Autres Provisions pour risques et charge;Valeur 1;Valeur 2;Valeur 3
+1896;Table 1;5. Autres Provisions pour risques et charge;Valeur 1;Valeur 2;Valeur 3
+1897;Table 1;5. Autres Provisions pour risques et charge;Valeur 1;Valeur 2;Valeur 3
+1898;Table 1;5. Autres Provisions pour risques et charge;Valeur 1;Valeur 2;Valeur 3
+1899;Table 1;5. Autres Provisions pour risques et charge;Valeur 1;Valeur 2;Valeur 3
+1900;Table 1;5. Autres Provisions pour risques et charge;Valeur 1;Valeur 2;Valeur 3
+1901;Table 1;5. Autres Provisions pour risques et charge;Valeur 1;Valeur 2;Valeur 3
+1903;Table 1;6. Provisions pour dépréciation des comptes de trésorerie;Valeur 1;Valeur 2;Valeur 3
+1904;Table 1;6. Provisions pour dépréciation des comptes de trésorerie;Valeur 1;Valeur 2;Valeur 3
+1905;Table 1;6. Provisions pour dépréciation des comptes de trésorerie;Valeur 1;Valeur 2;Valeur 3
+1906;Table 1;6. Provisions pour dépréciation des comptes de trésorerie;Valeur 1;Valeur 2;Valeur 3
+1907;Table 1;6. Provisions pour dépréciation des comptes de trésorerie;Valeur 1;Valeur 2;Valeur 3
+1908;Table 1;6. Provisions pour dépréciation des comptes de trésorerie;Valeur 1;Valeur 2;Valeur 3
+1909;Table 1;6. Provisions pour dépréciation des comptes de trésorerie;Valeur 1;Valeur 2;Valeur 3
+1910;Table 1;6. Provisions pour dépréciation des comptes de trésorerie;Valeur 1;Valeur 2;Valeur 3
+1912;Table 1;SOUS TOTAL (B);Valeur 1;Valeur 2;Valeur 3
+1913;Table 1;SOUS TOTAL (B);Valeur 1;Valeur 2;Valeur 3
+1914;Table 1;SOUS TOTAL (B);Valeur 1;Valeur 2;Valeur 3
+1915;Table 1;SOUS TOTAL (B);Valeur 1;Valeur 2;Valeur 3
+1916;Table 1;SOUS TOTAL (B);Valeur 1;Valeur 2;Valeur 3
+1917;Table 1;SOUS TOTAL (B);Valeur 1;Valeur 2;Valeur 3
+1918;Table 1;SOUS TOTAL (B);Valeur 1;Valeur 2;Valeur 3
+1919;Table 1;SOUS TOTAL (B);Valeur 1;Valeur 2;Valeur 3
+1921;Table 1;TOTAL (A+B);Valeur 1;Valeur 2;Valeur 3
+1922;Table 1;TOTAL (A+B);Valeur 1;Valeur 2;Valeur 3
+1923;Table 1;TOTAL (A+B);Valeur 1;Valeur 2;Valeur 3
+1924;Table 1;TOTAL (A+B);Valeur 1;Valeur 2;Valeur 3
+1925;Table 1;TOTAL (A+B);Valeur 1;Valeur 2;Valeur 3
+1926;Table 1;TOTAL (A+B);Valeur 1;Valeur 2;Valeur 3
+1927;Table 1;TOTAL (A+B);Valeur 1;Valeur 2;Valeur 3
+1928;Table 1;TOTAL (A+B);Valeur 1;Valeur 2;Valeur 3
+72;Table 1;Exercice clos le: (code = 72)(Type =Date);Valeur 1;Valeur 2;Valeur 3
+1929;Table 1;(code = 1929) (Type =Date);Valeur 1;Valeur 2;Valeur 3
+1930;Table 1;(code = 1929) (Type =Date);Valeur 1;Valeur 2;Valeur 3
+1931;Table 1;(code = 1929) (Type =Date);Valeur 1;Valeur 2;Valeur 3
+1932;Table 1;(code = 1929) (Type =Date);Valeur 1;Valeur 2;Valeur 3
+1933;Table 1;(code = 1929) (Type =Date);Valeur 1;Valeur 2;Valeur 3
+1934;Table 1;(code = 1929) (Type =Date);Valeur 1;Valeur 2;Valeur 3
+1935;Table 1;(code = 1929) (Type =Date);Valeur 1;Valeur 2;Valeur 3
+1936;Table 1;(code = 1929) (Type =Date);Valeur 1;Valeur 2;Valeur 3
+2037;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2038;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2039;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2040;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2041;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2042;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2043;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2044;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+14065;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2045;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2046;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2047;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2048;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2049;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2050;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2051;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2052;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2053;Table 1;"(code = 2044)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+14066;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2055;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2056;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2057;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2058;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2059;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2060;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2061;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2062;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2063;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+2065;Table 1;A. T.V.A. Facturée;Valeur 1;Valeur 2;Valeur 3
+2066;Table 1;A. T.V.A. Facturée;Valeur 1;Valeur 2;Valeur 3
+2067;Table 1;A. T.V.A. Facturée;Valeur 1;Valeur 2;Valeur 3
+2068;Table 1;A. T.V.A. Facturée;Valeur 1;Valeur 2;Valeur 3
+2070;Table 1;B. T.V.A. Récupérable;Valeur 1;Valeur 2;Valeur 3
+2071;Table 1;B. T.V.A. Récupérable;Valeur 1;Valeur 2;Valeur 3
+2072;Table 1;B. T.V.A. Récupérable;Valeur 1;Valeur 2;Valeur 3
+2073;Table 1;B. T.V.A. Récupérable;Valeur 1;Valeur 2;Valeur 3
+2075;Table 1;* sur charges;Valeur 1;Valeur 2;Valeur 3
+2076;Table 1;* sur charges;Valeur 1;Valeur 2;Valeur 3
+2077;Table 1;* sur charges;Valeur 1;Valeur 2;Valeur 3
+2078;Table 1;* sur charges;Valeur 1;Valeur 2;Valeur 3
+2080;Table 1;* sur immobilisations;Valeur 1;Valeur 2;Valeur 3
+2081;Table 1;* sur immobilisations;Valeur 1;Valeur 2;Valeur 3
+2082;Table 1;* sur immobilisations;Valeur 1;Valeur 2;Valeur 3
+2083;Table 1;* sur immobilisations;Valeur 1;Valeur 2;Valeur 3
+2085;Table 1;C. T.V.A. due ou crédit de T.V.A = (A - B );Valeur 1;Valeur 2;Valeur 3
+2086;Table 1;C. T.V.A. due ou crédit de T.V.A = (A - B );Valeur 1;Valeur 2;Valeur 3
+2087;Table 1;C. T.V.A. due ou crédit de T.V.A = (A - B );Valeur 1;Valeur 2;Valeur 3
+2088;Table 1;C. T.V.A. due ou crédit de T.V.A = (A - B );Valeur 1;Valeur 2;Valeur 3
+18;Table 1;Montant du capital: (code = 18)(Type =Double);Valeur 1;Valeur 2;Valeur 3
+2094;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+17887;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+13536;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+13537;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+14560;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2095;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2096;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2097;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2098;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2099;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2100;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+2101;Table 1;"(code = 2094)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+471;Table 1;Report à nouveau;Valeur 1;Valeur 2;Valeur 3
+473;Table 1;Résultats nets en instance d'affectation;Valeur 1;Valeur 2;Valeur 3
+475;Table 1;Résultat net de l'exercice;Valeur 1;Valeur 2;Valeur 3
+477;Table 1;Prélèvements sur les réserves;Valeur 1;Valeur 2;Valeur 3
+479;Table 1;Autres prélèvements;Valeur 1;Valeur 2;Valeur 3
+481;Table 1;TOTAL A;Valeur 1;Valeur 2;Valeur 3
+483;Table 1;Réserve légale;Valeur 1;Valeur 2;Valeur 3
+485;Table 1;Autres réserves;Valeur 1;Valeur 2;Valeur 3
+487;Table 1;Tantièmes;Valeur 1;Valeur 2;Valeur 3
+489;Table 1;Dividendes;Valeur 1;Valeur 2;Valeur 3
+491;Table 1;Autres affectations;Valeur 1;Valeur 2;Valeur 3
+493;Table 1;Report à nouveau;Valeur 1;Valeur 2;Valeur 3
+495;Table 1;TOTAL B;Valeur 1;Valeur 2;Valeur 3
+22;Table 1;Montant global:                                              (code = 22)(Type =Double);Valeur 1;Valeur 2;Valeur 3
+50;Table 1;Exercice clos le:                                             (code = 50)(Type =Date);Valeur 1;Valeur 2;Valeur 3
+51;Table 1;Amortissements de l'exercice allant du: (code = 51)(Type =Date);Valeur 1;Valeur 2;Valeur 3
+52;Table 1;au:                                                                      (code = 52)(Type =Date);Valeur 1;Valeur 2;Valeur 3
+10061;Table 1;"(code = 10061)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1078;Table 1;"(code = 10061)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1079;Table 1;"(code = 10061)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1080;Table 1;"(code = 10061)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1081;Table 1;"(code = 10061)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1082;Table 1;"(code = 10061)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1083;Table 1;"(code = 10061)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1084;Table 1;"(code = 10061)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1085;Table 1;"(code = 10061)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1086;Table 1;"(code = 10061)
+(Type
+=Texte)";Valeur 1;Valeur 2;Valeur 3
+1087;Table 1;Totaux;Valeur 1;Valeur 2;Valeur 3
+1088;Table 1;Totaux;Valeur 1;Valeur 2;Valeur 3
+1089;Table 1;Totaux;Valeur 1;Valeur 2;Valeur 3
+1090;Table 1;Totaux;Valeur 1;Valeur 2;Valeur 3
+1091;Table 1;Totaux;Valeur 1;Valeur 2;Valeur 3
+1092;Table 1;Totaux;Valeur 1;Valeur 2;Valeur 3
+1093;Table 1;Totaux;Valeur 1;Valeur 2;Valeur 3
+1094;Table 1;Totaux;Valeur 1;Valeur 2;Valeur 3
+1095;Table 1;Totaux;Valeur 1;Valeur 2;Valeur 3
+54;Table 1;Exercice clos le: (code = 54)(Type =Date);Valeur 1;Valeur 2;Valeur 3
+1110;Table 1;1- Terrains (1);Valeur 1;Valeur 2;Valeur 3
+1111;Table 1;1- Terrains (1);Valeur 1;Valeur 2;Valeur 3
+1112;Table 1;1- Terrains (1);Valeur 1;Valeur 2;Valeur 3
+1113;Table 1;1- Terrains (1);Valeur 1;Valeur 2;Valeur 3
+1114;Table 1;1- Terrains (1);Valeur 1;Valeur 2;Valeur 3
+1115;Table 1;1- Terrains (1);Valeur 1;Valeur 2;Valeur 3
+1116;Table 1;1- Terrains (1);Valeur 1;Valeur 2;Valeur 3
+1117;Table 1;1- Terrains (1);Valeur 1;Valeur 2;Valeur 3
+1119;Table 1;2- Constructions;Valeur 1;Valeur 2;Valeur 3
+1120;Table 1;2- Constructions;Valeur 1;Valeur 2;Valeur 3
+1121;Table 1;2- Constructions;Valeur 1;Valeur 2;Valeur 3
+1122;Table 1;2- Constructions;Valeur 1;Valeur 2;Valeur 3
+1123;Table 1;2- Constructions;Valeur 1;Valeur 2;Valeur 3
+1124;Table 1;2- Constructions;Valeur 1;Valeur 2;Valeur 3
+1125;Table 1;2- Constructions;Valeur 1;Valeur 2;Valeur 3
+1126;Table 1;2- Constructions;Valeur 1;Valeur 2;Valeur 3
+1128;Table 1;3- Matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+1129;Table 1;3- Matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+1130;Table 1;3- Matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+1131;Table 1;3- Matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+1132;Table 1;3- Matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+1133;Table 1;3- Matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+1134;Table 1;3- Matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+1135;Table 1;3- Matériel et outillage;Valeur 1;Valeur 2;Valeur 3
+1137;Table 1;4- Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1138;Table 1;4- Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1139;Table 1;4- Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1140;Table 1;4- Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1141;Table 1;4- Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1142;Table 1;4- Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1143;Table 1;4- Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1144;Table 1;4- Matériel de transport;Valeur 1;Valeur 2;Valeur 3
+1146;Table 1;5- Agencements - installations;Valeur 1;Valeur 2;Valeur 3
+1147;Table 1;5- Agencements - installations;Valeur 1;Valeur 2;Valeur 3
+1148;Table 1;5- Agencements - installations;Valeur 1;Valeur 2;Valeur 3
+1149;Table 1;5- Agencements - installations;Valeur 1;Valeur 2;Valeur 3
+1150;Table 1;5- Agencements - installations;Valeur 1;Valeur 2;Valeur 3
+1151;Table 1;5- Agencements - installations;Valeur 1;Valeur 2;Valeur 3
+1152;Table 1;5- Agencements - installations;Valeur 1;Valeur 2;Valeur 3
+1153;Table 1;5- Agencements - installations;Valeur 1;Valeur 2;Valeur 3
+1155;Table 1;6- Brevets;Valeur 1;Valeur 2;Valeur 3
+1156;Table 1;6- Brevets;Valeur 1;Valeur 2;Valeur 3
+1157;Table 1;6- Brevets;Valeur 1;Valeur 2;Valeur 3
+1158;Table 1;6- Brevets;Valeur 1;Valeur 2;Valeur 3
+1159;Table 1;6- Brevets;Valeur 1;Valeur 2;Valeur 3
+1160;Table 1;6- Brevets;Valeur 1;Valeur 2;Valeur 3
+1161;Table 1;6- Brevets;Valeur 1;Valeur 2;Valeur 3
+1162;Table 1;6- Brevets;Valeur 1;Valeur 2;Valeur 3
+1164;Table 1;7- Autres éléments amortissables;Valeur 1;Valeur 2;Valeur 3
+1165;Table 1;7- Autres éléments amortissables;Valeur 1;Valeur 2;Valeur 3
+1166;Table 1;7- Autres éléments amortissables;Valeur 1;Valeur 2;Valeur 3
+1167;Table 1;7- Autres éléments amortissables;Valeur 1;Valeur 2;Valeur 3
+1168;Table 1;7- Autres éléments amortissables;Valeur 1;Valeur 2;Valeur 3
+1169;Table 1;7- Autres éléments amortissables;Valeur 1;Valeur 2;Valeur 3
+1170;Table 1;7- Autres éléments amortissables;Valeur 1;Valeur 2;Valeur 3
+1171;Table 1;7- Autres éléments amortissables;Valeur 1;Valeur 2;Valeur 3
+1180;Table 1;8- Titres de participation;Valeur 1;Valeur 2;Valeur 3
+1182;Table 1;9- Fonds de commerce;Valeur 1;Valeur 2;Valeur 3
+1183;Table 1;9- Fonds de commerce;Valeur 1;Valeur 2;Valeur 3
+1184;Table 1;9- Fonds de commerce;Valeur 1;Valeur 2;Valeur 3
+1185;Table 1;9- Fonds de commerce;Valeur 1;Valeur 2;Valeur 3
+1186;Table 1;9- Fonds de commerce;Valeur 1;Valeur 2;Valeur 3
+1187;Table 1;9- Fonds de commerce;Valeur 1;Valeur 2;Valeur 3
+1188;Table 1;9- Fonds de commerce;Valeur 1;Valeur 2;Valeur 3
+1189;Table 1;9- Fonds de commerce;Valeur 1;Valeur 2;Valeur 3
+1191;Table 1;10- Autres éléments non amortissables;Valeur 1;Valeur 2;Valeur 3
+1192;Table 1;10- Autres éléments non amortissables;Valeur 1;Valeur 2;Valeur 3
+1193;Table 1;10- Autres éléments non amortissables;Valeur 1;Valeur 2;Valeur 3
+1194;Table 1;10- Autres éléments non amortissables;Valeur 1;Valeur 2;Valeur 3
+1195;Table 1;10- Autres éléments non amortissables;Valeur 1;Valeur 2;Valeur 3
+1196;Table 1;10- Autres éléments non amortissables;Valeur 1;Valeur 2;Valeur 3
+1197;Table 1;10- Autres éléments non amortissables;Valeur 1;Valeur 2;Valeur 3
+1198;Table 1;10- Autres éléments non amortissables;Valeur 1;Valeur 2;Valeur 3
+1200;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+1201;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+1202;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+1203;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+1204;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+1205;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+1206;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+1207;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+55;Table 1;Exercice clos le: (code = 55)(Type =Date);Valeur 1;Valeur 2;Valeur 3
+1209;Table 1;"(cod e = 1208
+)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1211;Table 1;"(cod e = 1208
+)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1214;Table 1;"(cod e = 1208
+)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1215;Table 1;"(cod e = 1208
+)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1216;Table 1;"(cod e = 1208
+)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1217;Table 1;"(cod e = 1208
+)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1218;Table 1;"(cod e = 1208
+)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1219;Table 1;"(cod e = 1208
+)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1220;Table 1;"(cod e = 1208
+)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1222;Table 1;"(cod e = 1221)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1224;Table 1;"(cod e = 1221)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1227;Table 1;"(cod e = 1221)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1228;Table 1;"(cod e = 1221)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1229;Table 1;"(cod e = 1221)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1250;Table 1;"(cod e = 1221)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1251;Table 1;"(cod e = 1221)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1252;Table 1;"(cod e = 1221)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1253;Table 1;"(cod e = 1221)
+(Typ e
+=Tex te)";Valeur 1;Valeur 2;Valeur 3
+1255;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1257;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1260;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1261;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1262;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1263;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1264;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1265;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1266;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1267;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+1268;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+1269;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+14964;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+14965;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+14040;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+14041;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+17919;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+1270;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+1271;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+1272;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+1273;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+1274;Table 1;"(code
+= 1267)
+(Type
+=Text e)";Valeur 1;Valeur 2;Valeur 3
+1276;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1277;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+14966;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+14967;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+14042;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+14043;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+17920;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1278;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1279;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1280;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1281;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1282;Table 1;TOT AL;Valeur 1;Valeur 2;Valeur 3
+1401;Table 1;I. Stocks Approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1402;Table 1;I. Stocks Approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1403;Table 1;I. Stocks Approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1404;Table 1;I. Stocks Approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1405;Table 1;I. Stocks Approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1406;Table 1;I. Stocks Approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1407;Table 1;I. Stocks Approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1409;Table 1;1- Biens et produits destinés à la revente en l'état;Valeur 1;Valeur 2;Valeur 3
+1410;Table 1;1- Biens et produits destinés à la revente en l'état;Valeur 1;Valeur 2;Valeur 3
+1411;Table 1;1- Biens et produits destinés à la revente en l'état;Valeur 1;Valeur 2;Valeur 3
+1412;Table 1;1- Biens et produits destinés à la revente en l'état;Valeur 1;Valeur 2;Valeur 3
+1413;Table 1;1- Biens et produits destinés à la revente en l'état;Valeur 1;Valeur 2;Valeur 3
+1414;Table 1;1- Biens et produits destinés à la revente en l'état;Valeur 1;Valeur 2;Valeur 3
+1415;Table 1;1- Biens et produits destinés à la revente en l'état;Valeur 1;Valeur 2;Valeur 3
+1417;Table 1;* Biens immeubles;Valeur 1;Valeur 2;Valeur 3
+1418;Table 1;* Biens immeubles;Valeur 1;Valeur 2;Valeur 3
+1419;Table 1;* Biens immeubles;Valeur 1;Valeur 2;Valeur 3
+1420;Table 1;* Biens immeubles;Valeur 1;Valeur 2;Valeur 3
+1421;Table 1;* Biens immeubles;Valeur 1;Valeur 2;Valeur 3
+1422;Table 1;* Biens immeubles;Valeur 1;Valeur 2;Valeur 3
+1423;Table 1;* Biens immeubles;Valeur 1;Valeur 2;Valeur 3
+1425;Table 1;* Biens meubles;Valeur 1;Valeur 2;Valeur 3
+1426;Table 1;* Biens meubles;Valeur 1;Valeur 2;Valeur 3
+1427;Table 1;* Biens meubles;Valeur 1;Valeur 2;Valeur 3
+1428;Table 1;* Biens meubles;Valeur 1;Valeur 2;Valeur 3
+1429;Table 1;* Biens meubles;Valeur 1;Valeur 2;Valeur 3
+1430;Table 1;* Biens meubles;Valeur 1;Valeur 2;Valeur 3
+1431;Table 1;* Biens meubles;Valeur 1;Valeur 2;Valeur 3
+1433;Table 1;2- Biens et Matières Premières destinés aux activités de production et de transformation;Valeur 1;Valeur 2;Valeur 3
+1434;Table 1;2- Biens et Matières Premières destinés aux activités de production et de transformation;Valeur 1;Valeur 2;Valeur 3
+1435;Table 1;2- Biens et Matières Premières destinés aux activités de production et de transformation;Valeur 1;Valeur 2;Valeur 3
+1436;Table 1;2- Biens et Matières Premières destinés aux activités de production et de transformation;Valeur 1;Valeur 2;Valeur 3
+1437;Table 1;2- Biens et Matières Premières destinés aux activités de production et de transformation;Valeur 1;Valeur 2;Valeur 3
+1438;Table 1;2- Biens et Matières Premières destinés aux activités de production et de transformation;Valeur 1;Valeur 2;Valeur 3
+1439;Table 1;2- Biens et Matières Premières destinés aux activités de production et de transformation;Valeur 1;Valeur 2;Valeur 3
+1449;Table 1;3- Matières premières;Valeur 1;Valeur 2;Valeur 3
+1450;Table 1;3- Matières premières;Valeur 1;Valeur 2;Valeur 3
+1451;Table 1;3- Matières premières;Valeur 1;Valeur 2;Valeur 3
+1452;Table 1;3- Matières premières;Valeur 1;Valeur 2;Valeur 3
+1453;Table 1;3- Matières premières;Valeur 1;Valeur 2;Valeur 3
+1454;Table 1;3- Matières premières;Valeur 1;Valeur 2;Valeur 3
+1455;Table 1;3- Matières premières;Valeur 1;Valeur 2;Valeur 3
+1457;Table 1;4- Matières consommables;Valeur 1;Valeur 2;Valeur 3
+1458;Table 1;4- Matières consommables;Valeur 1;Valeur 2;Valeur 3
+1459;Table 1;4- Matières consommables;Valeur 1;Valeur 2;Valeur 3
+1460;Table 1;4- Matières consommables;Valeur 1;Valeur 2;Valeur 3
+1461;Table 1;4- Matières consommables;Valeur 1;Valeur 2;Valeur 3
+1462;Table 1;4- Matières consommables;Valeur 1;Valeur 2;Valeur 3
+1463;Table 1;4- Matières consommables;Valeur 1;Valeur 2;Valeur 3
+1465;Table 1;5 - Pièces détachées;Valeur 1;Valeur 2;Valeur 3
+1466;Table 1;5 - Pièces détachées;Valeur 1;Valeur 2;Valeur 3
+1467;Table 1;5 - Pièces détachées;Valeur 1;Valeur 2;Valeur 3
+1468;Table 1;5 - Pièces détachées;Valeur 1;Valeur 2;Valeur 3
+1469;Table 1;5 - Pièces détachées;Valeur 1;Valeur 2;Valeur 3
+1470;Table 1;5 - Pièces détachées;Valeur 1;Valeur 2;Valeur 3
+1471;Table 1;5 - Pièces détachées;Valeur 1;Valeur 2;Valeur 3
+1473;Table 1;6- Carburants, lubrifiants pour véhicules de transport;Valeur 1;Valeur 2;Valeur 3
+1474;Table 1;6- Carburants, lubrifiants pour véhicules de transport;Valeur 1;Valeur 2;Valeur 3
+1475;Table 1;6- Carburants, lubrifiants pour véhicules de transport;Valeur 1;Valeur 2;Valeur 3
+1476;Table 1;6- Carburants, lubrifiants pour véhicules de transport;Valeur 1;Valeur 2;Valeur 3
+1477;Table 1;6- Carburants, lubrifiants pour véhicules de transport;Valeur 1;Valeur 2;Valeur 3
+1478;Table 1;6- Carburants, lubrifiants pour véhicules de transport;Valeur 1;Valeur 2;Valeur 3
+1479;Table 1;6- Carburants, lubrifiants pour véhicules de transport;Valeur 1;Valeur 2;Valeur 3
+1481;Table 1;- Emballage;Valeur 1;Valeur 2;Valeur 3
+1482;Table 1;- Emballage;Valeur 1;Valeur 2;Valeur 3
+1483;Table 1;- Emballage;Valeur 1;Valeur 2;Valeur 3
+1484;Table 1;- Emballage;Valeur 1;Valeur 2;Valeur 3
+1485;Table 1;- Emballage;Valeur 1;Valeur 2;Valeur 3
+1486;Table 1;- Emballage;Valeur 1;Valeur 2;Valeur 3
+1487;Table 1;- Emballage;Valeur 1;Valeur 2;Valeur 3
+1555;Table 1;7 * récupérables;Valeur 1;Valeur 2;Valeur 3
+1556;Table 1;7 * récupérables;Valeur 1;Valeur 2;Valeur 3
+1557;Table 1;7 * récupérables;Valeur 1;Valeur 2;Valeur 3
+1558;Table 1;7 * récupérables;Valeur 1;Valeur 2;Valeur 3
+1559;Table 1;7 * récupérables;Valeur 1;Valeur 2;Valeur 3
+1560;Table 1;7 * récupérables;Valeur 1;Valeur 2;Valeur 3
+1561;Table 1;7 * récupérables;Valeur 1;Valeur 2;Valeur 3
+1596;Table 1;8 * vendus;Valeur 1;Valeur 2;Valeur 3
+1597;Table 1;8 * vendus;Valeur 1;Valeur 2;Valeur 3
+1598;Table 1;8 * vendus;Valeur 1;Valeur 2;Valeur 3
+1599;Table 1;8 * vendus;Valeur 1;Valeur 2;Valeur 3
+1600;Table 1;8 * vendus;Valeur 1;Valeur 2;Valeur 3
+1601;Table 1;8 * vendus;Valeur 1;Valeur 2;Valeur 3
+1602;Table 1;8 * vendus;Valeur 1;Valeur 2;Valeur 3
+1604;Table 1;9 * perdus;Valeur 1;Valeur 2;Valeur 3
+1605;Table 1;9 * perdus;Valeur 1;Valeur 2;Valeur 3
+1606;Table 1;9 * perdus;Valeur 1;Valeur 2;Valeur 3
+1607;Table 1;9 * perdus;Valeur 1;Valeur 2;Valeur 3
+1608;Table 1;9 * perdus;Valeur 1;Valeur 2;Valeur 3
+1609;Table 1;9 * perdus;Valeur 1;Valeur 2;Valeur 3
+1610;Table 1;9 * perdus;Valeur 1;Valeur 2;Valeur 3
+1612;Table 1;10- Total stocks approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1613;Table 1;10- Total stocks approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1614;Table 1;10- Total stocks approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1615;Table 1;10- Total stocks approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1616;Table 1;10- Total stocks approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1617;Table 1;10- Total stocks approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1618;Table 1;10- Total stocks approvisionnement;Valeur 1;Valeur 2;Valeur 3
+1635;Table 1;II. Stock en cours Production de biens et service;Valeur 1;Valeur 2;Valeur 3
+1636;Table 1;II. Stock en cours Production de biens et service;Valeur 1;Valeur 2;Valeur 3
+1637;Table 1;II. Stock en cours Production de biens et service;Valeur 1;Valeur 2;Valeur 3
+1638;Table 1;II. Stock en cours Production de biens et service;Valeur 1;Valeur 2;Valeur 3
+1639;Table 1;II. Stock en cours Production de biens et service;Valeur 1;Valeur 2;Valeur 3
+1640;Table 1;II. Stock en cours Production de biens et service;Valeur 1;Valeur 2;Valeur 3
+1641;Table 1;II. Stock en cours Production de biens et service;Valeur 1;Valeur 2;Valeur 3
+1643;Table 1;11- Produits en cours;Valeur 1;Valeur 2;Valeur 3
+1644;Table 1;11- Produits en cours;Valeur 1;Valeur 2;Valeur 3
+1645;Table 1;11- Produits en cours;Valeur 1;Valeur 2;Valeur 3
+1646;Table 1;11- Produits en cours;Valeur 1;Valeur 2;Valeur 3
+1647;Table 1;11- Produits en cours;Valeur 1;Valeur 2;Valeur 3
+1648;Table 1;11- Produits en cours;Valeur 1;Valeur 2;Valeur 3
+1649;Table 1;11- Produits en cours;Valeur 1;Valeur 2;Valeur 3
+1656;Table 1;12- Etudes en cours;Valeur 1;Valeur 2;Valeur 3
+1657;Table 1;12- Etudes en cours;Valeur 1;Valeur 2;Valeur 3
+1658;Table 1;12- Etudes en cours;Valeur 1;Valeur 2;Valeur 3
+1659;Table 1;12- Etudes en cours;Valeur 1;Valeur 2;Valeur 3
+1660;Table 1;12- Etudes en cours;Valeur 1;Valeur 2;Valeur 3
+1661;Table 1;12- Etudes en cours;Valeur 1;Valeur 2;Valeur 3
+1662;Table 1;12- Etudes en cours;Valeur 1;Valeur 2;Valeur 3
+1664;Table 1;13- Travaux en cours;Valeur 1;Valeur 2;Valeur 3
+1665;Table 1;13- Travaux en cours;Valeur 1;Valeur 2;Valeur 3
+1666;Table 1;13- Travaux en cours;Valeur 1;Valeur 2;Valeur 3
+1667;Table 1;13- Travaux en cours;Valeur 1;Valeur 2;Valeur 3
+1668;Table 1;13- Travaux en cours;Valeur 1;Valeur 2;Valeur 3
+1669;Table 1;13- Travaux en cours;Valeur 1;Valeur 2;Valeur 3
+1670;Table 1;13- Travaux en cours;Valeur 1;Valeur 2;Valeur 3
+1672;Table 1;14- Services en cours;Valeur 1;Valeur 2;Valeur 3
+1673;Table 1;14- Services en cours;Valeur 1;Valeur 2;Valeur 3
+1674;Table 1;14- Services en cours;Valeur 1;Valeur 2;Valeur 3
+1675;Table 1;14- Services en cours;Valeur 1;Valeur 2;Valeur 3
+1676;Table 1;14- Services en cours;Valeur 1;Valeur 2;Valeur 3
+1677;Table 1;14- Services en cours;Valeur 1;Valeur 2;Valeur 3
+1678;Table 1;14- Services en cours;Valeur 1;Valeur 2;Valeur 3
+1685;Table 1;15- Total Stocks des en cours;Valeur 1;Valeur 2;Valeur 3
+1686;Table 1;15- Total Stocks des en cours;Valeur 1;Valeur 2;Valeur 3
+1687;Table 1;15- Total Stocks des en cours;Valeur 1;Valeur 2;Valeur 3
+1688;Table 1;15- Total Stocks des en cours;Valeur 1;Valeur 2;Valeur 3
+1689;Table 1;15- Total Stocks des en cours;Valeur 1;Valeur 2;Valeur 3
+1690;Table 1;15- Total Stocks des en cours;Valeur 1;Valeur 2;Valeur 3
+1691;Table 1;15- Total Stocks des en cours;Valeur 1;Valeur 2;Valeur 3
+1736;Table 1;III. Stock Produits finis;Valeur 1;Valeur 2;Valeur 3
+1737;Table 1;III. Stock Produits finis;Valeur 1;Valeur 2;Valeur 3
+1738;Table 1;III. Stock Produits finis;Valeur 1;Valeur 2;Valeur 3
+1739;Table 1;III. Stock Produits finis;Valeur 1;Valeur 2;Valeur 3
+1740;Table 1;III. Stock Produits finis;Valeur 1;Valeur 2;Valeur 3
+1741;Table 1;III. Stock Produits finis;Valeur 1;Valeur 2;Valeur 3
+1742;Table 1;III. Stock Produits finis;Valeur 1;Valeur 2;Valeur 3
+1757;Table 1;16- Produits finis;Valeur 1;Valeur 2;Valeur 3
+1758;Table 1;16- Produits finis;Valeur 1;Valeur 2;Valeur 3
+1759;Table 1;16- Produits finis;Valeur 1;Valeur 2;Valeur 3
+1760;Table 1;16- Produits finis;Valeur 1;Valeur 2;Valeur 3
+1761;Table 1;16- Produits finis;Valeur 1;Valeur 2;Valeur 3
+1762;Table 1;16- Produits finis;Valeur 1;Valeur 2;Valeur 3
+1763;Table 1;16- Produits finis;Valeur 1;Valeur 2;Valeur 3
+1769;Table 1;17- Biens finis;Valeur 1;Valeur 2;Valeur 3
+1770;Table 1;17- Biens finis;Valeur 1;Valeur 2;Valeur 3
+1771;Table 1;17- Biens finis;Valeur 1;Valeur 2;Valeur 3
+1772;Table 1;17- Biens finis;Valeur 1;Valeur 2;Valeur 3
+1773;Table 1;17- Biens finis;Valeur 1;Valeur 2;Valeur 3
+1774;Table 1;17- Biens finis;Valeur 1;Valeur 2;Valeur 3
+1775;Table 1;17- Biens finis;Valeur 1;Valeur 2;Valeur 3
+1800;Table 1;18- Total Stocks Produits et Biens finis;Valeur 1;Valeur 2;Valeur 3
+1801;Table 1;18- Total Stocks Produits et Biens finis;Valeur 1;Valeur 2;Valeur 3
+1802;Table 1;18- Total Stocks Produits et Biens finis;Valeur 1;Valeur 2;Valeur 3
+1803;Table 1;18- Total Stocks Produits et Biens finis;Valeur 1;Valeur 2;Valeur 3
+1804;Table 1;18- Total Stocks Produits et Biens finis;Valeur 1;Valeur 2;Valeur 3
+1805;Table 1;18- Total Stocks Produits et Biens finis;Valeur 1;Valeur 2;Valeur 3
+1806;Table 1;18- Total Stocks Produits et Biens finis;Valeur 1;Valeur 2;Valeur 3
+1819;Table 1;IV . Stock Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1820;Table 1;IV . Stock Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1821;Table 1;IV . Stock Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1822;Table 1;IV . Stock Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1823;Table 1;IV . Stock Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1824;Table 1;IV . Stock Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1825;Table 1;IV . Stock Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1836;Table 1;19- Déchets;Valeur 1;Valeur 2;Valeur 3
+1837;Table 1;19- Déchets;Valeur 1;Valeur 2;Valeur 3
+1838;Table 1;19- Déchets;Valeur 1;Valeur 2;Valeur 3
+1839;Table 1;19- Déchets;Valeur 1;Valeur 2;Valeur 3
+1840;Table 1;19- Déchets;Valeur 1;Valeur 2;Valeur 3
+1841;Table 1;19- Déchets;Valeur 1;Valeur 2;Valeur 3
+1842;Table 1;19- Déchets;Valeur 1;Valeur 2;Valeur 3
+1853;Table 1;20- Rebuts;Valeur 1;Valeur 2;Valeur 3
+1854;Table 1;20- Rebuts;Valeur 1;Valeur 2;Valeur 3
+1855;Table 1;20- Rebuts;Valeur 1;Valeur 2;Valeur 3
+1856;Table 1;20- Rebuts;Valeur 1;Valeur 2;Valeur 3
+1857;Table 1;20- Rebuts;Valeur 1;Valeur 2;Valeur 3
+1858;Table 1;20- Rebuts;Valeur 1;Valeur 2;Valeur 3
+1859;Table 1;20- Rebuts;Valeur 1;Valeur 2;Valeur 3
+1861;Table 1;21- Matières de récupération;Valeur 1;Valeur 2;Valeur 3
+1862;Table 1;21- Matières de récupération;Valeur 1;Valeur 2;Valeur 3
+1863;Table 1;21- Matières de récupération;Valeur 1;Valeur 2;Valeur 3
+1864;Table 1;21- Matières de récupération;Valeur 1;Valeur 2;Valeur 3
+1865;Table 1;21- Matières de récupération;Valeur 1;Valeur 2;Valeur 3
+1866;Table 1;21- Matières de récupération;Valeur 1;Valeur 2;Valeur 3
+1867;Table 1;21- Matières de récupération;Valeur 1;Valeur 2;Valeur 3
+1869;Table 1;22- Total Stocks Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1870;Table 1;22- Total Stocks Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1871;Table 1;22- Total Stocks Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1872;Table 1;22- Total Stocks Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1873;Table 1;22- Total Stocks Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1874;Table 1;22- Total Stocks Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1875;Table 1;22- Total Stocks Produits résiduels;Valeur 1;Valeur 2;Valeur 3
+1886;Table 1;"23- TOTAL GENERAL (ligne
+10+15+18+22)";Valeur 1;Valeur 2;Valeur 3
+1887;Table 1;"23- TOTAL GENERAL (ligne
+10+15+18+22)";Valeur 1;Valeur 2;Valeur 3
+1888;Table 1;"23- TOTAL GENERAL (ligne
+10+15+18+22)";Valeur 1;Valeur 2;Valeur 3
+1889;Table 1;"23- TOTAL GENERAL (ligne
+10+15+18+22)";Valeur 1;Valeur 2;Valeur 3
+1890;Table 1;"23- TOTAL GENERAL (ligne
+10+15+18+22)";Valeur 1;Valeur 2;Valeur 3
+1891;Table 1;"23- TOTAL GENERAL (ligne
+10+15+18+22)";Valeur 1;Valeur 2;Valeur 3
+1892;Table 1;"23- TOTAL GENERAL (ligne
+10+15+18+22)";Valeur 1;Valeur 2;Valeur 3
+14068;Table 1;Financement permanent;Valeur 1;Valeur 2;Valeur 3
+14069;Table 1;Financement permanent;Valeur 1;Valeur 2;Valeur 3
+14071;Table 1;Immobilisations brutes;Valeur 1;Valeur 2;Valeur 3
+14072;Table 1;Immobilisations brutes;Valeur 1;Valeur 2;Valeur 3
+14074;Table 1;Rentrées sur immobilisations;Valeur 1;Valeur 2;Valeur 3
+14075;Table 1;Rentrées sur immobilisations;Valeur 1;Valeur 2;Valeur 3
+14077;Table 1;Remboursement des dettes de financement;Valeur 1;Valeur 2;Valeur 3
+14078;Table 1;Remboursement des dettes de financement;Valeur 1;Valeur 2;Valeur 3
+14080;Table 1;Produits;Valeur 1;Valeur 2;Valeur 3
+14081;Table 1;Produits;Valeur 1;Valeur 2;Valeur 3
+14083;Table 1;Charges;Valeur 1;Valeur 2;Valeur 3
+14084;Table 1;Charges;Valeur 1;Valeur 2;Valeur 3
+14086;Table 1;TOTAL DES ENTREES;Valeur 1;Valeur 2;Valeur 3
+14087;Table 1;TOTAL DES ENTREES;Valeur 1;Valeur 2;Valeur 3
+16394;Table 1;TOTAL DES SORTIES;Valeur 1;Valeur 2;Valeur 3
+16395;Table 1;TOTAL DES SORTIES;Valeur 1;Valeur 2;Valeur 3
+16397;Table 1;BALANCE DEVISES;Valeur 1;Valeur 2;Valeur 3
+16398;Table 1;BALANCE DEVISES;Valeur 1;Valeur 2;Valeur 3
+16400;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+16401;Table 1;TOTAL;Valeur 1;Valeur 2;Valeur 3
+14088;Table 1;(code = 14088) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+14089;Table 1;(code = 14088) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+14090;Table 1;(code = 14088) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+14091;Table 1;(code = 14091) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+14092;Table 1;(code = 14091) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+14093;Table 1;(code = 14091) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+14098;Table 1;I- Dérogations aux principes comptables fondamentaux;Valeur 1;Valeur 2;Valeur 3
+14099;Table 1;I- Dérogations aux principes comptables fondamentaux;Valeur 1;Valeur 2;Valeur 3
+14101;Table 1;II- Dérogations aux méthodes d'évaluation;Valeur 1;Valeur 2;Valeur 3
+14102;Table 1;II- Dérogations aux méthodes d'évaluation;Valeur 1;Valeur 2;Valeur 3
+14104;Table 1;III- Dérogations aux règles;Valeur 1;Valeur 2;Valeur 3
+14105;Table 1;III- Dérogations aux règles;Valeur 1;Valeur 2;Valeur 3
+14113;Table 1;1- Financement permanent;Valeur 1;Valeur 2;Valeur 3
+14120;Table 1;1- Financement permanent;Valeur 1;Valeur 2;Valeur 3
+14127;Table 1;1- Financement permanent;Valeur 1;Valeur 2;Valeur 3
+14134;Table 1;1- Financement permanent;Valeur 1;Valeur 2;Valeur 3
+14114;Table 1;2- Moins actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+14121;Table 1;2- Moins actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+14128;Table 1;2- Moins actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+14135;Table 1;2- Moins actif immobilisé;Valeur 1;Valeur 2;Valeur 3
+14115;Table 1;3- FONDS DE ROULEMENT FONCTIONNEL (1 - 2) (A);Valeur 1;Valeur 2;Valeur 3
+14122;Table 1;3- FONDS DE ROULEMENT FONCTIONNEL (1 - 2) (A);Valeur 1;Valeur 2;Valeur 3
+14129;Table 1;3- FONDS DE ROULEMENT FONCTIONNEL (1 - 2) (A);Valeur 1;Valeur 2;Valeur 3
+14136;Table 1;3- FONDS DE ROULEMENT FONCTIONNEL (1 - 2) (A);Valeur 1;Valeur 2;Valeur 3
+14116;Table 1;4- Actif circulant;Valeur 1;Valeur 2;Valeur 3
+14123;Table 1;4- Actif circulant;Valeur 1;Valeur 2;Valeur 3
+14130;Table 1;4- Actif circulant;Valeur 1;Valeur 2;Valeur 3
+14137;Table 1;4- Actif circulant;Valeur 1;Valeur 2;Valeur 3
+14117;Table 1;5- Moins passif circulant;Valeur 1;Valeur 2;Valeur 3
+14124;Table 1;5- Moins passif circulant;Valeur 1;Valeur 2;Valeur 3
+14131;Table 1;5- Moins passif circulant;Valeur 1;Valeur 2;Valeur 3
+14138;Table 1;5- Moins passif circulant;Valeur 1;Valeur 2;Valeur 3
+14118;Table 1;6- BESOIN DE FINANCEMENT GLOBAL (4 - 5) (B);Valeur 1;Valeur 2;Valeur 3
+14125;Table 1;6- BESOIN DE FINANCEMENT GLOBAL (4 - 5) (B);Valeur 1;Valeur 2;Valeur 3
+14132;Table 1;6- BESOIN DE FINANCEMENT GLOBAL (4 - 5) (B);Valeur 1;Valeur 2;Valeur 3
+14139;Table 1;6- BESOIN DE FINANCEMENT GLOBAL (4 - 5) (B);Valeur 1;Valeur 2;Valeur 3
+14119;Table 1;7- TRESORERIE NETTE (ACTIF - PASSIF) = A - B;Valeur 1;Valeur 2;Valeur 3
+14126;Table 1;7- TRESORERIE NETTE (ACTIF - PASSIF) = A - B;Valeur 1;Valeur 2;Valeur 3
+14133;Table 1;7- TRESORERIE NETTE (ACTIF - PASSIF) = A - B;Valeur 1;Valeur 2;Valeur 3
+14140;Table 1;7- TRESORERIE NETTE (ACTIF - PASSIF) = A - B;Valeur 1;Valeur 2;Valeur 3
+14172;Table 1;* AUTOFINANCEMENT (A);Valeur 1;Valeur 2;Valeur 3
+14184;Table 1;* AUTOFINANCEMENT (A);Valeur 1;Valeur 2;Valeur 3
+14196;Table 1;* AUTOFINANCEMENT (A);Valeur 1;Valeur 2;Valeur 3
+14208;Table 1;* AUTOFINANCEMENT (A);Valeur 1;Valeur 2;Valeur 3
+14173;Table 1;- Capacité d'autofinancement;Valeur 1;Valeur 2;Valeur 3
+14185;Table 1;- Capacité d'autofinancement;Valeur 1;Valeur 2;Valeur 3
+14197;Table 1;- Capacité d'autofinancement;Valeur 1;Valeur 2;Valeur 3
+14209;Table 1;- Capacité d'autofinancement;Valeur 1;Valeur 2;Valeur 3
+14174;Table 1;- Distribution de bénéfices;Valeur 1;Valeur 2;Valeur 3
+14186;Table 1;- Distribution de bénéfices;Valeur 1;Valeur 2;Valeur 3
+14198;Table 1;- Distribution de bénéfices;Valeur 1;Valeur 2;Valeur 3
+14210;Table 1;- Distribution de bénéfices;Valeur 1;Valeur 2;Valeur 3
+14175;Table 1;* CESSIONS ET REDUCTIONS D'IMMOBILISATIONS (B);Valeur 1;Valeur 2;Valeur 3
+14187;Table 1;* CESSIONS ET REDUCTIONS D'IMMOBILISATIONS (B);Valeur 1;Valeur 2;Valeur 3
+14199;Table 1;* CESSIONS ET REDUCTIONS D'IMMOBILISATIONS (B);Valeur 1;Valeur 2;Valeur 3
+14211;Table 1;* CESSIONS ET REDUCTIONS D'IMMOBILISATIONS (B);Valeur 1;Valeur 2;Valeur 3
+14176;Table 1;- Cessions d'immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+14188;Table 1;- Cessions d'immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+14200;Table 1;- Cessions d'immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+14212;Table 1;- Cessions d'immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+14177;Table 1;- Cessions d'immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+14189;Table 1;- Cessions d'immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+14201;Table 1;- Cessions d'immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+14213;Table 1;- Cessions d'immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+14178;Table 1;- Cessions d'immobilisations;Valeur 1;Valeur 2;Valeur 3
+14190;Table 1;- Cessions d'immobilisations;Valeur 1;Valeur 2;Valeur 3
+14202;Table 1;- Cessions d'immobilisations;Valeur 1;Valeur 2;Valeur 3
+14214;Table 1;- Cessions d'immobilisations;Valeur 1;Valeur 2;Valeur 3
+14179;Table 1;- Récupérations sur créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+14191;Table 1;- Récupérations sur créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+14203;Table 1;- Récupérations sur créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+14215;Table 1;- Récupérations sur créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+14180;Table 1;"* AUGEMENTATION DES CAPITAUX PROPRES ET
+ASSIMILES (C)";Valeur 1;Valeur 2;Valeur 3
+14192;Table 1;"* AUGEMENTATION DES CAPITAUX PROPRES ET
+ASSIMILES (C)";Valeur 1;Valeur 2;Valeur 3
+14204;Table 1;"* AUGEMENTATION DES CAPITAUX PROPRES ET
+ASSIMILES (C)";Valeur 1;Valeur 2;Valeur 3
+14216;Table 1;"* AUGEMENTATION DES CAPITAUX PROPRES ET
+ASSIMILES (C)";Valeur 1;Valeur 2;Valeur 3
+14181;Table 1;- Augmentations de capital, apports;Valeur 1;Valeur 2;Valeur 3
+14193;Table 1;- Augmentations de capital, apports;Valeur 1;Valeur 2;Valeur 3
+14205;Table 1;- Augmentations de capital, apports;Valeur 1;Valeur 2;Valeur 3
+14217;Table 1;- Augmentations de capital, apports;Valeur 1;Valeur 2;Valeur 3
+14182;Table 1;- Subventions d'investissement;Valeur 1;Valeur 2;Valeur 3
+14194;Table 1;- Subventions d'investissement;Valeur 1;Valeur 2;Valeur 3
+14206;Table 1;- Subventions d'investissement;Valeur 1;Valeur 2;Valeur 3
+14218;Table 1;- Subventions d'investissement;Valeur 1;Valeur 2;Valeur 3
+14183;Table 1;"* AUGMENTATION DES DETTES DE
+FINANCEMENT (D) (nettes des primes de remboursements)";Valeur 1;Valeur 2;Valeur 3
+14195;Table 1;"* AUGMENTATION DES DETTES DE
+FINANCEMENT (D) (nettes des primes de remboursements)";Valeur 1;Valeur 2;Valeur 3
+14207;Table 1;"* AUGMENTATION DES DETTES DE
+FINANCEMENT (D) (nettes des primes de remboursements)";Valeur 1;Valeur 2;Valeur 3
+14219;Table 1;"* AUGMENTATION DES DETTES DE
+FINANCEMENT (D) (nettes des primes de remboursements)";Valeur 1;Valeur 2;Valeur 3
+14221;Table 1;TOTAL I- RESSOURCES STABLES (A+B+C+D);Valeur 1;Valeur 2;Valeur 3
+14222;Table 1;TOTAL I- RESSOURCES STABLES (A+B+C+D);Valeur 1;Valeur 2;Valeur 3
+14223;Table 1;TOTAL I- RESSOURCES STABLES (A+B+C+D);Valeur 1;Valeur 2;Valeur 3
+14224;Table 1;TOTAL I- RESSOURCES STABLES (A+B+C+D);Valeur 1;Valeur 2;Valeur 3
+14233;Table 1;* ACQUISITIONS ET AUGEMENTATIONS D'IMMOBILISATIONS (E);Valeur 1;Valeur 2;Valeur 3
+14241;Table 1;* ACQUISITIONS ET AUGEMENTATIONS D'IMMOBILISATIONS (E);Valeur 1;Valeur 2;Valeur 3
+14249;Table 1;* ACQUISITIONS ET AUGEMENTATIONS D'IMMOBILISATIONS (E);Valeur 1;Valeur 2;Valeur 3
+14257;Table 1;* ACQUISITIONS ET AUGEMENTATIONS D'IMMOBILISATIONS (E);Valeur 1;Valeur 2;Valeur 3
+14234;Table 1;- Acquisitions d'immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+14242;Table 1;- Acquisitions d'immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+14250;Table 1;- Acquisitions d'immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+14258;Table 1;- Acquisitions d'immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+14235;Table 1;- Acquisitions d'immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+14243;Table 1;- Acquisitions d'immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+14251;Table 1;- Acquisitions d'immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+14259;Table 1;- Acquisitions d'immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+14236;Table 1;- Acquisitions d'immobilisations financières;Valeur 1;Valeur 2;Valeur 3
+14244;Table 1;- Acquisitions d'immobilisations financières;Valeur 1;Valeur 2;Valeur 3
+14252;Table 1;- Acquisitions d'immobilisations financières;Valeur 1;Valeur 2;Valeur 3
+14260;Table 1;- Acquisitions d'immobilisations financières;Valeur 1;Valeur 2;Valeur 3
+14237;Table 1;- Augmentation des créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+14245;Table 1;- Augmentation des créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+14253;Table 1;- Augmentation des créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+14261;Table 1;- Augmentation des créances immobilisées;Valeur 1;Valeur 2;Valeur 3
+14238;Table 1;* REMBOURSEMENT DES CAPITAUX PROPRES (F);Valeur 1;Valeur 2;Valeur 3
+14246;Table 1;* REMBOURSEMENT DES CAPITAUX PROPRES (F);Valeur 1;Valeur 2;Valeur 3
+14254;Table 1;* REMBOURSEMENT DES CAPITAUX PROPRES (F);Valeur 1;Valeur 2;Valeur 3
+14262;Table 1;* REMBOURSEMENT DES CAPITAUX PROPRES (F);Valeur 1;Valeur 2;Valeur 3
+14239;Table 1;* REMBOURSEMENT DES DETTES DE FINANCEMENT (G);Valeur 1;Valeur 2;Valeur 3
+14247;Table 1;* REMBOURSEMENT DES DETTES DE FINANCEMENT (G);Valeur 1;Valeur 2;Valeur 3
+14255;Table 1;* REMBOURSEMENT DES DETTES DE FINANCEMENT (G);Valeur 1;Valeur 2;Valeur 3
+14263;Table 1;* REMBOURSEMENT DES DETTES DE FINANCEMENT (G);Valeur 1;Valeur 2;Valeur 3
+14240;Table 1;* EMPLOIS EN NON VALEURS (H);Valeur 1;Valeur 2;Valeur 3
+14248;Table 1;* EMPLOIS EN NON VALEURS (H);Valeur 1;Valeur 2;Valeur 3
+14256;Table 1;* EMPLOIS EN NON VALEURS (H);Valeur 1;Valeur 2;Valeur 3
+14264;Table 1;* EMPLOIS EN NON VALEURS (H);Valeur 1;Valeur 2;Valeur 3
+14266;Table 1;TOTAL II- EMPLOIS STABLES (E+F+G+H);Valeur 1;Valeur 2;Valeur 3
+14267;Table 1;TOTAL II- EMPLOIS STABLES (E+F+G+H);Valeur 1;Valeur 2;Valeur 3
+14268;Table 1;TOTAL II- EMPLOIS STABLES (E+F+G+H);Valeur 1;Valeur 2;Valeur 3
+14269;Table 1;TOTAL II- EMPLOIS STABLES (E+F+G+H);Valeur 1;Valeur 2;Valeur 3
+14271;Table 1;III- VARIATION DU BESOIN DE FINANCEMENT GLOBAL (B.G.F);Valeur 1;Valeur 2;Valeur 3
+14272;Table 1;III- VARIATION DU BESOIN DE FINANCEMENT GLOBAL (B.G.F);Valeur 1;Valeur 2;Valeur 3
+14273;Table 1;III- VARIATION DU BESOIN DE FINANCEMENT GLOBAL (B.G.F);Valeur 1;Valeur 2;Valeur 3
+14274;Table 1;III- VARIATION DU BESOIN DE FINANCEMENT GLOBAL (B.G.F);Valeur 1;Valeur 2;Valeur 3
+14276;Table 1;IV- VARIATION DE LA TRESORERIE;Valeur 1;Valeur 2;Valeur 3
+14277;Table 1;IV- VARIATION DE LA TRESORERIE;Valeur 1;Valeur 2;Valeur 3
+14278;Table 1;IV- VARIATION DE LA TRESORERIE;Valeur 1;Valeur 2;Valeur 3
+14279;Table 1;IV- VARIATION DE LA TRESORERIE;Valeur 1;Valeur 2;Valeur 3
+14281;Table 1;TOTAL GENERAL;Valeur 1;Valeur 2;Valeur 3
+14282;Table 1;TOTAL GENERAL;Valeur 1;Valeur 2;Valeur 3
+14283;Table 1;TOTAL GENERAL;Valeur 1;Valeur 2;Valeur 3
+14284;Table 1;TOTAL GENERAL;Valeur 1;Valeur 2;Valeur 3
+14342;Table 1;1- Immobilisations en non valeurs;Valeur 1;Valeur 2;Valeur 3
+14343;Table 1;2- Immobilisations incorporelles;Valeur 1;Valeur 2;Valeur 3
+14344;Table 1;3- Immobilisations corporelles;Valeur 1;Valeur 2;Valeur 3
+14345;Table 1;4- Immobilisations financières;Valeur 1;Valeur 2;Valeur 3
+14301;Table 1;1- Méthodes d'amortissements;Valeur 1;Valeur 2;Valeur 3
+14303;Table 1;2- Méthodes d'évaluation des provisions pour dépréciation;Valeur 1;Valeur 2;Valeur 3
+14305;Table 1;3- Méthodes de détermination des écarts de Conversion - Actif;Valeur 1;Valeur 2;Valeur 3
+14307;Table 1;1- Stocks;Valeur 1;Valeur 2;Valeur 3
+14309;Table 1;2- Créances;Valeur 1;Valeur 2;Valeur 3
+14311;Table 1;3- Titres et valeurs de placement;Valeur 1;Valeur 2;Valeur 3
+14313;Table 1;1- Méthodes d'évaluation des provisions pour dépréciation;Valeur 1;Valeur 2;Valeur 3
+14315;Table 1;2- Méthodes de détermination des écarts de Conversion - Actif;Valeur 1;Valeur 2;Valeur 3
+14317;Table 1;1- Méthodes de réévaluation;Valeur 1;Valeur 2;Valeur 3
+14319;Table 1;2- Méthodes d'évaluation des provisions réglementées;Valeur 1;Valeur 2;Valeur 3
+14321;Table 1;3- Dettes de financement permanent;Valeur 1;Valeur 2;Valeur 3
+14323;Table 1;4- Méthodes d'évaluation des provisions durables pour risques et charges;Valeur 1;Valeur 2;Valeur 3
+14325;Table 1;5- Méthodes de détermination des écarts de Conversion - Passif;Valeur 1;Valeur 2;Valeur 3
+14327;Table 1;1- Dettes du passif circulant;Valeur 1;Valeur 2;Valeur 3
+14329;Table 1;2- Méthodes d'évaluation des autres provisions pour risques et charges;Valeur 1;Valeur 2;Valeur 3
+14331;Table 1;3- Méthodes de détermination des écarts de Conversion - Passif;Valeur 1;Valeur 2;Valeur 3
+14333;Table 1;1- Trésorerie - Actif;Valeur 1;Valeur 2;Valeur 3
+14335;Table 1;2- Trésorerie - Passif;Valeur 1;Valeur 2;Valeur 3
+14337;Table 1;3- Méthodes d'évaluation des provisions pour dépréciation;Valeur 1;Valeur 2;Valeur 3
+14347;Table 1;1- CA taxable;Valeur 1;Valeur 2;Valeur 3
+14349;Table 1;2- CA exonéré à 100%;Valeur 1;Valeur 2;Valeur 3
+14990;Table 1;(code = 14990) (Type =Double);Valeur 1;Valeur 2;Valeur 3
+14353;Table 1;(code = 14990) (Type =Double);Valeur 1;Valeur 2;Valeur 3
+17929;Table 1;4- Autres produits taxables;Valeur 1;Valeur 2;Valeur 3
+14992;Table 1;- Autres produits d'exploitation;Valeur 1;Valeur 2;Valeur 3
+14994;Table 1;- Produits financiers;Valeur 1;Valeur 2;Valeur 3
+14996;Table 1;- Subventions;Valeur 1;Valeur 2;Valeur 3
+14355;Table 1;(code = 14355) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+14356;Table 1;(code = 14355) (Type =Texte);Valeur 1;Valeur 2;Valeur 3
+14380;Table 1;5- Dénominateur (1 + 2 + 3 + 4);Valeur 1;Valeur 2;Valeur 3
+14415;Table 1;6- Montant de l'impôt sur les sociétés (IS) dû;Valeur 1;Valeur 2;Valeur 3
