@@ -18,20 +18,22 @@
             </tr>
         </thead>
         <tbody>
-            @php 
-                $grandTotalBrut = 0; 
-                $grandTotalAmort = 0; 
-                $grandTotalNet = 0; 
+            @php
+                $grandTotalBrut = 0;
+                $grandTotalAmort = 0;
+                $grandTotalNet = 0;
+                $grandTotalNetPrec = 0;
             @endphp
 
             @foreach($data as $rubrique => $lignes)
                 @php
                     // Calcul du total de la catégorie parente (lignes en gras)
-                    $sectionBrut = 0; $sectionAmort = 0; $sectionNet = 0;
+                    $sectionBrut = 0; $sectionAmort = 0; $sectionNet = 0; $sectionNetPrec = 0;
                     foreach($lignes as $l) {
                         $sectionBrut += $l->brut;
                         $sectionAmort += $l->amort;
                         $sectionNet += $l->net;
+                        $sectionNetPrec += $l->net_prec ?? 0;
                     }
                 @endphp
                 {{-- En-tête de section avec cumul dynamique --}}
@@ -40,7 +42,7 @@
                     <td class="p-2 border text-right font-mono">{{ $sectionBrut > 0 ? number_format($sectionBrut, 2, ',', ' ') : '0,00' }}</td>
                     <td class="p-2 border text-right font-mono">{{ $sectionAmort > 0 ? number_format($sectionAmort, 2, ',', ' ') : '0,00' }}</td>
                     <td class="p-2 border text-right font-mono text-blue-900">{{ number_format($sectionNet, 2, ',', ' ') }}</td>
-                    <td class="p-2 border text-right font-mono bg-slate-100 text-slate-400">0,00</td>
+                    <td class="p-2 border text-right font-mono bg-slate-100 text-slate-700">{{ number_format($sectionNetPrec, 2, ',', ' ') }}</td>
                 </tr>
 
                 {{-- Éléments enfants --}}
@@ -50,7 +52,7 @@
                         <td class="p-2 border text-right font-mono text-slate-700">{{ $valeurs->brut > 0 ? number_format($valeurs->brut, 2, ',', ' ') : '0,00' }}</td>
                         <td class="p-2 border text-right font-mono text-slate-500">{{ $valeurs->amort > 0 ? number_format($valeurs->amort, 2, ',', ' ') : '0,00' }}</td>
                         <td class="p-2 border text-right font-mono font-bold text-slate-800">{{ number_format($valeurs->net, 2, ',', ' ') }}</td>
-                        <td class="p-2 border text-right font-mono bg-slate-50 text-slate-400">0,00</td>
+                        <td class="p-2 border text-right font-mono bg-slate-50 text-slate-600">{{ number_format($valeurs->net_prec ?? 0, 2, ',', ' ') }}</td>
                     </tr>
                 @endforeach
 
@@ -61,12 +63,13 @@
                         <td class="p-2.5 border text-right font-mono text-blue-950">{{ number_format($totaux['TOTAL_I']->brut, 2, ',', ' ') }}</td>
                         <td class="p-2.5 border text-right font-mono text-blue-950">{{ number_format($totaux['TOTAL_I']->amort, 2, ',', ' ') }}</td>
                         <td class="p-2.5 border text-right font-mono text-blue-950">{{ number_format($totaux['TOTAL_I']->net, 2, ',', ' ') }}</td>
-                        <td class="p-2.5 border text-right font-mono bg-slate-200 text-slate-400">0,00</td>
+                        <td class="p-2.5 border text-right font-mono bg-slate-200 text-slate-700">{{ number_format($totaux['TOTAL_I']->net_prec ?? 0, 2, ',', ' ') }}</td>
                     </tr>
-                    @php 
-                        $grandTotalBrut += $totaux['TOTAL_I']->brut; 
-                        $grandTotalAmort += $totaux['TOTAL_I']->amort; 
-                        $grandTotalNet += $totaux['TOTAL_I']->net; 
+                    @php
+                        $grandTotalBrut += $totaux['TOTAL_I']->brut;
+                        $grandTotalAmort += $totaux['TOTAL_I']->amort;
+                        $grandTotalNet += $totaux['TOTAL_I']->net;
+                        $grandTotalNetPrec += $totaux['TOTAL_I']->net_prec ?? 0;
                     @endphp
                 @endif
 
@@ -77,12 +80,13 @@
                         <td class="p-2.5 border text-right font-mono text-blue-950">{{ number_format($totaux['TOTAL_II']->brut, 2, ',', ' ') }}</td>
                         <td class="p-2.5 border text-right font-mono text-blue-950">{{ number_format($totaux['TOTAL_II']->amort, 2, ',', ' ') }}</td>
                         <td class="p-2.5 border text-right font-mono text-blue-950">{{ number_format($totaux['TOTAL_II']->net, 2, ',', ' ') }}</td>
-                        <td class="p-2.5 border text-right font-mono bg-slate-200 text-slate-400">0,00</td>
+                        <td class="p-2.5 border text-right font-mono bg-slate-200 text-slate-700">{{ number_format($totaux['TOTAL_II']->net_prec ?? 0, 2, ',', ' ') }}</td>
                     </tr>
-                    @php 
-                        $grandTotalBrut += $totaux['TOTAL_II']->brut; 
-                        $grandTotalAmort += $totaux['TOTAL_II']->amort; 
-                        $grandTotalNet += $totaux['TOTAL_II']->net; 
+                    @php
+                        $grandTotalBrut += $totaux['TOTAL_II']->brut;
+                        $grandTotalAmort += $totaux['TOTAL_II']->amort;
+                        $grandTotalNet += $totaux['TOTAL_II']->net;
+                        $grandTotalNetPrec += $totaux['TOTAL_II']->net_prec ?? 0;
                     @endphp
                 @endif
 
@@ -93,12 +97,13 @@
                         <td class="p-2.5 border text-right font-mono text-blue-950">{{ number_format($totaux['TOTAL_III']->brut, 2, ',', ' ') }}</td>
                         <td class="p-2.5 border text-right font-mono text-blue-950">{{ number_format($totaux['TOTAL_III']->amort, 2, ',', ' ') }}</td>
                         <td class="p-2.5 border text-right font-mono text-blue-950">{{ number_format($totaux['TOTAL_III']->net, 2, ',', ' ') }}</td>
-                        <td class="p-2.5 border text-right font-mono bg-slate-200 text-slate-400">0,00</td>
+                        <td class="p-2.5 border text-right font-mono bg-slate-200 text-slate-700">{{ number_format($totaux['TOTAL_III']->net_prec ?? 0, 2, ',', ' ') }}</td>
                     </tr>
-                    @php 
-                        $grandTotalBrut += $totaux['TOTAL_III']->brut; 
-                        $grandTotalAmort += $totaux['TOTAL_III']->amort; 
-                        $grandTotalNet += $totaux['TOTAL_III']->net; 
+                    @php
+                        $grandTotalBrut += $totaux['TOTAL_III']->brut;
+                        $grandTotalAmort += $totaux['TOTAL_III']->amort;
+                        $grandTotalNet += $totaux['TOTAL_III']->net;
+                        $grandTotalNetPrec += $totaux['TOTAL_III']->net_prec ?? 0;
                     @endphp
                 @endif
             @endforeach
@@ -109,7 +114,7 @@
                 <td class="p-3 border text-right font-mono text-yellow-400 font-bold">{{ number_format($grandTotalBrut, 2, ',', ' ') }}</td>
                 <td class="p-3 border text-right font-mono text-yellow-400 font-bold">{{ number_format($grandTotalAmort, 2, ',', ' ') }}</td>
                 <td class="p-3 border text-right font-mono text-green-400 text-base font-black">{{ number_format($grandTotalNet, 2, ',', ' ') }}</td>
-                <td class="p-3 border text-right font-mono bg-slate-700 text-slate-300">0,00</td>
+                <td class="p-3 border text-right font-mono bg-slate-700 text-slate-200">{{ number_format($grandTotalNetPrec, 2, ',', ' ') }}</td>
             </tr>
         </tbody>
     </table>

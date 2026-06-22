@@ -47,6 +47,10 @@
 
                     $totXIV = $tI['3'] + $tIV['3'] + $tVIII['3'];
                     $totXV = $tII['3'] + $tV['3'] + $tIX['3'] + $tXII['3'];
+
+                    // Exercice Précédent (N-1) : mêmes agrégats sur la colonne (4).
+                    $totXIVPrec = $tI['4'] + $tIV['4'] + $tVIII['4'];
+                    $totXVPrec = $tII['4'] + $tV['4'] + $tIX['4'] + $tXII['4'];
                 @endphp
 
                 {{-- AFFICHAGE I & II --}}
@@ -88,9 +92,9 @@
                 <tr class="fw-bold table-dark text-white"><td>XIII. RÉSULTAT NET (XI - XII)</td><td colspan="2" class="hachure"></td><td class="text-end">{{ number_format($resXIII['3'], 2) }}</td><td class="text-end">{{ number_format($resXIII['4'], 2) }}</td></tr>
 
                 {{-- TOTAL DE SYNTHÈSE (Bas de l'image image_e26113.png) --}}
-                <tr class="fw-bold border-top border-dark"><td>XIV. TOTAL DES PRODUITS (I+IV+VIII)</td><td colspan="2" class="hachure"></td><td class="text-end">{{ number_format($totXIV, 2) }}</td><td class="text-end">0,00</td></tr>
-                <tr class="fw-bold"><td>XV. TOTAL DES CHARGES (II+V+IX+XII)</td><td colspan="2" class="hachure"></td><td class="text-end">{{ number_format($totXV, 2) }}</td><td class="text-end">0,00</td></tr>
-                <tr class="fw-bold table-primary"><td>XVI. RÉSULTAT NET (XIV - XV)</td><td colspan="2" class="hachure"></td><td class="text-end">{{ number_format($totXIV - $totXV, 2) }}</td><td class="text-end">0,00</td></tr>
+                <tr class="fw-bold border-top border-dark"><td>XIV. TOTAL DES PRODUITS (I+IV+VIII)</td><td colspan="2" class="hachure"></td><td class="text-end">{{ number_format($totXIV, 2) }}</td><td class="text-end">{{ number_format($totXIVPrec, 2) }}</td></tr>
+                <tr class="fw-bold"><td>XV. TOTAL DES CHARGES (II+V+IX+XII)</td><td colspan="2" class="hachure"></td><td class="text-end">{{ number_format($totXV, 2) }}</td><td class="text-end">{{ number_format($totXVPrec, 2) }}</td></tr>
+                <tr class="fw-bold table-primary"><td>XVI. RÉSULTAT NET (XIV - XV)</td><td colspan="2" class="hachure"></td><td class="text-end">{{ number_format($totXIV - $totXV, 2) }}</td><td class="text-end">{{ number_format($totXIVPrec - $totXVPrec, 2) }}</td></tr>
             </tbody>
         </table>
     </div>

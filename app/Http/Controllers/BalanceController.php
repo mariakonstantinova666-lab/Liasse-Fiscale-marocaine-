@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BalanceItem;
+use App\Services\BalanceService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -11,24 +12,28 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class BalanceController extends Controller
 {
-    public function index()
+    public function index(BalanceService $balanceService)
     {
         $userId = Auth::id();
-        
+
         // Si aucune année n'est en session, on met 2026 par défaut pour s'aligner avec la liasse
         $exercice = session('annee_exercice', 2026);
         if (!session()->has('annee_exercice')) {
             session(['annee_exercice' => $exercice]);
         }
-        
+
         // Récupère la société liée à l'utilisateur
         $societe = DB::table('societes')->where('user_id', $userId)->first();
-        
+
         $items = [];
+        $exercicesImportes = [];
         if ($societe && $exercice) {
             $items = BalanceItem::where('societe_id', $societe->id)
                                 ->where('exercice', $exercice)
                                 ->get();
+
+            // Années déjà importées : pilote le bandeau d'historisation N / N-1
+            $exercicesImportes = $balanceService->exercicesImportes($societe->id);
         }
 
         // On retourne le composant Vue "Dashboard" via Inertia
@@ -36,6 +41,8 @@ class BalanceController extends Controller
             'items' => $items,
             'societe' => $societe,
             'exerciceActif' => $exercice,
+            'exercicePrecedent' => $exercice - 1,
+            'exercicesImportes' => $exercicesImportes,
             'flash' => [
                 'success' => session('success'),
                 'error' => session('error')
@@ -88,10 +95,17 @@ class BalanceController extends Controller
                     }
                 }
 
-                // Sauvegarde immédiate en session pour alimenter tous les tableaux (Vue et Blade)
-                session(['annee_exercice' => $exercice]);
-                
-                return redirect()->back()->with('success', "$count lignes importées avec succès pour {$societe->nom_societe} !");
+                // L'exercice "actif" (N) reste toujours le plus récent importé.
+                // Ainsi, importer une balance N-1 n'écrase pas l'affichage de N :
+                // elle vient seulement alimenter la colonne "Exercice Précédent".
+                $exerciceActif = (int) max($exercice, session('annee_exercice', $exercice));
+                session(['annee_exercice' => $exerciceActif]);
+
+                $libelleExercice = $exercice < $exerciceActif
+                    ? "exercice précédent (N-1 : {$exercice})"
+                    : "exercice {$exercice}";
+
+                return redirect()->back()->with('success', "$count lignes importées pour {$societe->nom_societe} — {$libelleExercice}.");
             }
 
             return redirect()->back()->with('error', "Le fichier est vide.");

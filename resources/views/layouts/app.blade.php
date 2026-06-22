@@ -59,8 +59,39 @@
                             <span class="w-8 font-mono text-[10px] {{ request()->routeIs('liasse.provisions') ? 'text-blue-400' : 'text-slate-600' }}">T9</span> Provisions
                         </a>
                         <a href="{{ route('liasse.tva') }}" class="flex items-center p-2 text-sm rounded-md transition {{ request()->routeIs('liasse.tva') ? 'text-blue-400 font-bold bg-slate-900' : 'hover:bg-slate-900' }}">
-                            <span class="w-8 font-mono text-[10px] {{ request()->routeIs('liasse.tva') ? 'text-blue-400' : 'text-slate-600' }}">T19</span> Détail de la TVA
+                            <span class="w-8 font-mono text-[10px] {{ request()->routeIs('liasse.tva') ? 'text-blue-400' : 'text-slate-600' }}">T12</span> Détail de la TVA
                         </a>
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-[10px] font-black text-slate-500 uppercase px-3 mb-3 tracking-[0.2em]">Annexes complémentaires</p>
+                    <div class="space-y-1 text-slate-400">
+                        @foreach ([
+                            ['esg', 'T5', 'E.S.G'],
+                            ['detail_cpc', 'T6', 'Détail des postes CPC'],
+                            ['credit_bail', 'T7', 'Biens en crédit-bail'],
+                            ['plus_values', 'T10', 'Plus/moins-values'],
+                            ['titres_participation', 'T11', 'Titres de participation'],
+                            ['repartition_capital', 'T13', 'Répartition du capital'],
+                            ['affectation_resultats', 'T14', 'Affectation des résultats'],
+                            ['calcul_impot_encouragement', 'T15', 'Calcul impôt (encour.)'],
+                            ['dotations_amortissements', 'T16', 'Dotations amortissements'],
+                            ['plus_values_fusion', 'T17', 'Plus-values de fusion'],
+                            ['interets_emprunts', 'T18', 'Intérêts des emprunts'],
+                            ['locations_baux', 'T19', 'Locations et baux'],
+                            ['detail_stocks', 'T20', 'État détaillé des stocks'],
+                            ['operations_devises', 'T21', 'Opérations en devises'],
+                            ['tableau_financement', 'T22', 'Tableau de financement'],
+                            ['methodes_evaluation', 'T23', "Méthodes d'évaluation"],
+                            ['derogations', 'T24', 'État des dérogations'],
+                            ['changements_methodes', 'T25', 'Changements de méthodes'],
+                            ['calcul_is_encouragees', 'T26', 'Calcul IS (encouragées)'],
+                        ] as [$r, $t, $lbl])
+                            <a href="{{ route('liasse.'.$r) }}" class="flex items-center p-2 text-sm rounded-md transition {{ request()->routeIs('liasse.'.$r) ? 'text-blue-400 font-bold bg-slate-900' : 'hover:bg-slate-900' }}">
+                                <span class="w-8 font-mono text-[10px] {{ request()->routeIs('liasse.'.$r) ? 'text-blue-400' : 'text-slate-600' }}">{{ $t }}</span> {{ $lbl }}
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -91,6 +122,11 @@
             </header>
 
             <div class="flex-grow overflow-y-auto bg-slate-50 p-8">
+                @if(session('success'))
+                    <div class="max-w-7xl mx-auto mb-4 p-3 rounded-lg bg-green-100 text-green-800 text-sm border border-green-200">
+                        {{ session('success') }}
+                    </div>
+                @endif
                 @yield('content')
             </div>
         </main>

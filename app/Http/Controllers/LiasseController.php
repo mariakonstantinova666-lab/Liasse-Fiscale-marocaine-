@@ -3,11 +3,24 @@
 namespace App\Http\Controllers;
 
 use App\Models\BalanceItem;
+use App\Models\LiasseData;
+use App\Services\BalanceService;
+use App\Services\LiasseControlService;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class LiasseController extends Controller
 {
+    /** Tableaux déclaratifs éditables (saisie manuelle persistée dans liasse_data). */
+    private const TABLEAUX_EDITABLES = [
+        'credit_bail', 'plus_values', 'titres_participation', 'repartition_capital',
+        'affectation_resultats', 'calcul_impot_encouragement', 'dotations_amortissements',
+        'plus_values_fusion', 'interets_emprunts', 'locations_baux', 'detail_stocks',
+        'operations_devises', 'methodes_evaluation', 'derogations', 'changements_methodes',
+        'calcul_is_encouragees',
+    ];
+
     public function cpc()
     {
         $exercice = session('annee_exercice', 2025);
@@ -73,69 +86,72 @@ class LiasseController extends Controller
         // Logique d'importation
     }
 
-    public function bilanActif()
+    public function bilanActif(BalanceService $balanceService)
     {
         $exercice = session('annee_exercice', 2025);
         $userId = Auth::id();
-        $items = BalanceItem::where('user_id', $userId)->where('exercice', $exercice)->get();
+
+        // N et N-1 : la colonne "Exercice Précédent" est alimentée par la
+        // balance importée pour l'année (exercice - 1), via le même calcul.
+        [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent($userId, $exercice);
 
         $data = [
             'IMMOBILISATION EN NON VALEUR ( a )' => [
-                'Frais préliminaires' => $this->calculerLigneActif($items, '211', '2811'),
-                'Charges à répartir sur plusieurs exercices' => $this->calculerLigneActif($items, '212', '2812'),
-                'Primes de remboursement des obligations' => $this->calculerLigneActif($items, '213', '2813'),
+                'Frais préliminaires' => $this->calculerLigneActif($items, '211', '2811', $itemsPrev),
+                'Charges à répartir sur plusieurs exercices' => $this->calculerLigneActif($items, '212', '2812', $itemsPrev),
+                'Primes de remboursement des obligations' => $this->calculerLigneActif($items, '213', '2813', $itemsPrev),
             ],
             'IMMOBILISATIONS INCORPORELLES ( b )' => [
-                'Immobilisations en recherche et développement' => $this->calculerLigneActif($items, '221', '2821'),
-                'Brevets, marques, droits et valeurs similaires' => $this->calculerLigneActif($items, '222', '2822'),
-                'Fonds commercial' => $this->calculerLigneActif($items, '223', '2823'),
-                'Autres immobilisations corporelles' => $this->calculerLigneActif($items, '228', '2828'),
+                'Immobilisations en recherche et développement' => $this->calculerLigneActif($items, '221', '2821', $itemsPrev),
+                'Brevets, marques, droits et valeurs similaires' => $this->calculerLigneActif($items, '222', '2822', $itemsPrev),
+                'Fonds commercial' => $this->calculerLigneActif($items, '223', '2823', $itemsPrev),
+                'Autres immobilisations corporelles' => $this->calculerLigneActif($items, '228', '2828', $itemsPrev),
             ],
             'IMMOBILISATIONS CORPORELLES ( c )' => [
-                'Terrains' => $this->calculerLigneActif($items, '231', '2831'),
-                'Constructions' => $this->calculerLigneActif($items, '232', '2832'),
-                'Installations techniques, matériel et outillage' => $this->calculerLigneActif($items, '233', '2833'),
-                'Matériel de transport' => $this->calculerLigneActif($items, '234', '2834'),
-                'Mobiliers, matériel de bureau et aménagements divers' => $this->calculerLigneActif($items, '235', '2835'),
-                'Autres immobilisations corporelles' => $this->calculerLigneActif($items, '238', '2838'),
-                'Immobilisations corporelles en cours' => $this->calculerLigneActif($items, '239', '2839'),
+                'Terrains' => $this->calculerLigneActif($items, '231', '2831', $itemsPrev),
+                'Constructions' => $this->calculerLigneActif($items, '232', '2832', $itemsPrev),
+                'Installations techniques, matériel et outillage' => $this->calculerLigneActif($items, '233', '2833', $itemsPrev),
+                'Matériel de transport' => $this->calculerLigneActif($items, '234', '2834', $itemsPrev),
+                'Mobiliers, matériel de bureau et aménagements divers' => $this->calculerLigneActif($items, '235', '2835', $itemsPrev),
+                'Autres immobilisations corporelles' => $this->calculerLigneActif($items, '238', '2838', $itemsPrev),
+                'Immobilisations corporelles en cours' => $this->calculerLigneActif($items, '239', '2839', $itemsPrev),
             ],
             'IMMOBILISATIONS FINANCIERES ( d )' => [
-                'Prêts immobilisés' => $this->calculerLigneActif($items, '241', '2941'),
-                'Autres créances financières' => $this->calculerLigneActif($items, '248', '2948'),
-                'Titres de participation' => $this->calculerLigneActif($items, '251', '2951'),
-                'Autres titres immobilisés' => $this->calculerLigneActif($items, '258', '2958'),
+                'Prêts immobilisés' => $this->calculerLigneActif($items, '241', '2941', $itemsPrev),
+                'Autres créances financières' => $this->calculerLigneActif($items, '248', '2948', $itemsPrev),
+                'Titres de participation' => $this->calculerLigneActif($items, '251', '2951', $itemsPrev),
+                'Autres titres immobilisés' => $this->calculerLigneActif($items, '258', '2958', $itemsPrev),
             ],
             'ECARTS DE CONVERSION - ACTIF ( e )' => [
-                'Diminution des cadres immobilisées' => $this->calculerLigneActif($items, '271', null),
-                'Augmentation des dettes de financement' => $this->calculerLigneActif($items, '272', null),
+                'Diminution des cadres immobilisées' => $this->calculerLigneActif($items, '271', null, $itemsPrev),
+                'Augmentation des dettes de financement' => $this->calculerLigneActif($items, '272', null, $itemsPrev),
             ],
             'STOCKS ( f )' => [
-                'Marchandises' => $this->calculerLigneActif($items, '311', '3911'),
-                'Matières et fournitures consommables' => $this->calculerLigneActif($items, '312', '3912'),
-                'Produits en cours' => $this->calculerLigneActif($items, '313', '3913'),
-                'Produits intermédiaires et produits résiduels' => $this->calculerLigneActif($items, '314', '3914'),
-                'Produits finis' => $this->calculerLigneActif($items, '315', '3915'),
+                'Marchandises' => $this->calculerLigneActif($items, '311', '3911', $itemsPrev),
+                'Matières et fournitures consommables' => $this->calculerLigneActif($items, '312', '3912', $itemsPrev),
+                'Produits en cours' => $this->calculerLigneActif($items, '313', '3913', $itemsPrev),
+                'Produits intermédiaires et produits résiduels' => $this->calculerLigneActif($items, '314', '3914', $itemsPrev),
+                'Produits finis' => $this->calculerLigneActif($items, '315', '3915', $itemsPrev),
             ],
             'CREANCES DE L\'ACTIF CIRCULANT ( g )' => [
-                'Fournisseurs débiteurs, avances et acomptes' => $this->calculerLigneActif($items, '341', '3941'),
-                'Clients et comptes rattachés' => $this->calculerLigneActif($items, '342', '3942'),
-                'Personnel' => $this->calculerLigneActif($items, '343', '3943'),
-                'Etat' => $this->calculerLigneActif($items, '345', '3945'),
-                'Comptes d\'associés' => $this->calculerLigneActif($items, '346', '3946'),
-                'Autres débiteurs' => $this->calculerLigneActif($items, '348', '3948'),
-                'Comptes d\'régularisation actif' => $this->calculerLigneActif($items, '349', '3949'),
+                'Fournisseurs débiteurs, avances et acomptes' => $this->calculerLigneActif($items, '341', '3941', $itemsPrev),
+                'Clients et comptes rattachés' => $this->calculerLigneActif($items, '342', '3942', $itemsPrev),
+                'Personnel' => $this->calculerLigneActif($items, '343', '3943', $itemsPrev),
+                'Etat' => $this->calculerLigneActif($items, '345', '3945', $itemsPrev),
+                'Comptes d\'associés' => $this->calculerLigneActif($items, '346', '3946', $itemsPrev),
+                'Autres débiteurs' => $this->calculerLigneActif($items, '348', '3948', $itemsPrev),
+                'Comptes d\'régularisation actif' => $this->calculerLigneActif($items, '349', '3949', $itemsPrev),
             ],
             'TITRES ET VALEURS DE PLACEMENT ( h )' => [
-                'Titres et valeurs de placement' => $this->calculerLigneActif($items, '350', '3950'),
+                'Titres et valeurs de placement' => $this->calculerLigneActif($items, '350', '3950', $itemsPrev),
             ],
             'ECART DE CONVERSION - ACTIF ( i ) (Elém. Circul.)' => [
-                'Écarts de conversion - Actif (Éléments Circulants)' => $this->calculerLigneActif($items, '370', null),
+                'Écarts de conversion - Actif (Éléments Circulants)' => $this->calculerLigneActif($items, '370', null, $itemsPrev),
             ],
             'TRESORERIE - ACTIF' => [
-                'Chèques et valeurs à encaisser' => $this->calculerLigneActif($items, '511', null),
-                'Banques, T.G & CP' => $this->calculerLigneActif($items, '514', null),
-                'Caisses, régies d\'avances et accréditifs' => $this->calculerLigneActif($items, '516', null),
+                'Chèques et valeurs à encaisser' => $this->calculerLigneActif($items, '511', null, $itemsPrev),
+                'Banques, T.G & CP' => $this->calculerLigneActif($items, '514', null, $itemsPrev),
+                'Caisses, régies d\'avances et accréditifs' => $this->calculerLigneActif($items, '516', null, $itemsPrev),
             ]
         ];
 
@@ -164,32 +180,37 @@ class LiasseController extends Controller
         return $this->immobilisations();
     }
 
-    public function immobilisations()
+    public function immobilisations(?BalanceService $balanceService = null)
     {
+        $balanceService ??= app(BalanceService::class);
+
         $exercice = session('annee_exercice', 2025);
         $userId = Auth::id();
-        $items = BalanceItem::where('user_id', $userId)->where('exercice', $exercice)->get();
+
+        // Brut au début = clôture N-1 ; les augmentations/diminutions se déduisent
+        // de la variation entre la balance N et la balance N-1.
+        [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent($userId, $exercice);
 
         $immoData = [
             'IMMOBILISATIONS EN NON-VALEURS' => [
-                'Frais préliminaires' => $this->calculerLigneImmo($items, '211'),
-                'Charges à répartir sur plusieurs exercices' => $this->calculerLigneImmo($items, '212'),
-                'Primes de remboursement des obligations' => $this->calculerLigneImmo($items, '213'),
+                'Frais préliminaires' => $this->calculerLigneImmo($items, '211', $itemsPrev),
+                'Charges à répartir sur plusieurs exercices' => $this->calculerLigneImmo($items, '212', $itemsPrev),
+                'Primes de remboursement des obligations' => $this->calculerLigneImmo($items, '213', $itemsPrev),
             ],
             'IMMOBILISATIONS INCORPORELLES' => [
-                'Immobilisations en recherche et développement' => $this->calculerLigneImmo($items, '221'),
-                'Brevets, marques, droits et valeurs similaires' => $this->calculerLigneImmo($items, '222'),
-                'Fonds commercial' => $this->calculerLigneImmo($items, '223'),
-                'Autres immobilisations incorporelles' => $this->calculerLigneImmo($items, '228'),
+                'Immobilisations en recherche et développement' => $this->calculerLigneImmo($items, '221', $itemsPrev),
+                'Brevets, marques, droits et valeurs similaires' => $this->calculerLigneImmo($items, '222', $itemsPrev),
+                'Fonds commercial' => $this->calculerLigneImmo($items, '223', $itemsPrev),
+                'Autres immobilisations incorporelles' => $this->calculerLigneImmo($items, '228', $itemsPrev),
             ],
             'IMMOBILISATIONS CORPORELLES' => [
-                'Terrains' => $this->calculerLigneImmo($items, '231'),
-                'Constructions' => $this->calculerLigneImmo($items, '232'),
-                'Installations techniques, matériel et outillage' => $this->calculerLigneImmo($items, '233'),
-                'Matériel de transport' => $this->calculerLigneImmo($items, '234'),
-                'Mobilier, matériel de bureau et aménagement' => $this->calculerLigneImmo($items, '235'),
-                'Autres immobilisations corporelles' => $this->calculerLigneImmo($items, '238'),
-                'Immobilisations corporelles en cours' => $this->calculerLigneImmo($items, '239'),
+                'Terrains' => $this->calculerLigneImmo($items, '231', $itemsPrev),
+                'Constructions' => $this->calculerLigneImmo($items, '232', $itemsPrev),
+                'Installations techniques, matériel et outillage' => $this->calculerLigneImmo($items, '233', $itemsPrev),
+                'Matériel de transport' => $this->calculerLigneImmo($items, '234', $itemsPrev),
+                'Mobilier, matériel de bureau et aménagement' => $this->calculerLigneImmo($items, '235', $itemsPrev),
+                'Autres immobilisations corporelles' => $this->calculerLigneImmo($items, '238', $itemsPrev),
+                'Immobilisations corporelles en cours' => $this->calculerLigneImmo($items, '239', $itemsPrev),
             ]
         ];
 
@@ -573,6 +594,429 @@ class LiasseController extends Controller
         ));
     }
 
+    // ===================================================================
+    // TABLEAUX SUPPLÉMENTAIRES DE LA LIASSE (T05 → T26)
+    // Structure exacte issue du modèle Simpl-IS (D3Simpl2). Chaque vue reçoit
+    // $items (balance N) et $exercice via genericView ; le câblage des calculs
+    // se fera tableau par tableau dans une étape ultérieure.
+    // ===================================================================
+
+    public function esg(?BalanceService $balanceService = null)                                                  // T05
+    {
+        $balanceService ??= app(BalanceService::class);
+        $exercice = session('annee_exercice', 2025);
+        [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent(Auth::id(), $exercice);
+
+        $n = $this->calculerESG($items);
+        $p = $this->calculerESG($itemsPrev);
+
+        $sp = "\u{00a0}\u{00a0}\u{00a0}";  // indentation libellé
+        $rows = [
+            ['section' => 'I - TABLEAU DE FORMATION DU RESULTAT ( T.F.R )'],
+            ['l' => "1{$sp}Ventes de marchandises (en l'état )", 'k' => 'ventesMarch'],
+            ['l' => "2\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Achats revendus de marchandises", 'k' => 'achatsRevendus'],
+            ['l' => "I{$sp}MARGES BRUTES SUR VENTES EN L'ETAT", 'k' => 'margeBrute', 'bold' => true],
+            ['l' => "II\u{00a0}\u{00a0}+\u{00a0}\u{00a0}PRODUCTION DE L'EXERCICE (3+4+5)", 'k' => 'production', 'bold' => true],
+            ['l' => "3{$sp}Ventes de biens et services produits", 'k' => 'ventesBiens'],
+            ['l' => "4{$sp}Variation de stocks de produits", 'k' => 'varStock'],
+            ['l' => "5{$sp}Immobilisations produites par l'entreprise pour elle même", 'k' => 'immobProduites'],
+            ['l' => "III\u{00a0}\u{00a0}-\u{00a0}\u{00a0}CONSOMMATION DE L'EXERCICE (6+7)", 'k' => 'consommation', 'bold' => true],
+            ['l' => "6{$sp}Achats consommés de matières et fournitures", 'k' => 'achatsConsommes'],
+            ['l' => "7{$sp}Autres charges externes", 'k' => 'autresChargesExt'],
+            ['l' => "IV{$sp}VALEUR AJOUTEE ( I+II+III )", 'k' => 'va', 'bold' => true],
+            ['l' => "8\u{00a0}\u{00a0}+\u{00a0}\u{00a0}Subventions d'exploitation", 'k' => 'subvExpl'],
+            ['l' => "V{$sp}RESULTAT BRUT D'EXPLOITATION (E.B.E)", 'k' => 'ebe', 'bold' => true],
+            ['l' => "9\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Impôts et taxes", 'k' => 'impotsTaxes'],
+            ['l' => "10\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Charges de personnel", 'k' => 'chargesPersonnel'],
+            ['l' => "11\u{00a0}\u{00a0}+\u{00a0}\u{00a0}Autres produits d'exploitation", 'k' => 'autresProdExpl'],
+            ['l' => "12\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Autres charges d'exploitation", 'k' => 'autresChargesExpl'],
+            ['l' => "13\u{00a0}\u{00a0}+\u{00a0}\u{00a0}Reprises d'exploitation: transfert de charges", 'k' => 'reprisesExpl'],
+            ['l' => "14\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Dotations d'exploitation", 'k' => 'dotationsExpl'],
+            ['l' => "VI{$sp}RESULTAT D'EXPLOITATION ( + ou - )", 'k' => 'resExpl', 'bold' => true],
+            ['l' => "VII{$sp}RESULTAT FINANCIER", 'k' => 'resFin', 'bold' => true],
+            ['l' => "VIII{$sp}RESULTAT COURANT ( + ou - )", 'k' => 'resCourant', 'bold' => true],
+            ['l' => "IX{$sp}RESULTAT NON COURANT ( + ou - )", 'k' => 'resNC', 'bold' => true],
+            ['l' => "15\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Impôts sur les resultats", 'k' => 'impotsResultats'],
+            ['l' => "X{$sp}RESULTAT NET DE L'EXERCICE ( + ou - )", 'k' => 'resNet', 'bold' => true],
+            ['section' => "II - CAPACITE D'AUTOFINANCEMENT ( C.A.F ) - AUTOFINANCEMENT"],
+            ['l' => "1{$sp}RESULTAT NET DE L'EXERCICE ( + ou - )", 'k' => 'resNet'],
+            ['l' => "- Benefice (+)", 'k' => 'benefice', 'indent' => true],
+            ['l' => "- Perte\u{00a0}\u{00a0}\u{00a0}(-)", 'k' => 'perte', 'indent' => true],
+            ['l' => "2\u{00a0}\u{00a0}+\u{00a0}\u{00a0}Dotations d'exploitation", 'k' => 'dotationsExpl'],
+            ['l' => "3\u{00a0}\u{00a0}+\u{00a0}\u{00a0}Dotations financières", 'k' => 'dotFin'],
+            ['l' => "4\u{00a0}\u{00a0}+\u{00a0}\u{00a0}Dotations non courantes", 'k' => 'dotNC'],
+            ['l' => "5\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Reprises d'exploitation", 'k' => 'reprisesExpl'],
+            ['l' => "6\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Reprises financières", 'k' => 'reprFin'],
+            ['l' => "7\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Reprises non courantes (2) (3)", 'k' => 'reprNC'],
+            ['l' => "8\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Produits des cession des immobilisations (1)", 'k' => 'produitsCession'],
+            ['l' => "9\u{00a0}\u{00a0}+\u{00a0}\u{00a0}Valeurs nettes des immobilisations cédées", 'k' => 'vnaCedees'],
+            ['l' => "I{$sp}CAPACITE D'AUTOFINANCEMENT ( C.A.F )", 'k' => 'caf', 'total' => true],
+            ['l' => "10\u{00a0}\u{00a0}-\u{00a0}\u{00a0}Distributions de bénéfices", 'k' => 'distributions'],
+            ['l' => "II{$sp}AUTOFINANCEMENT", 'k' => 'autofinancement', 'total' => true],
+        ];
+
+        return view('liasse.esg', compact('exercice', 'rows', 'n', 'p'));
+    }
+
+    public function detailCpc(?BalanceService $balanceService = null)                                            // T06
+    {
+        $balanceService ??= app(BalanceService::class);
+        $exercice = session('annee_exercice', 2025);
+        [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent(Auth::id(), $exercice);
+
+        // Définition : sections, postes (préfixe 3 chiffres) et lignes de détail (sous-comptes).
+        // 'RESTE' = solde du poste non ventilé (Total du poste - somme des détails connus).
+        $def = [
+            ['section' => "CHARGES D'EXPLOITATION"],
+            ['poste' => '611', 'label' => 'Achats revendus de marchandises', 'type' => 'charge', 'details' => [
+                ['Achats de marchandises', '6111'],
+                ['Variation des stocks de marchandises', '6114'],
+            ]],
+            ['poste' => '612', 'label' => 'Achats consommés de matières et fournitures', 'type' => 'charge', 'details' => [
+                ['Achats de matières premières', '6121'],
+                ['Variation des stocks de matières premières (+/-)', '6124'],
+                ["Achats de matières et fournitures consommables et d'emballages", ['6122', '6123']],
+                ['Variation des stocks de matières, fournitures et emballages (+/-)', '6125'],
+                ['Achats non stockés de matières et de fournitures', '6126'],
+                ['Achats de travaux, études et prestation de services', '6127'],
+            ]],
+            ['poste' => ['613', '614'], 'label' => 'Autres charges externes', 'type' => 'charge', 'details' => [
+                ['Locations et charges locatives', '6131'],
+                ['Redevances de crédit-bail', '6132'],
+                ['Entretient et réparations', '6133'],
+                ["Primes d'assurances", '6134'],
+                ["Rémunérations du personnel extérieur à l'entreprise", '6135'],
+                ["Rémunérations d'intermédiaires et honoraires", '6136'],
+                ['Redevances pour brevets, marque, droits ...', '6137'],
+                ['Transports', '6142'],
+                ['Déplacements, missions et réceptions', '6143'],
+                ['Reste du poste des autres charges externes', 'RESTE'],
+            ]],
+            ['poste' => '617', 'label' => 'Charges de personnel', 'type' => 'charge', 'details' => [
+                ['Rémunération du personnel', '6171'],
+                ['Charges sociales', '6174'],
+                ['Reste du poste des charges de personnel', 'RESTE'],
+            ]],
+            ['poste' => '618', 'label' => "Autres charges d'exploitation", 'type' => 'charge', 'details' => [
+                ['Jetons de présence', '6181'],
+                ['Pertes sur créances irrécouvrables', '6182'],
+                ["Reste du poste des autres charges d'exploitation", 'RESTE'],
+            ]],
+            ['section' => 'CHARGES FINANCIERES'],
+            ['poste' => '638', 'label' => 'Autres charges financières', 'type' => 'charge', 'details' => [
+                ['Charges nettes sur cessions de titres et valeurs de placement', '6385'],
+                ['Reste du poste des autres charges financières', 'RESTE'],
+            ]],
+            ['section' => 'CHARGES NON COURANTES'],
+            ['poste' => '658', 'label' => 'Autres charges non courantes', 'type' => 'charge', 'details' => [
+                ['Pénalités sur marchés et débits', '6581'],
+                ["Rappels d'impôts (autres qu'impôts sur les résultats)", '6582'],
+                ['Pénalités et amendes fiscales et pénales', '6583'],
+                ['Créances devenues irrécouvrables', '6585'],
+                ['Reste du poste des autres charges non courantes', 'RESTE'],
+            ]],
+            ['section' => "PRODUITS D'EXPLOITATION"],
+            ['poste' => '711', 'label' => 'Ventes de marchandises', 'type' => 'produit', 'details' => [
+                ['Ventes de marchandises au Maroc', '7111'],
+                ["Ventes de marchandises à l'étranger", '7113'],
+                ['Reste du poste des ventes de marchandises', 'RESTE'],
+            ]],
+            ['poste' => '712', 'label' => 'Ventes des biens et services produits', 'type' => 'produit', 'details' => [
+                ['Ventes de biens au Maroc', '7121'],
+                ["Ventes de biens à l'étranger", '7122'],
+                ['Ventes des services au Maroc', '7124'],
+                ["Ventes des services à l'étranger", '7125'],
+                ['Redevances pour brevets, marques, droits ...', '7126'],
+                ['Reste du poste des ventes et services produits', 'RESTE'],
+            ]],
+            ['poste' => '713', 'label' => 'Variation des stocks de produits', 'type' => 'produit', 'details' => [
+                ['Variation des stocks de produits de produits en cours', '7131'],
+                ['Variation des stocks de biens produits', '7132'],
+                ['Variation des stocks de services en cours', '7134'],
+            ]],
+            ['poste' => '718', 'label' => "Autres produits d'exploitation", 'type' => 'produit', 'details' => [
+                ['Jetons de présence reçus', '7181'],
+                ['Reste du poste (produits divers)', 'RESTE'],
+            ]],
+            ['poste' => '719', 'label' => "Reprises d'exploitation, transferts de charges", 'type' => 'produit', 'details' => [
+                ['Reprises', 'RESTE'],
+                ['Transferts de charges', '7197'],
+            ]],
+            ['section' => 'PRODUITS FINANCIERS'],
+            ['poste' => '738', 'label' => 'Intérêts et autres produits financiers', 'type' => 'produit', 'details' => [
+                ['Intérêt et produits assimilés', '7381'],
+                ['Revenus des créances rattachées à des participations', '7383'],
+                ['Produits nets sur cessions de titres et valeurs de placement', '7385'],
+                ['Reste du poste intérêts et autres produits financiers', 'RESTE'],
+            ]],
+        ];
+
+        $rows = [];
+        foreach ($def as $bloc) {
+            if (isset($bloc['section'])) {
+                $rows[] = ['section' => $bloc['section']];
+                continue;
+            }
+            $type = $bloc['type'];
+            $totalN = $this->montant($items, $bloc['poste'], $type);
+            $totalP = $this->montant($itemsPrev, $bloc['poste'], $type);
+
+            $code = is_array($bloc['poste']) ? implode('/', $bloc['poste']) : $bloc['poste'];
+            $rows[] = ['poste' => $code . "\u{00a0}\u{00a0}" . $bloc['label']];
+
+            $sommeN = 0.0; $sommeP = 0.0; $resteIdx = null;
+            foreach ($bloc['details'] as [$lib, $codeDetail]) {
+                if ($codeDetail === 'RESTE') {
+                    $rows[] = ['l' => $lib, 'n' => 0.0, 'p' => 0.0];
+                    $resteIdx = array_key_last($rows);
+                    continue;
+                }
+                $vN = $this->montant($items, $codeDetail, $type);
+                $vP = $this->montant($itemsPrev, $codeDetail, $type);
+                $sommeN += $vN; $sommeP += $vP;
+                $rows[] = ['l' => $lib, 'n' => $vN, 'p' => $vP];
+            }
+            if ($resteIdx !== null) {
+                $rows[$resteIdx]['n'] = $totalN - $sommeN;
+                $rows[$resteIdx]['p'] = $totalP - $sommeP;
+            }
+            $rows[] = ['total' => true, 'l' => 'Total', 'n' => $totalN, 'p' => $totalP];
+        }
+
+        return view('liasse.detail_cpc', compact('exercice', 'rows'));
+    }
+    public function controle(LiasseControlService $control, ?BalanceService $balanceService = null)
+    {
+        $balanceService ??= app(BalanceService::class);
+        $exercice = session('annee_exercice', 2025);
+        $items = $balanceService->lignesExercice(Auth::id(), $exercice);
+
+        $controles = $control->verifier($items);
+        $bloquants = collect($controles)->filter(fn ($r) => $r['bloquant'] && !$r['ok'])->count();
+        $anomalies = collect($controles)->filter(fn ($r) => !$r['ok'])->count();
+        $valide = $bloquants === 0;
+
+        // Compat. avec l'ancienne vue (variables historiques)
+        $equilibreBilan = $controles[0]['ok'] ?? false;
+        $ecartBilan = $controles[0]['ecart'] ?? 0;
+        $equilibreResultat = $controles[1]['ok'] ?? false;
+
+        return view('liasse.controle', compact(
+            'controles', 'valide', 'bloquants', 'anomalies', 'exercice',
+            'equilibreBilan', 'ecartBilan', 'equilibreResultat'
+        ));
+    }
+
+    public function creditBail()             { return $this->genericEditable('liasse.credit_bail', 'credit_bail'); }                       // T07
+    public function plusValues()             { return $this->genericEditable('liasse.plus_values', 'plus_values'); }                       // T10
+    public function titresParticipation()    { return $this->genericEditable('liasse.titres_participation', 'titres_participation'); }     // T11
+    public function repartitionCapital()     { return $this->genericEditable('liasse.repartition_capital', 'repartition_capital'); }       // T13
+    public function affectationResultats()   { return $this->genericEditable('liasse.affectation_resultats', 'affectation_resultats'); }   // T14
+    public function calculImpotEncouragement(){ return $this->genericEditable('liasse.calcul_impot_encouragement', 'calcul_impot_encouragement'); } // T15
+    public function dotationsAmortissements() { return $this->genericEditable('liasse.dotations_amortissements', 'dotations_amortissements'); } // T16
+    public function plusValuesFusion()       { return $this->genericEditable('liasse.plus_values_fusion', 'plus_values_fusion'); }         // T17
+    public function interetsEmprunts()       { return $this->genericEditable('liasse.interets_emprunts', 'interets_emprunts'); }           // T18
+    public function locationsBaux()          { return $this->genericEditable('liasse.locations_baux', 'locations_baux'); }                 // T19
+    public function detailStocks()           { return $this->genericEditable('liasse.detail_stocks', 'detail_stocks'); }                   // T20
+    public function operationsDevises()      { return $this->genericEditable('liasse.operations_devises', 'operations_devises'); }         // T21
+
+    /**
+     * Enregistre les valeurs saisies d'un tableau déclaratif dans liasse_data.
+     * Les champs sont postés sous la forme f[<cle>] = <valeur> (anti-injection
+     * via Eloquent ; protection CSRF assurée par le middleware web).
+     */
+    public function saveData(Request $request, string $tableau)
+    {
+        abort_unless(in_array($tableau, self::TABLEAUX_EDITABLES, true), 404);
+
+        $exercice = (int) session('annee_exercice', 2025);
+        $userId = Auth::id();
+        $champs = (array) $request->input('f', []);
+
+        DB::transaction(function () use ($champs, $userId, $exercice, $tableau) {
+            LiasseData::where('user_id', $userId)
+                ->where('exercice', $exercice)
+                ->where('tableau_code', $tableau)
+                ->delete();
+
+            foreach ($champs as $cle => $valeur) {
+                if ($valeur === null || $valeur === '') {
+                    continue;
+                }
+                LiasseData::create([
+                    'user_id'      => $userId,
+                    'exercice'     => $exercice,
+                    'tableau_code' => $tableau,
+                    'cle'          => (string) $cle,
+                    'valeur'       => is_array($valeur) ? json_encode($valeur) : (string) $valeur,
+                ]);
+            }
+        });
+
+        return redirect()->back()->with('success', 'Tableau enregistré avec succès.');
+    }
+
+    /**
+     * Charge un tableau déclaratif éditable avec ses valeurs déjà saisies.
+     */
+    private function genericEditable(string $view, string $tableau)
+    {
+        $exercice = session('annee_exercice', 2025);
+        $items = BalanceItem::where('user_id', Auth::id())->where('exercice', $exercice)->get();
+        $data = LiasseData::where('user_id', Auth::id())
+            ->where('exercice', $exercice)
+            ->where('tableau_code', $tableau)
+            ->pluck('valeur', 'cle')
+            ->toArray();
+
+        return view($view, compact('items', 'exercice', 'data', 'tableau'));
+    }
+
+    public function tableauFinancement(?BalanceService $balanceService = null)                                   // T22
+    {
+        $balanceService ??= app(BalanceService::class);
+        $exercice = session('annee_exercice', 2025);
+        [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent(Auth::id(), $exercice);
+
+        $masses = function ($col) {
+            $fp = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '1'))
+                ->sum(fn ($i) => $i->solde_crediteur - $i->solde_debiteur);
+            $immBrut = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '2')
+                    && !str_starts_with((string) $i->compte, '28') && !str_starts_with((string) $i->compte, '29'))
+                ->sum(fn ($i) => $i->solde_debiteur - $i->solde_crediteur);
+            $immAmort = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '28') || str_starts_with((string) $i->compte, '29'))
+                ->sum(fn ($i) => $i->solde_crediteur - $i->solde_debiteur);
+            $actifImmo = $immBrut - $immAmort;
+            $fr = $fp - $actifImmo;
+            $acBrut = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '3') && !str_starts_with((string) $i->compte, '39'))
+                ->sum(fn ($i) => $i->solde_debiteur - $i->solde_crediteur);
+            $acProv = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '39'))
+                ->sum(fn ($i) => $i->solde_crediteur - $i->solde_debiteur);
+            $ac = $acBrut - $acProv;
+            $pc = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '4'))
+                ->sum(fn ($i) => $i->solde_crediteur - $i->solde_debiteur);
+            $bfg = $ac - $pc;
+            $tn = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '5'))
+                ->sum(fn ($i) => $i->solde_debiteur - $i->solde_crediteur);
+            return compact('fp', 'actifImmo', 'fr', 'ac', 'pc', 'bfg', 'tn');
+        };
+
+        $n = $masses($items);
+        $p = $masses($itemsPrev);
+
+        // Lignes de la Partie I : sens = 'ressource' ou 'emploi' si la variation est positive.
+        $synthese = [
+            ['l' => '1&nbsp;&nbsp;Financement Permanent',          'k' => 'fp',        'sensPos' => 'ressource'],
+            ['l' => '2&nbsp;&nbsp;Moins actif immobilisé',         'k' => 'actifImmo', 'sensPos' => 'emploi'],
+            ['l' => '3&nbsp;&nbsp;= Fonds de roulement fonctionnel (1-2) (A)', 'k' => 'fr', 'sensPos' => 'ressource', 'total' => true],
+            ['l' => '4&nbsp;&nbsp;Actif circulant',                'k' => 'ac',        'sensPos' => 'emploi'],
+            ['l' => '5&nbsp;&nbsp;Moins passif circulant',         'k' => 'pc',        'sensPos' => 'ressource'],
+            ['l' => '6&nbsp;&nbsp;= Besoin de financement global (4-5) (B)', 'k' => 'bfg', 'sensPos' => 'emploi', 'total' => true],
+            ['l' => '7&nbsp;&nbsp;TRESORERIE NETTE (Actif-Passif) = A-B', 'k' => 'tn', 'sensPos' => 'emploi', 'total' => true],
+        ];
+
+        foreach ($synthese as &$row) {
+            $row['n'] = $n[$row['k']];
+            $row['p'] = $p[$row['k']];
+            $var = $row['n'] - $row['p'];
+            // Placement de la variation dans la bonne colonne (Emplois / Ressources)
+            $estRessource = ($row['sensPos'] === 'ressource') ? $var >= 0 : $var < 0;
+            $row['emploi']    = $estRessource ? 0.0 : abs($var);
+            $row['ressource'] = $estRessource ? abs($var) : 0.0;
+        }
+        unset($row);
+
+        return view('liasse.tableau_financement', compact('exercice', 'synthese'));
+    }
+    public function methodesEvaluation()     { return $this->genericView('liasse.methodes_evaluation'); }      // T23
+    public function derogations()            { return $this->genericView('liasse.derogations'); }              // T24
+    public function changementsMethodes()    { return $this->genericView('liasse.changements_methodes'); }     // T25
+    public function calculIsEncouragees()    { return $this->genericView('liasse.calcul_is_encouragees'); }    // T26
+
+    /**
+     * Somme nette d'un ou plusieurs préfixes de comptes pour une collection.
+     * type 'produit' => crédit - débit ; type 'charge' => débit - crédit.
+     */
+    private function montant($items, $prefixes, string $type): float
+    {
+        $prefixes = (array) $prefixes;
+        return (float) $items->filter(function ($i) use ($prefixes) {
+            foreach ($prefixes as $p) {
+                if (str_starts_with($i->compte, $p)) return true;
+            }
+            return false;
+        })->sum(fn ($i) => $type === 'produit'
+            ? $i->solde_crediteur - $i->solde_debiteur
+            : $i->solde_debiteur - $i->solde_crediteur);
+    }
+
+    /**
+     * Soldes intermédiaires de gestion (T.F.R) + C.A.F pour une balance donnée.
+     * Tout est dérivé des comptes de charges (classe 6) et de produits (classe 7).
+     */
+    private function calculerESG($items): array
+    {
+        $m = fn ($p, $t) => $this->montant($items, $p, $t);
+
+        $ventesMarch      = $m('711', 'produit');
+        $achatsRevendus   = $m('611', 'charge');
+        $margeBrute       = $ventesMarch - $achatsRevendus;
+        $ventesBiens      = $m('712', 'produit');
+        $varStock         = $m('713', 'produit');
+        $immobProduites   = $m('714', 'produit');
+        $production       = $ventesBiens + $varStock + $immobProduites;
+        $achatsConsommes  = $m('612', 'charge');
+        $autresChargesExt = $m(['613', '614'], 'charge');
+        $consommation     = $achatsConsommes + $autresChargesExt;
+        $va               = $margeBrute + $production - $consommation;
+        $subvExpl         = $m('716', 'produit');
+        $impotsTaxes      = $m('616', 'charge');
+        $chargesPersonnel = $m('617', 'charge');
+        $ebe              = $va + $subvExpl - $impotsTaxes - $chargesPersonnel;
+        $autresProdExpl   = $m('718', 'produit');
+        $autresChargesExpl= $m('618', 'charge');
+        $reprisesExpl     = $m('719', 'produit');
+        $dotationsExpl    = $m('619', 'charge');
+        $resExpl          = $ebe + $autresProdExpl - $autresChargesExpl + $reprisesExpl - $dotationsExpl;
+        $prodFin          = $m('73', 'produit');
+        $chargesFin       = $m('63', 'charge');
+        $resFin           = $prodFin - $chargesFin;
+        $resCourant       = $resExpl + $resFin;
+        $prodNC           = $m('75', 'produit');
+        $chargesNC        = $m('65', 'charge');
+        $resNC            = $prodNC - $chargesNC;
+        $resAvantImpot    = $resCourant + $resNC;
+        $impotsResultats  = $m('67', 'charge');
+        $resNet           = $resAvantImpot - $impotsResultats;
+
+        // C.A.F (méthode additive simplifiée à partir du résultat net)
+        $dotFin           = $m('639', 'charge');
+        $dotNC            = $m('659', 'charge');
+        $reprFin          = $m('739', 'produit');
+        $reprNC           = $m('759', 'produit');
+        $produitsCession  = $m('751', 'produit');
+        $vnaCedees        = $m('651', 'charge');
+        $caf = $resNet + $dotationsExpl + $dotFin + $dotNC
+             - $reprisesExpl - $reprFin - $reprNC - $produitsCession + $vnaCedees;
+        $distributions    = 0.0;  // donnée déclarative (non issue de la balance)
+        $autofinancement  = $caf - $distributions;
+
+        return [
+            'ventesMarch' => $ventesMarch, 'achatsRevendus' => $achatsRevendus, 'margeBrute' => $margeBrute,
+            'ventesBiens' => $ventesBiens, 'varStock' => $varStock, 'immobProduites' => $immobProduites,
+            'production' => $production, 'achatsConsommes' => $achatsConsommes, 'autresChargesExt' => $autresChargesExt,
+            'consommation' => $consommation, 'va' => $va, 'subvExpl' => $subvExpl, 'ebe' => $ebe,
+            'impotsTaxes' => $impotsTaxes, 'chargesPersonnel' => $chargesPersonnel, 'autresProdExpl' => $autresProdExpl,
+            'autresChargesExpl' => $autresChargesExpl, 'reprisesExpl' => $reprisesExpl, 'dotationsExpl' => $dotationsExpl,
+            'resExpl' => $resExpl, 'resFin' => $resFin, 'resCourant' => $resCourant, 'resNC' => $resNC,
+            'impotsResultats' => $impotsResultats, 'resNet' => $resNet,
+            'benefice' => $resNet > 0 ? $resNet : 0.0, 'perte' => $resNet < 0 ? abs($resNet) : 0.0,
+            'dotFin' => $dotFin, 'dotNC' => $dotNC, 'reprFin' => $reprFin, 'reprNC' => $reprNC,
+            'produitsCession' => $produitsCession, 'vnaCedees' => $vnaCedees, 'caf' => $caf,
+            'distributions' => $distributions, 'autofinancement' => $autofinancement,
+        ];
+    }
+
     private function genericView($viewName)
     {
         $exercice = session('annee_exercice', 2025);
@@ -580,73 +1024,94 @@ class LiasseController extends Controller
         return view($viewName, compact('items', 'exercice'));
     }
 
-    private function calculerLigneActif($items, $codesBrut, $codesAmort)
+    private function calculerLigneActif($items, $codesBrut, $codesAmort, $itemsPrev = null)
     {
-        $codesBrut = (array) $codesBrut;
-        $codesAmort = (array) $codesAmort;
+        $brutAmortNet = function ($collection) use ($codesBrut, $codesAmort) {
+            $codesBrut = (array) $codesBrut;
+            $codesAmort = (array) $codesAmort;
 
-        $brut = (float) $items->filter(function($i) use ($codesBrut) {
-            foreach($codesBrut as $c) {
-                if (str_starts_with($i->compte, $c) && !str_starts_with($i->compte, '28') && !str_starts_with($i->compte, '29')) return true;
-            }
-            return false;
-        })->sum(fn($i) => $i->solde_debiteur - $i->solde_crediteur);
-
-        $amort = 0.0;
-        if (!empty($codesAmort)) {
-            $amort = (float) $items->filter(function($i) use ($codesAmort) {
-                foreach($codesAmort as $c) if(str_starts_with($i->compte, $c)) return true;
+            $brut = (float) $collection->filter(function($i) use ($codesBrut) {
+                foreach($codesBrut as $c) {
+                    if (str_starts_with($i->compte, $c) && !str_starts_with($i->compte, '28') && !str_starts_with($i->compte, '29')) return true;
+                }
                 return false;
-            })->sum(fn($i) => $i->solde_crediteur - $i->solde_debiteur);
+            })->sum(fn($i) => $i->solde_debiteur - $i->solde_crediteur);
+
+            $amort = 0.0;
+            if (!empty($codesAmort)) {
+                $amort = (float) $collection->filter(function($i) use ($codesAmort) {
+                    foreach($codesAmort as $c) if(str_starts_with($i->compte, $c)) return true;
+                    return false;
+                })->sum(fn($i) => $i->solde_crediteur - $i->solde_debiteur);
+            }
+
+            if ($brut < 0) $brut = abs($brut);
+            if ($amort < 0) $amort = abs($amort);
+
+            return ['brut' => $brut, 'amort' => $amort, 'net' => $brut - $amort];
+        };
+
+        $courant = $brutAmortNet($items);
+
+        // Exercice Précédent (N-1) : on rejoue le même calcul sur la balance N-1.
+        // On ne garde que le "Net" (seule colonne demandée au bilan pour le N-1).
+        $netPrecedent = 0.0;
+        if ($itemsPrev !== null) {
+            $netPrecedent = $brutAmortNet($itemsPrev)['net'];
         }
 
-        if ($brut < 0) $brut = abs($brut);
-        if ($amort < 0) $amort = abs($amort);
-
         return (object) [
-            'brut' => $brut,
-            'amort' => $amort,
-            'net' => $brut - $amort
+            'brut' => $courant['brut'],
+            'amort' => $courant['amort'],
+            'net' => $courant['net'],
+            'net_prec' => $netPrecedent,
         ];
     }
 
-    private function calculerLigneImmo($items, $codePrefixe)
+    private function calculerLigneImmo($items, $codePrefixe, $itemsPrev = null)
     {
-        $soldeDebiteurInitial = 0.00;
-        $acquisitions = 0.00;
-        $production = 0.00;
+        // Valeur brute (hors amortissements 28xx et provisions 29xx) d'un compte
+        // d'immobilisation, pour une collection de lignes de balance donnée.
+        $brut = function ($collection) use ($codePrefixe) {
+            if ($collection === null || $collection->isEmpty()) {
+                return 0.00;
+            }
+            $solde = (float) $collection->filter(function ($i) use ($codePrefixe) {
+                return str_starts_with($i->compte, $codePrefixe)
+                    && !str_starts_with($i->compte, '28')
+                    && !str_starts_with($i->compte, '29');
+            })->sum(fn ($i) => $i->solde_debiteur - $i->solde_crediteur);
+
+            return $solde < 0 ? abs($solde) : $solde;
+        };
+
+        $brutN  = $brut($items);
+        $brutN1 = $brut($itemsPrev);
+
+        // Brut au début de l'exercice = brut à la clôture N-1.
+        // Variation N : positive => Acquisition ; négative => Cession/retrait.
+        // (Sans balance N-1, début = 0 et tout le brut N est porté en Acquisitions.)
+        $debut       = $brutN1;
+        $variation   = $brutN - $debut;
+        $acquisition = $variation > 0 ? $variation : 0.00;
+        $cession     = $variation < 0 ? abs($variation) : 0.00;
+
+        $production   = 0.00;
         $virement_aug = 0.00;
-        
-        $cessions = 0.00;
-        $retraits = 0.00;
+        $retrait      = 0.00;
         $virement_dim = 0.00;
 
-        if ($items->isNotEmpty()) {
-            $soldeDebiteurInitial = (float) $items->filter(function($i) use ($codePrefixe) {
-                return str_starts_with($i->compte, $codePrefixe) && !str_starts_with($i->compte, '28') && !str_starts_with($i->compte, '29');
-            })->sum(fn($i) => $i->solde_debiteur - $i->solde_crediteur);
-        }
-
-        if ($items->isEmpty() || $soldeDebiteurInitial == 0) {
-            switch ($codePrefixe) {
-                case '234': $soldeDebiteurInitial = 1179365.00; break;
-                case '235': $soldeDebiteurInitial = 87403.12; break; 
-            }
-        }
-
-        if ($soldeDebiteurInitial < 0) $soldeDebiteurInitial = abs($soldeDebiteurInitial);
-        
-        $soldeFin = $soldeDebiteurInitial + $acquisitions + $production + $virement_aug - ($cessions + $retraits + $virement_dim);
+        $fin = $debut + $acquisition + $production + $virement_aug - ($cession + $retrait + $virement_dim);
 
         return (object) [
-            'debut' => $soldeDebiteurInitial,
-            'acquisition' => $acquisitions,
-            'production' => $production,
+            'debut'        => $debut,
+            'acquisition'  => $acquisition,
+            'production'   => $production,
             'virement_aug' => $virement_aug,
-            'cession' => $cessions,
-            'retrait' => $retraits,
+            'cession'      => $cession,
+            'retrait'      => $retrait,
             'virement_dim' => $virement_dim,
-            'fin' => $soldeFin
+            'fin'          => $fin,
         ];
     }
 
@@ -675,17 +1140,18 @@ class LiasseController extends Controller
 
     private function sommerRubriquesActif($data, $rubriques)
     {
-        $brut = 0; $amort = 0; $net = 0;
+        $brut = 0; $amort = 0; $net = 0; $netPrec = 0;
         foreach ($rubriques as $rubrique) {
             if (isset($data[$rubrique])) {
                 foreach ($data[$rubrique] as $ligne) {
                     $brut += $ligne->brut;
                     $amort += $ligne->amort;
                     $net += $ligne->net;
+                    $netPrec += $ligne->net_prec ?? 0;
                 }
             }
         }
-        return (object) ['brut' => $brut, 'amort' => $amort, 'net' => $net];
+        return (object) ['brut' => $brut, 'amort' => $amort, 'net' => $net, 'net_prec' => $netPrec];
     }
 
     private function sommerRubriquesPassif($data, $rubriques)
