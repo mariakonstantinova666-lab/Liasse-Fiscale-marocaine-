@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liasse Expert - Maria Data</title>
+    @vite(['resources/css/app.css'])
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .sidebar-scroll::-webkit-scrollbar { width: 4px; }
@@ -11,16 +12,18 @@
         .sidebar-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans">
-    <div class="flex h-screen overflow-hidden">
+<body class="bg-slate-50 text-slate-900 font-sans antialiased">
+    <div class="flex min-h-screen lg:h-screen lg:overflow-hidden">
+        <div id="sidebar-overlay" class="fixed inset-0 z-40 hidden bg-slate-950/60 backdrop-blur-sm lg:hidden" aria-hidden="true"></div>
         
-        <aside class="w-72 bg-slate-950 text-white flex-shrink-0 flex flex-col shadow-2xl">
-            <div class="p-6 border-b border-slate-800 flex items-center space-x-3">
-                <div class="bg-blue-600 p-2 rounded-lg shadow-lg"><span class="text-xl font-bold text-white">LX</span></div>
+        <aside id="app-sidebar" class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-shrink-0 flex-col bg-slate-950 text-white shadow-2xl transition-transform duration-300 lg:static lg:translate-x-0">
+            <div class="p-5 border-b border-slate-800 flex items-center space-x-3">
+                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 shadow-lg shadow-indigo-950/40"><span class="text-lg font-black text-white">LX</span></div>
                 <div>
                     <h1 class="text-lg font-bold tracking-tight text-white">LIASSE EXPERT</h1>
                     <p class="text-[10px] text-blue-400 font-bold uppercase tracking-widest">Système Marocain</p>
                 </div>
+                <button id="sidebar-close" type="button" class="ml-auto rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden" aria-label="Fermer le menu">✕</button>
             </div>
             
             <div class="flex-grow overflow-y-auto sidebar-scroll p-4 space-y-6">
@@ -99,8 +102,8 @@
             <div class="p-4 border-t border-slate-800 bg-slate-900/50">
                 <div class="flex items-center justify-between px-2">
                     <div class="flex items-center space-x-3">
-                        <div class="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white shadow-md">M</div>
-                        <span class="text-xs font-bold text-slate-300 truncate w-24">Maria</span>
+                        <div class="h-8 w-8 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white shadow-md">U</div>
+                        <span class="text-xs font-bold text-slate-300 truncate w-28">Compte utilisateur</span>
                     </div>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -110,26 +113,43 @@
             </div>
         </aside>
 
-        <main class="flex-grow flex flex-col min-w-0">
-            <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8 shadow-sm">
+        <main class="flex min-h-screen min-w-0 flex-grow flex-col lg:min-h-0">
+            <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 px-4 shadow-sm backdrop-blur sm:px-6 lg:static lg:px-8">
                 <div class="flex items-center space-x-3">
-                    <span class="font-black text-slate-800 uppercase tracking-tight">MARIA DATA SARL AU</span>
-                    <span class="px-2 py-0.5 bg-green-100 text-green-700 text-[10px] font-bold rounded-full">2026</span>
+                    <button id="sidebar-open" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 lg:hidden" aria-label="Ouvrir le menu">☰</button>
+                    <span class="hidden max-w-[55vw] truncate font-black uppercase tracking-tight text-slate-800 sm:block">Liasse fiscale marocaine</span>
+                    <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-[10px] font-bold text-emerald-700">{{ session('annee_exercice', 2026) }}</span>
                 </div>
                 <div class="flex items-center space-x-4">
                     <button class="text-slate-400 hover:text-blue-600 transition">🔔</button>
                 </div>
             </header>
 
-            <div class="flex-grow overflow-y-auto bg-slate-50 p-8">
+            <div class="flex-grow overflow-y-auto bg-slate-50 p-3 sm:p-5 lg:p-8">
                 @if(session('success'))
                     <div class="max-w-7xl mx-auto mb-4 p-3 rounded-lg bg-green-100 text-green-800 text-sm border border-green-200">
                         {{ session('success') }}
                     </div>
                 @endif
-                @yield('content')
+                <div class="liasse-ui">
+                    @yield('content')
+                </div>
             </div>
         </main>
     </div>
+    <script>
+        (() => {
+            const sidebar = document.getElementById('app-sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const openButton = document.getElementById('sidebar-open');
+            const closeButton = document.getElementById('sidebar-close');
+            const open = () => { sidebar?.classList.remove('-translate-x-full'); overlay?.classList.remove('hidden'); };
+            const close = () => { sidebar?.classList.add('-translate-x-full'); overlay?.classList.add('hidden'); };
+            openButton?.addEventListener('click', open);
+            closeButton?.addEventListener('click', close);
+            overlay?.addEventListener('click', close);
+            document.addEventListener('keydown', event => { if (event.key === 'Escape') close(); });
+        })();
+    </script>
 </body>
 </html>

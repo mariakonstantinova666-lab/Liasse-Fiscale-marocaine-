@@ -1,207 +1,69 @@
 @extends('layouts.app')
 
 @section('content')
+@php $fmt = fn ($v) => number_format((float) $v, 2, ',', ' '); @endphp
 <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
-    <form method="POST" action="{{ route('liasse.save', 'detail_stocks') }}">
-    @csrf
     <div class="flex justify-between items-center mb-4 border-b pb-2">
         <div>
-            <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">
-                État détaillé des stocks
-            </h2>
-            <p class="text-sm text-slate-500 mt-1">Exercice : <strong>{{ $exercice ?? session('annee_exercice', 2025) }}</strong></p>
+            <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">État détaillé des stocks</h2>
+            <p class="text-sm text-slate-500 mt-1">Exercice : <strong>{{ $exercice }}</strong></p>
         </div>
-        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau N° 20 — Exercice {{ $exercice ?? session('annee_exercice', 2025) }}</span>
+        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau N° 20</span>
     </div>
 
     <div class="overflow-x-auto">
-        <table class="w-full text-xs text-left border-collapse border border-slate-300" style="min-width: 1100px;">
+        <table class="w-full text-xs border-collapse border border-slate-300" style="min-width: 1100px;">
             <thead class="text-white text-center font-bold">
                 <tr>
-                    <th rowspan="2" class="p-2 border border-slate-300 align-middle bg-slate-800 text-left" style="width: 28%;">STOCKS</th>
-                    <th colspan="3" class="p-2 border border-slate-300 bg-slate-800">Stock Final</th>
-                    <th colspan="3" class="p-2 border border-slate-300 bg-slate-800">Stock Initial</th>
-                    <th rowspan="2" class="p-2 border border-slate-300 align-middle bg-slate-800">Variation de stock en Valeur (+ ou -)</th>
+                    <th rowspan="2" class="p-2 border border-slate-300 bg-slate-800 text-left">STOCKS</th>
+                    <th colspan="3" class="p-2 border border-slate-300 bg-slate-800">Stock final (N)</th>
+                    <th colspan="3" class="p-2 border border-slate-300 bg-slate-800">Stock initial (N-1)</th>
+                    <th rowspan="2" class="p-2 border border-slate-300 bg-slate-800">Variation nette</th>
                 </tr>
                 <tr>
-                    <th class="p-2 border border-slate-300 bg-slate-800 font-medium">Montant brut</th>
-                    <th class="p-2 border border-slate-300 bg-slate-800 font-medium">Provision pour dépréciation</th>
-                    <th class="p-2 border border-slate-300 bg-slate-800 font-medium">Montant net</th>
-                    <th class="p-2 border border-slate-300 bg-slate-800 font-medium">Montant brut</th>
-                    <th class="p-2 border border-slate-300 bg-slate-800 font-medium">Provision pour dépréciation</th>
-                    <th class="p-2 border border-slate-300 bg-slate-800 font-medium">Montant net</th>
+                    @foreach(['Brut', 'Provision', 'Net', 'Brut', 'Provision', 'Net'] as $titre)
+                        <th class="p-2 border border-slate-300 bg-slate-700">{{ $titre }}</th>
+                    @endforeach
                 </tr>
             </thead>
             <tbody>
-                {{-- SECTION I --}}
-                <tr class="bg-slate-200 font-bold text-slate-900 border-t border-slate-300 uppercase">
-                    <td colspan="8" class="p-2 border border-slate-300 tracking-wide">I. Stocks Approvisionnement</td>
-                </tr>
-
-                <tr class="bg-slate-50 font-semibold text-slate-700">
-                    <td colspan="8" class="p-2 border border-slate-200 pl-4 italic">Biens et produits destinés à la revente en l'état :</td>
-                </tr>
-                @foreach(['Biens immeubles', 'Biens meubles'] as $label)
-                    @php($key = 's1a_'.$loop->index)
-                    <tr class="hover:bg-slate-50 border-b border-slate-200">
-                        <td class="p-2 border border-slate-200 pl-8 font-medium text-slate-600">{{ $label }}</td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c2]" value="{{ $data[$key.'_c2'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c3]" value="{{ $data[$key.'_c3'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c4]" value="{{ $data[$key.'_c4'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c5]" value="{{ $data[$key.'_c5'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c6]" value="{{ $data[$key.'_c6'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c7]" value="{{ $data[$key.'_c7'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c8]" value="{{ $data[$key.'_c8'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
+                @foreach($stockSections as $section => $lignes)
+                    <tr class="bg-slate-200 font-bold uppercase">
+                        <td colspan="8" class="p-2 border border-slate-300">{{ $section }}</td>
+                    </tr>
+                    @foreach($lignes as $ligne)
+                        @if(isset($ligne['group']))
+                            <tr class="bg-slate-50 italic font-semibold"><td colspan="8" class="p-2 pl-4 border border-slate-200">- {{ $ligne['group'] }}</td></tr>
+                            @continue
+                        @endif
+                        @php($v = $ligne['values'])
+                        <tr class="hover:bg-slate-50">
+                            <td class="p-2 pl-6 border border-slate-200">- {{ $ligne['label'] }}</td>
+                            <td class="p-2 text-right border border-slate-200">{{ $fmt($v->final_brut) }}</td>
+                            <td class="p-2 text-right border border-slate-200">{{ $fmt($v->final_provision) }}</td>
+                            <td class="p-2 text-right border border-slate-200 font-semibold">{{ $fmt($v->final_net) }}</td>
+                            <td class="p-2 text-right border border-slate-200">{{ $fmt($v->initial_brut) }}</td>
+                            <td class="p-2 text-right border border-slate-200">{{ $fmt($v->initial_provision) }}</td>
+                            <td class="p-2 text-right border border-slate-200 font-semibold">{{ $fmt($v->initial_net) }}</td>
+                            <td class="p-2 text-right border border-slate-200 font-semibold">{{ $fmt($v->variation) }}</td>
+                        </tr>
+                    @endforeach
+                    @php($t = $stockTotals[$section])
+                    <tr class="bg-slate-100 font-bold">
+                        <td class="p-2 text-right border border-slate-300">Total</td>
+                        @foreach(['final_brut','final_provision','final_net','initial_brut','initial_provision','initial_net','variation'] as $champ)
+                            <td class="p-2 text-right border border-slate-300">{{ $fmt($t->{$champ}) }}</td>
+                        @endforeach
                     </tr>
                 @endforeach
-
-                <tr class="bg-slate-50 font-semibold text-slate-700">
-                    <td colspan="8" class="p-2 border border-slate-200 pl-4 italic">Biens et Mat. premières destinés aux activités de prod. et de transf.</td>
-                </tr>
-                @foreach(['Matières premières', 'Matières consommables', 'Pièces détachées'] as $label)
-                    @php($key = 's1b_'.$loop->index)
-                    <tr class="hover:bg-slate-50 border-b border-slate-200">
-                        <td class="p-2 border border-slate-200 pl-8 font-medium text-slate-600">{{ $label }}</td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c2]" value="{{ $data[$key.'_c2'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c3]" value="{{ $data[$key.'_c3'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c4]" value="{{ $data[$key.'_c4'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c5]" value="{{ $data[$key.'_c5'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c6]" value="{{ $data[$key.'_c6'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c7]" value="{{ $data[$key.'_c7'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c8]" value="{{ $data[$key.'_c8'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    </tr>
-                @endforeach
-
-                <tr class="bg-slate-50 font-semibold text-slate-700">
-                    <td colspan="8" class="p-2 border border-slate-200 pl-4 italic">Emballage</td>
-                </tr>
-                @foreach(['récupérables', 'vendus', 'perdus'] as $label)
-                    @php($key = 's1c_'.$loop->index)
-                    <tr class="hover:bg-slate-50 border-b border-slate-200">
-                        <td class="p-2 border border-slate-200 pl-8 font-medium text-slate-600">{{ $label }}</td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c2]" value="{{ $data[$key.'_c2'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c3]" value="{{ $data[$key.'_c3'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c4]" value="{{ $data[$key.'_c4'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c5]" value="{{ $data[$key.'_c5'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c6]" value="{{ $data[$key.'_c6'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c7]" value="{{ $data[$key.'_c7'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c8]" value="{{ $data[$key.'_c8'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    </tr>
-                @endforeach
-
-                <tr class="bg-slate-100 font-bold text-slate-900 border-y border-slate-400">
-                    <td class="p-2 border border-slate-300 uppercase text-right pr-3 text-blue-900">Total Stocks Approvisionnement</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                </tr>
-
-                {{-- SECTION II --}}
-                <tr class="bg-slate-200 font-bold text-slate-900 border-t border-slate-300 uppercase">
-                    <td colspan="8" class="p-2 border border-slate-300 tracking-wide">II. Stocks En-cours Production de Biens et Service</td>
-                </tr>
-                @foreach(['Produits en cours', 'Etudes en cours', 'Travaux en cours', 'Services en cours'] as $label)
-                    @php($key = 's2_'.$loop->index)
-                    <tr class="hover:bg-slate-50 border-b border-slate-200">
-                        <td class="p-2 border border-slate-200 pl-6 font-medium text-slate-600">{{ $label }}</td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c2]" value="{{ $data[$key.'_c2'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c3]" value="{{ $data[$key.'_c3'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c4]" value="{{ $data[$key.'_c4'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c5]" value="{{ $data[$key.'_c5'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c6]" value="{{ $data[$key.'_c6'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c7]" value="{{ $data[$key.'_c7'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c8]" value="{{ $data[$key.'_c8'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    </tr>
-                @endforeach
-
-                <tr class="bg-slate-100 font-bold text-slate-900 border-y border-slate-400">
-                    <td class="p-2 border border-slate-300 uppercase text-right pr-3 text-blue-900">Total Stocks En-cours Production de Biens et Service</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                </tr>
-
-                {{-- SECTION III --}}
-                <tr class="bg-slate-200 font-bold text-slate-900 border-t border-slate-300 uppercase">
-                    <td colspan="8" class="p-2 border border-slate-300 tracking-wide">III. Stocks Produits finis</td>
-                </tr>
-                @foreach(['Produits finis', 'Biens finis'] as $label)
-                    @php($key = 's3_'.$loop->index)
-                    <tr class="hover:bg-slate-50 border-b border-slate-200">
-                        <td class="p-2 border border-slate-200 pl-6 font-medium text-slate-600">{{ $label }}</td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c2]" value="{{ $data[$key.'_c2'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c3]" value="{{ $data[$key.'_c3'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c4]" value="{{ $data[$key.'_c4'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c5]" value="{{ $data[$key.'_c5'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c6]" value="{{ $data[$key.'_c6'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c7]" value="{{ $data[$key.'_c7'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c8]" value="{{ $data[$key.'_c8'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    </tr>
-                @endforeach
-
-                <tr class="bg-slate-100 font-bold text-slate-900 border-y border-slate-400">
-                    <td class="p-2 border border-slate-300 uppercase text-right pr-3 text-blue-900">Total Stocks Produits et Biens Finis</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                </tr>
-
-                {{-- SECTION IV --}}
-                <tr class="bg-slate-200 font-bold text-slate-900 border-t border-slate-300 uppercase">
-                    <td colspan="8" class="p-2 border border-slate-300 tracking-wide">IV. Stocks Produits Résiduels</td>
-                </tr>
-                @foreach(['Déchets', 'Rebuts', 'Matières de récupération'] as $label)
-                    @php($key = 's4_'.$loop->index)
-                    <tr class="hover:bg-slate-50 border-b border-slate-200">
-                        <td class="p-2 border border-slate-200 pl-6 font-medium text-slate-600">{{ $label }}</td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c2]" value="{{ $data[$key.'_c2'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c3]" value="{{ $data[$key.'_c3'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c4]" value="{{ $data[$key.'_c4'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c5]" value="{{ $data[$key.'_c5'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c6]" value="{{ $data[$key.'_c6'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c7]" value="{{ $data[$key.'_c7'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                        <td class="p-1 border border-slate-200"><input type="text" name="f[{{ $key }}_c8]" value="{{ $data[$key.'_c8'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    </tr>
-                @endforeach
-
-                <tr class="bg-slate-100 font-bold text-slate-900 border-y border-slate-400">
-                    <td class="p-2 border border-slate-300 uppercase text-right pr-3 text-blue-900">Total Stocks Produits Résiduels</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                </tr>
-
-                {{-- TOTAL GENERAL --}}
-                <tr class="bg-slate-200 font-bold text-slate-900 border-y border-slate-400 uppercase">
-                    <td class="p-2 border border-slate-300 text-right pr-3 tracking-wide">TOTAL GENERAL (Ligne 10+15+18+22)</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
+                <tr class="bg-slate-800 text-white font-bold text-sm">
+                    <td class="p-3 border border-slate-700">TOTAL GÉNÉRAL</td>
+                    @foreach(['final_brut','final_provision','final_net','initial_brut','initial_provision','initial_net','variation'] as $champ)
+                        <td class="p-3 text-right border border-slate-700">{{ $fmt($stockTotalGeneral->{$champ}) }}</td>
+                    @endforeach
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="mt-4 flex justify-end"><button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700">💾 Enregistrer le tableau</button></div>
-    </form>
 </div>
 @endsection

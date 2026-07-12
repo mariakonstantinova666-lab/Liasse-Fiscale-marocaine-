@@ -74,7 +74,7 @@ class LiasseController extends Controller
                 'Dotations non courantes aux amortiss. et prov.' => $this->calculateRow($items, $itemsPrev, '659'),
             ],
             'XII. IMPOTS SUR LES RÉSULTATS' => [
-                'Impôts sur les résultats' => $this->calculateRow($items, $itemsPrev, '670'),
+                'Impôts sur les résultats' => $this->calculateRow($items, $itemsPrev, '67'),
             ]
         ];
 
@@ -236,22 +236,26 @@ class LiasseController extends Controller
         return view('liasse.immobilisations', compact('immoData', 'totauxImmo', 'exercice'));
     }
 
-    public function bilanPassif()
+    public function bilanPassif(?BalanceService $balanceService = null)
     {
+        $balanceService ??= app(BalanceService::class);
         $exercice = session('annee_exercice', 2025);
         $userId = Auth::id();
-        $items = BalanceItem::where('user_id', $userId)->where('exercice', $exercice)->get();
+        [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent($userId, $exercice);
 
-        $capitalSocial = $this->calculerLignePassif($items, '1111');
-        $actionnaires = $this->calculerLignePassif($items, '1119');
-        $primeEmission = $this->calculerLignePassif($items, '112');
-        $ecartReeval = $this->calculerLignePassif($items, '113');
-        $reserveLegale = $this->calculerLignePassif($items, '114');
-        $autresReserves = $this->calculerLignePassif($items, '115');
-        $reportANouveau = $this->calculerLignePassif($items, ['116', '117']);
-        $resultatInstance = $this->calculerLignePassif($items, '118');
-        
-        $resultatNetExercice = (object) ['montant' => -2665.62];
+        $ligne = fn ($codes) => $this->calculerLignePassif($items, $codes, $itemsPrev);
+        $capitalSocial = $ligne('1111');
+        $actionnaires = $ligne('1119');
+        $primeEmission = $ligne('112');
+        $ecartReeval = $ligne('113');
+        $reserveLegale = $ligne('114');
+        $autresReserves = $ligne('115');
+        $reportANouveau = $ligne(['116', '117']);
+        $resultatInstance = $ligne('118');
+        $resultatNetExercice = (object) [
+            'montant' => $this->montant($items, '7', 'produit') - $this->montant($items, '6', 'charge'),
+            'montant_prec' => $this->montant($itemsPrev, '7', 'produit') - $this->montant($itemsPrev, '6', 'charge'),
+        ];
 
         $data = [
             'CAPITAUX PROPRES' => [
@@ -266,41 +270,41 @@ class LiasseController extends Controller
                 'Résultat net de l\'exercice (2)' => $resultatNetExercice,
             ],
             'CAPITAUX PROPRES ASSIMILES ( b )' => [
-                'Subventions d\'investissement' => $this->calculerLignePassif($items, '131'),
-                'Provisions réglementées' => $this->calculerLignePassif($items, '135'),
+                'Subventions d\'investissement' => $ligne('131'),
+                'Provisions réglementées' => $ligne('135'),
             ],
             'DETTES DE FINANCEMENT ( c )' => [
-                'Emprunts obligataires' => $this->calculerLignePassif($items, '141'),
-                'Autres dettes de financement' => $this->calculerLignePassif($items, '148'),
+                'Emprunts obligataires' => $ligne('141'),
+                'Autres dettes de financement' => $ligne('148'),
             ],
             'PROVISIONS DURABLES POUR RISQUES ET CHARGES ( d )' => [
-                'Provisions pour risks' => $this->calculerLignePassif($items, '151'),
-                'Provisions pour charges' => $this->calculerLignePassif($items, '155'),
+                'Provisions pour risks' => $ligne('151'),
+                'Provisions pour charges' => $ligne('155'),
             ],
             'ECARTS DE CONVERSION - PASSIF ( e )' => [
-                'Augmentation des dettes de financement' => $this->calculerLignePassif($items, '171'),
-                'Diminution des dettes de financement' => $this->calculerLignePassif($items, '172'),
+                'Augmentation des créances immobilisées' => $ligne('171'),
+                'Diminution des dettes de financement' => $ligne('172'),
             ],
             'DETTES DU PASSIF CIRCULANT ( f )' => [
-                'Fournisseurs et comptes rattachés' => $this->calculerLignePassif($items, '441'),
-                'Clients créditeurs, avances et acomptes' => $this->calculerLignePassif($items, '442'),
-                'Personnel' => $this->calculerLignePassif($items, '443'),
-                'Organismes sociaux' => $this->calculerLignePassif($items, '444'),
-                'Etat' => $this->calculerLignePassif($items, '445'),
-                'Comptes d\'associés' => $this->calculerLignePassif($items, '446'),
-                'Autres créanciers' => $this->calculerLignePassif($items, '448'),
-                'Comptes de regularisation - passif' => $this->calculerLignePassif($items, '449'),
+                'Fournisseurs et comptes rattachés' => $ligne('441'),
+                'Clients créditeurs, avances et acomptes' => $ligne('442'),
+                'Personnel' => $ligne('443'),
+                'Organismes sociaux' => $ligne('444'),
+                'Etat' => $ligne('445'),
+                'Comptes d\'associés' => $ligne('446'),
+                'Autres créanciers' => $ligne('448'),
+                'Comptes de regularisation - passif' => $ligne('449'),
             ],
             'AUTRES PROVISIONS POUR RISQUES ET CHARGES ( g )' => [
-                'Autres provisions pour risques et charges' => $this->calculerLignePassif($items, '450'),
+                'Autres provisions pour risques et charges' => $ligne('45'),
             ],
             'ECARTS DE CONVERSION - PASSIF ( h ) (Éléments Circulants)' => [
-                'Écarts de conversion - Passif (Éléments Circulants)' => $this->calculerLignePassif($items, '470'), // <-- Correction syntaxique ici
+                'Écarts de conversion - Passif (Éléments Circulants)' => $ligne('47'),
             ],
             'TRESORERIE PASSIF' => [
-                'Crédits d\'escompte' => $this->calculerLignePassif($items, '552'),
-                'Crédits de trésorerie' => $this->calculerLignePassif($items, '553'),
-                'Banques ( soldes créditeurs )' => $this->calculerLignePassif($items, '554'),
+                'Crédits d\'escompte' => $ligne('552'),
+                'Crédits de trésorerie' => $ligne('553'),
+                'Banques ( soldes créditeurs )' => $ligne('554'),
             ]
         ];
 
@@ -411,37 +415,34 @@ class LiasseController extends Controller
         return view('liasse.passage_fiscal', compact('fiscalData', 'exercice'));
     }
 
-    public function amortissements() 
+    public function amortissements(?BalanceService $balanceService = null)
     { 
+        $balanceService ??= app(BalanceService::class);
         $exercice = session('annee_exercice', 2025);
         $userId = Auth::id();
-        $items = BalanceItem::where('user_id', $userId)->where('exercice', $exercice)->get();
+        [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent($userId, $exercice);
 
         $amortData = [
             'IMMOBILISATION EN NON-VALEURS' => [
-                '- Frais préliminaires' => $this->calculerLigneAmortissement($items, '211', '61911'),
-                '- Charges à répartir sur plusieurs exercices' => $this->calculerLigneAmortissement($items, '212', '61912'),
-                '- Primes de remboursement obligations' => $this->calculerLigneAmortissement($items, '213', 'FORCER_ZERO'), 
+                '- Frais préliminaires' => $this->calculerLigneAmortissement($items, $itemsPrev, '2811', '61911'),
+                '- Charges à répartir sur plusieurs exercices' => $this->calculerLigneAmortissement($items, $itemsPrev, '2812', '61912'),
+                '- Primes de remboursement obligations' => $this->calculerLigneAmortissement($items, $itemsPrev, '2813', '61913'),
             ],
             'IMMOBILISATIONS INCORPORELLES' => [
-                '- Immobilisation en recherche et développement' => $this->calculerLigneAmortissement($items, '221', '61921'),
-                '- Brevets, marques, droits et valeurs similaires' => $this->calculerLigneAmortissement($items, '222', '61922'),
-                '- Fonds commercial' => $this->calculerLigneAmortissement($items, '223', '61923'),
-                '- Autres immobilisations incorporelles' => $this->calculerLigneAmortissement($items, '228', '61928'),
+                '- Immobilisation en recherche et développement' => $this->calculerLigneAmortissement($items, $itemsPrev, '2821', '61921'),
+                '- Brevets, marques, droits et valeurs similaires' => $this->calculerLigneAmortissement($items, $itemsPrev, '2822', '61922'),
+                '- Fonds commercial' => $this->calculerLigneAmortissement($items, $itemsPrev, '2823', '61923'),
+                '- Autres immobilisations incorporelles' => $this->calculerLigneAmortissement($items, $itemsPrev, '2828', '61928'),
             ],
             'IMMOBILISATIONS CORPORELLES' => [
-                '- Terrains' => $this->calculerLigneAmortissement($items, '231', '61931'),
-                '- Constructions' => $this->calculerLigneAmortissement($items, '232', '61932'),
-                '- Installations techniques, matériel et outillage' => $this->calculerLigneAmortissement($items, '233', '61933'),
-                '- Matériel de transport' => $this->calculerLigneAmortissement($items, '234', '61934'),
-                '- Mobilier, matériel de bureau et aménagement' => $this->calculerLigneAmortissement($items, '235', '61935'), 
-                '- Autres immobilisations corporelles' => $this->calculerLigneAmortissement($items, '238', '61938'),
-                '- Immobilisations corporelles en cours' => $this->calculerLigneAmortissement($items, '239', '61939'),
+                '- Terrains' => $this->calculerLigneAmortissement($items, $itemsPrev, '2831', '61931'),
+                '- Constructions' => $this->calculerLigneAmortissement($items, $itemsPrev, '2832', '61932'),
+                '- Installations techniques, matériel et outillage' => $this->calculerLigneAmortissement($items, $itemsPrev, '2833', '61933'),
+                '- Matériel de transport' => $this->calculerLigneAmortissement($items, $itemsPrev, '2834', '61934'),
+                '- Mobilier, matériel de bureau et aménagement' => $this->calculerLigneAmortissement($items, $itemsPrev, '2835', '61935'),
+                '- Autres immobilisations corporelles' => $this->calculerLigneAmortissement($items, $itemsPrev, '2838', '61938'),
+                '- Immobilisations corporelles en cours' => $this->calculerLigneAmortissement($items, $itemsPrev, '2839', '61939'),
             ]
-        ];
-
-        $amortData['IMMOBILISATIONS CORPORELLES']['- Mobilier, matériel de bureau et aménagement'] = (object)[
-            'col1' => 0.00, 'col2' => 87403.12, 'col3' => 0.00, 'col4' => 87403.12
         ];
 
         $totauxAmort = [];
@@ -533,65 +534,46 @@ class LiasseController extends Controller
         return view('liasse.provisions', compact('provisionsData', 'totauxProvisions', 'totalGeneral', 'exercice')); 
     }
 
-    public function tva() 
-    { 
+    public function tva(?BalanceService $balanceService = null)
+    {
+        $balanceService ??= app(BalanceService::class);
         $exercice = session('annee_exercice', 2025);
-        $userId = Auth::id();
-        $items = BalanceItem::where('user_id', $userId)->where('exercice', $exercice)->get();
+        [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent(Auth::id(), $exercice);
 
-        $tvaFactureeSolde = 0.00;
-        if ($items->isNotEmpty()) {
-            $compteTvaFact = $items->firstWhere('compte', '44550000');
-            if ($compteTvaFact) {
-                $tvaFactureeSolde = (float) $compteTvaFact->solde_crediteur;
-            }
-        }
-        if ($items->isEmpty() || $tvaFactureeSolde == 0) {
-            $tvaFactureeSolde = 120708.12; 
-        }
+        $solde = fn ($collection, string $prefix, string $sens): float => (float) $collection
+            ->filter(fn ($i) => str_starts_with((string) $i->compte, $prefix))
+            ->sum(fn ($i) => $sens === 'credit'
+                ? (float) $i->solde_crediteur - (float) $i->solde_debiteur
+                : (float) $i->solde_debiteur - (float) $i->solde_crediteur);
 
-        $tvaRecupChargesSolde = 4701.81; 
-
-        $tvaData = [
-            'TVA FACTURÉE' => [
-                'Ventes au taux de 7%' => (object)['base' => 0.00, 'taux' => 7, 'tva' => 0.00, 'ttc' => 0.00],
-                'Ventes au taux de 10%' => (object)['base' => 0.00, 'taux' => 10, 'tva' => 0.00, 'ttc' => 0.00],
-                'Ventes au taux de 14%' => (object)['base' => 0.00, 'taux' => 14, 'tva' => 0.00, 'ttc' => 0.00],
-                'Ventes au taux de 20%' => (object)['base' => $tvaFactureeSolde / 0.20, 'taux' => 20, 'tva' => $tvaFactureeSolde, 'ttc' => ($tvaFactureeSolde / 0.20) + $tvaFactureeSolde],
-            ],
-            'TVA RÉCUPÉRABLE' => [
-                'TVA / IMMOBILISATIONS (20%)' => (object)['base' => 0.00, 'taux' => 20, 'tva' => 0.00, 'ttc' => 0.00],
-                'TVA / CHARGES (20%)' => (object)['base' => $tvaRecupChargesSolde / 0.20, 'taux' => 20, 'tva' => $tvaRecupChargesSolde, 'ttc' => ($tvaRecupChargesSolde / 0.20) + $tvaRecupChargesSolde],
-                'TVA / CHARGES (14%)' => (object)['base' => 0.00, 'taux' => 14, 'tva' => 0.00, 'ttc' => 0.00],
-                'TVA / CHARGES (10%)' => (object)['base' => 0.00, 'taux' => 10, 'tva' => 0.00, 'ttc' => 0.00],
-            ]
+        $ligne = fn (float $debut, float $fin): object => (object) [
+            'debut' => $debut,
+            'operations' => $fin - $debut,
+            'declarations' => 0.0,
+            'fin' => $fin,
         ];
 
-        $totalBaseFacturee = array_sum(array_column($tvaData['TVA FACTURÉE'], 'base'));
-        $totalTvaFacturee = array_sum(array_column($tvaData['TVA FACTURÉE'], 'tva'));
-        $totalTtcFacturee = array_sum(array_column($tvaData['TVA FACTURÉE'], 'ttc'));
+        $facturee = $ligne($solde($itemsPrev, '4455', 'credit'), $solde($items, '4455', 'credit'));
+        $recupImmo = $ligne($solde($itemsPrev, '34551', 'debit'), $solde($items, '34551', 'debit'));
+        $recupTotal = $ligne($solde($itemsPrev, '3455', 'debit'), $solde($items, '3455', 'debit'));
+        $recupCharges = $ligne(
+            $recupTotal->debut - $recupImmo->debut,
+            $recupTotal->fin - $recupImmo->fin
+        );
+        $due = $ligne(
+            $facturee->debut - $recupTotal->debut,
+            $facturee->fin - $recupTotal->fin
+        );
 
-        $totalBaseRecup = array_sum(array_column($tvaData['TVA RÉCUPÉRABLE'], 'base'));
-        $totalTvaRecup = array_sum(array_column($tvaData['TVA RÉCUPÉRABLE'], 'tva'));
-        $totalTtcRecup = array_sum(array_column($tvaData['TVA RÉCUPÉRABLE'], 'ttc'));
-
-        $creditPrecedent = 0.00;
-        $tvaDueRaw = $totalTvaFacturee - $totalTvaRecup - $creditPrecedent;
-
-        $calculTvaDue = (object)[
-            'tva_facturee' => $totalTvaFacturee,
-            'tva_recuperable' => $totalTvaRecup,
-            'credit_precedent' => $creditPrecedent,
-            'tva_due' => $tvaDueRaw > 0 ? $tvaDueRaw : 0.00,
-            'credit_tva' => $tvaDueRaw < 0 ? abs($tvaDueRaw) : 0.00
+        $tvaRows = [
+            ['label' => 'A. T.V.A. Facturée', 'values' => $facturee, 'bold' => true],
+            ['label' => 'B. T.V.A. Récupérable', 'values' => $recupTotal, 'bold' => true],
+            ['label' => '- sur charges', 'values' => $recupCharges],
+            ['label' => '- sur immobilisations', 'values' => $recupImmo],
+            ['label' => 'C. T.V.A. due ou crédit de T.V.A = (A - B)', 'values' => $due, 'bold' => true],
         ];
 
-        return view('liasse.tva', compact(
-            'tvaData', 
-            'totalBaseFacturee', 'totalTvaFacturee', 'totalTtcFacturee',
-            'totalBaseRecup', 'totalTvaRecup', 'totalTtcRecup',
-            'calculTvaDue', 'exercice'
-        ));
+        return view('liasse.tva', compact('tvaRows', 'exercice'));
     }
 
     // ===================================================================
@@ -817,7 +799,72 @@ class LiasseController extends Controller
     public function plusValuesFusion()       { return $this->genericEditable('liasse.plus_values_fusion', 'plus_values_fusion'); }         // T17
     public function interetsEmprunts()       { return $this->genericEditable('liasse.interets_emprunts', 'interets_emprunts'); }           // T18
     public function locationsBaux()          { return $this->genericEditable('liasse.locations_baux', 'locations_baux'); }                 // T19
-    public function detailStocks()           { return $this->genericEditable('liasse.detail_stocks', 'detail_stocks'); }                   // T20
+    public function detailStocks(?BalanceService $balanceService = null)                                           // T20
+    {
+        $balanceService ??= app(BalanceService::class);
+        $exercice = session('annee_exercice', 2025);
+        [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent(Auth::id(), $exercice);
+
+        $definitions = [
+            'I. Stocks Approvisionnement' => [
+                ['group' => "Biens et produits destinés à la revente en l'état"],
+                ['label' => 'Biens immeubles', 'brut' => [], 'provision' => []],
+                ['label' => 'Biens meubles', 'brut' => ['311'], 'provision' => ['3911']],
+                ['group' => 'Biens et matières premières destinés aux activités de production et de transformation'],
+                ['label' => 'Matières premières', 'brut' => ['3121'], 'provision' => ['39121']],
+                ['label' => 'Matières consommables', 'brut' => ['3122', '3126', '3128'], 'provision' => ['39122', '39126', '39128']],
+                ['label' => 'Pièces détachées', 'brut' => [], 'provision' => []],
+                ['group' => 'Emballages'],
+                ['label' => 'Récupérables', 'brut' => ['31232'], 'provision' => ['391232']],
+                ['label' => 'Vendus', 'brut' => [], 'provision' => []],
+                ['label' => 'Perdus', 'brut' => ['31231'], 'provision' => ['391231']],
+            ],
+            'II. Stocks En-cours Production de Biens et Services' => [
+                ['label' => 'Produits en cours', 'brut' => ['3131', '3138', '3141', '3148'], 'provision' => ['39131', '39138', '39141', '39148']],
+                ['label' => 'Études en cours', 'brut' => ['31342'], 'provision' => ['391342']],
+                ['label' => 'Travaux en cours', 'brut' => ['31341'], 'provision' => ['391341']],
+                ['label' => 'Services en cours', 'brut' => ['31343'], 'provision' => ['391343']],
+            ],
+            'III. Stocks Produits finis' => [
+                ['label' => 'Produits finis', 'brut' => ['315'], 'provision' => ['3915']],
+                ['label' => 'Biens finis', 'brut' => [], 'provision' => []],
+            ],
+            'IV. Stocks Produits Résiduels' => [
+                ['label' => 'Déchets', 'brut' => ['31451'], 'provision' => ['391451']],
+                ['label' => 'Rebuts', 'brut' => ['31452'], 'provision' => ['391452']],
+                ['label' => 'Matières de récupération', 'brut' => ['31453'], 'provision' => ['391453']],
+            ],
+        ];
+
+        $stockSections = [];
+        foreach ($definitions as $section => $lignes) {
+            foreach ($lignes as $definition) {
+                if (isset($definition['group'])) {
+                    $stockSections[$section][] = ['group' => $definition['group']];
+                    continue;
+                }
+                $stockSections[$section][] = [
+                    'label' => $definition['label'],
+                    'values' => $this->calculerLigneStock(
+                        $items, $itemsPrev, $definition['brut'], $definition['provision']
+                    ),
+                ];
+            }
+        }
+
+        $stockTotals = [];
+        foreach ($stockSections as $section => $lignes) {
+            $stockTotals[$section] = $this->totaliserLignesStock(array_map(
+                fn ($ligne) => $ligne['values'] ?? null,
+                $lignes
+            ));
+        }
+        $stockTotalGeneral = $this->totaliserLignesStock($stockTotals);
+
+        return view('liasse.detail_stocks', compact(
+            'exercice', 'stockSections', 'stockTotals', 'stockTotalGeneral'
+        ));
+    }
     public function operationsDevises()      { return $this->genericEditable('liasse.operations_devises', 'operations_devises'); }         // T21
 
     /**
@@ -879,8 +926,19 @@ class LiasseController extends Controller
         [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent(Auth::id(), $exercice);
 
         $masses = function ($col) {
-            $fp = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '1'))
-                ->sum(fn ($i) => $i->solde_crediteur - $i->solde_debiteur);
+            $passif = function (array $prefixes) use ($col): float {
+                return (float) $col->filter(function ($i) use ($prefixes) {
+                    foreach ($prefixes as $prefix) {
+                        if (str_starts_with((string) $i->compte, $prefix)) return true;
+                    }
+                    return false;
+                })->sum(fn ($i) => (float) $i->solde_crediteur - (float) $i->solde_debiteur);
+            };
+            $resultat = $this->montant($col, '7', 'produit') - $this->montant($col, '6', 'charge');
+            $fp = $passif([
+                '111', '112', '113', '114', '115', '116', '117', '118',
+                '131', '135', '141', '148', '151', '155', '171', '172',
+            ]) + $resultat;
             $immBrut = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '2')
                     && !str_starts_with((string) $i->compte, '28') && !str_starts_with((string) $i->compte, '29'))
                 ->sum(fn ($i) => $i->solde_debiteur - $i->solde_crediteur);
@@ -893,11 +951,11 @@ class LiasseController extends Controller
             $acProv = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '39'))
                 ->sum(fn ($i) => $i->solde_crediteur - $i->solde_debiteur);
             $ac = $acBrut - $acProv;
-            $pc = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '4'))
-                ->sum(fn ($i) => $i->solde_crediteur - $i->solde_debiteur);
+            $pc = $passif(['441', '442', '443', '444', '445', '446', '448', '449', '45', '47']);
             $bfg = $ac - $pc;
-            $tn = (float) $col->filter(fn ($i) => str_starts_with((string) $i->compte, '5'))
-                ->sum(fn ($i) => $i->solde_debiteur - $i->solde_crediteur);
+            // Le modèle T22 définit la trésorerie nette par l'équation
+            // Fonds de roulement - BFG, ce qui garantit la cohérence des masses.
+            $tn = $fr - $bfg;
             return compact('fp', 'actifImmo', 'fr', 'ac', 'pc', 'bfg', 'tn');
         };
 
@@ -926,7 +984,72 @@ class LiasseController extends Controller
         }
         unset($row);
 
-        return view('liasse.tableau_financement', compact('exercice', 'synthese'));
+        $variationBrute = function (array $prefixes) use ($items, $itemsPrev): float {
+            $brut = fn ($collection): float => (float) $collection
+                ->filter(function ($i) use ($prefixes) {
+                    foreach ($prefixes as $prefix) {
+                        if (str_starts_with((string) $i->compte, $prefix)) return true;
+                    }
+                    return false;
+                })
+                ->sum(fn ($i) => (float) $i->solde_debiteur - (float) $i->solde_crediteur);
+
+            return $brut($items) - $brut($itemsPrev);
+        };
+
+        $cafN = $this->calculerESG($items)['caf'];
+        $cafP = $this->calculerESG($itemsPrev)['caf'];
+        $cessionIncorpN = $this->montant($items, '7512', 'produit');
+        $cessionIncorpP = $this->montant($itemsPrev, '7512', 'produit');
+        $cessionCorpN = $this->montant($items, '7513', 'produit');
+        $cessionCorpP = $this->montant($itemsPrev, '7513', 'produit');
+        $cessionFinN = $this->montant($items, '7514', 'produit');
+        $cessionFinP = $this->montant($itemsPrev, '7514', 'produit');
+        $cessionsN = $cessionIncorpN + $cessionCorpN + $cessionFinN;
+        $cessionsP = $cessionIncorpP + $cessionCorpP + $cessionFinP;
+        $acqIncorp = max(0.0, $variationBrute(['22']));
+        $acqCorp = max(0.0, $variationBrute(['23']));
+        $acqFin = max(0.0, $variationBrute(['24', '25']));
+        $emploisNonValeurs = max(0.0, $variationBrute(['21']));
+
+        $fluxRows = [
+            ['section' => "I- RESSOURCES STABLES DE L'EXERCICE (FLUX)"],
+            ['subtotal' => true, 'label' => 'Autofinancement (A)', 'n_ressource' => $cafN, 'p_ressource' => $cafP],
+            ['label' => "+ Capacité d'autofinancement", 'n_ressource' => $cafN, 'p_ressource' => $cafP],
+            ['label' => '- Distributions de bénéfices'],
+            ['subtotal' => true, 'label' => "Cessions et réductions d'immobilisations (B)", 'n_ressource' => $cessionsN, 'p_ressource' => $cessionsP],
+            ['label' => "+ Cessions d'immobilisations incorporelles", 'n_ressource' => $cessionIncorpN, 'p_ressource' => $cessionIncorpP],
+            ['label' => "+ Cessions d'immobilisations corporelles", 'n_ressource' => $cessionCorpN, 'p_ressource' => $cessionCorpP],
+            ['label' => "+ Cessions d'immobilisations financières", 'n_ressource' => $cessionFinN, 'p_ressource' => $cessionFinP],
+            ['label' => '+ Récupérations sur créances immobilisées'],
+            ['subtotal' => true, 'label' => 'Augmentation des capitaux propres et assimilés (C)'],
+            ['label' => '+ Augmentation du capital, apports'],
+            ['label' => "+ Subventions d'investissement"],
+            ['subtotal' => true, 'label' => 'Augmentation des dettes de financement (D)'],
+            ['total' => true, 'label' => 'TOTAL I - RESSOURCES STABLES', 'n_ressource' => $cafN + $cessionsN, 'p_ressource' => $cafP + $cessionsP],
+            ['section' => "II- EMPLOIS STABLES DE L'EXERCICE (FLUX)"],
+            ['subtotal' => true, 'label' => "Acquisitions et augmentations d'immobilisations (E)", 'n_emploi' => $acqIncorp + $acqCorp + $acqFin],
+            ['label' => "Acquisitions d'immobilisations incorporelles", 'n_emploi' => $acqIncorp],
+            ['label' => "Acquisitions d'immobilisations corporelles", 'n_emploi' => $acqCorp],
+            ['label' => "Acquisitions d'immobilisations financières", 'n_emploi' => $acqFin],
+            ['label' => 'Augmentation des créances immobilisées'],
+            ['subtotal' => true, 'label' => 'Remboursement des capitaux propres (F)'],
+            ['subtotal' => true, 'label' => 'Remboursements des dettes de financement (G)'],
+            ['label' => 'Emplois en non-valeurs', 'n_emploi' => $emploisNonValeurs],
+            ['total' => true, 'label' => 'TOTAL II - EMPLOIS STABLES', 'n_emploi' => $acqIncorp + $acqCorp + $acqFin + $emploisNonValeurs],
+            ['label' => 'III- VARIATION DU BESOIN DE FINANCEMENT GLOBAL (B.F.G)', 'n_emploi' => $synthese[5]['emploi'], 'n_ressource' => $synthese[5]['ressource']],
+            ['label' => 'IV- VARIATION DE LA TRÉSORERIE', 'n_emploi' => $synthese[6]['emploi'], 'n_ressource' => $synthese[6]['ressource']],
+        ];
+
+        $fluxTotal = (object) ['n_emploi' => 0.0, 'n_ressource' => 0.0, 'p_emploi' => 0.0, 'p_ressource' => 0.0];
+        foreach ($fluxRows as $row) {
+            if (!empty($row['section']) || !empty($row['total']) || !empty($row['subtotal'])) continue;
+            foreach (get_object_vars($fluxTotal) as $key => $_) {
+                $fluxTotal->{$key} += (float) ($row[$key] ?? 0);
+            }
+        }
+
+        return view('liasse.tableau_financement', compact('exercice', 'synthese', 'fluxRows', 'fluxTotal'));
     }
     public function methodesEvaluation()     { return $this->genericView('liasse.methodes_evaluation'); }      // T23
     public function derogations()            { return $this->genericView('liasse.derogations'); }              // T24
@@ -1115,26 +1238,22 @@ class LiasseController extends Controller
         ];
     }
 
-    private function calculerLignePassif($items, $codes)
+    private function calculerLignePassif($items, $codes, $itemsPrev = null)
     {
         $codes = (array) $codes;
-        
-        $montant = (float) $items->filter(function($i) use ($codes) {
-            foreach($codes as $c) if(str_starts_with($i->compte, $c)) return true;
-            return false;
-        })->sum(fn($i) => $i->solde_crediteur - $i->solde_debiteur);
 
-        foreach ($codes as $code) {
-            if ($code === '1119' || $code === '1169' || $code === '1199') {
-                $debitSolde = (float) $items->filter(fn($i) => str_starts_with($i->compte, $code))->sum(fn($i) => $i->solde_debiteur - $i->solde_crediteur);
-                if ($debitSolde != 0) {
-                    $montant = -$debitSolde;
+        $calcul = fn ($collection): float => $collection === null ? 0.0 : (float) $collection
+            ->filter(function ($i) use ($codes) {
+                foreach ($codes as $code) {
+                    if (str_starts_with((string) $i->compte, $code)) return true;
                 }
-            }
-        }
+                return false;
+            })
+            ->sum(fn ($i) => (float) $i->solde_crediteur - (float) $i->solde_debiteur);
 
         return (object) [
-            'montant' => $montant
+            'montant' => $calcul($items),
+            'montant_prec' => $calcul($itemsPrev),
         ];
     }
 
@@ -1156,20 +1275,36 @@ class LiasseController extends Controller
 
     private function sommerRubriquesPassif($data, $rubriques)
     {
-        $total = 0;
+        $total = 0; $totalPrec = 0;
         foreach ($rubriques as $rubrique) {
             if (isset($data[$rubrique])) {
                 foreach ($data[$rubrique] as $ligne) {
                     $total += $ligne->montant;
+                    $totalPrec += $ligne->montant_prec ?? 0;
                 }
             }
         }
-        return (object) ['montant' => $total];
+        return (object) ['montant' => $total, 'montant_prec' => $totalPrec];
     }
 
     private function calculateRow($items, $itemsPrev, $codes)
     {
         $codes = (array) $codes;
+
+        $montant = function ($collection) use ($codes): float {
+            $filtered = $collection->filter(function ($i) use ($codes) {
+                foreach ($codes as $code) {
+                    if (str_starts_with((string) $i->compte, $code)) return true;
+                }
+                return false;
+            });
+
+            $isProduit = str_starts_with((string) $codes[0], '7');
+
+            return (float) $filtered->sum(fn ($i) => $isProduit
+                ? (float) $i->solde_crediteur - (float) $i->solde_debiteur
+                : (float) $i->solde_debiteur - (float) $i->solde_crediteur);
+        };
 
         $currentItems = $items->filter(function($i) use ($codes) {
             foreach($codes as $c) if(str_starts_with($i->compte, $c)) return true;
@@ -1179,16 +1314,10 @@ class LiasseController extends Controller
         $precedent = $currentItems->filter(fn($i) => strlen($i->compte) >= 4 && str_starts_with(substr($i->compte, 3, 1), '8'));
         $propres = $currentItems->diff($precedent);
 
-        $col1 = (float) $propres->sum(fn($i) => abs($i->solde_debiteur - $i->solde_crediteur));
-        $col2 = (float) $precedent->sum(fn($i) => abs($i->solde_debiteur - $i->solde_crediteur));
+        $col1 = $montant($propres);
+        $col2 = $montant($precedent);
         $col3 = $col1 + $col2;
-        
-        $prevItems = $itemsPrev->filter(function($i) use ($codes) {
-            foreach($codes as $c) if(str_starts_with($i->compte, $c)) return true;
-            return false;
-        });
-        
-        $col4 = (float) $prevItems->sum(fn($i) => abs($i->solde_debiteur - $i->solde_crediteur));
+        $col4 = $montant($itemsPrev);
 
         return (object) [
             'col1' => $col1,
@@ -1207,35 +1336,24 @@ class LiasseController extends Controller
         })->sum(fn($i) => abs($i->solde_crediteur - $i->solde_debiteur));
     }
 
-    private function calculerLigneAmortissement($items, $codeImmo, $codeDotationPrefixe)
+    private function calculerLigneAmortissement($items, $itemsPrev, string $codeAmort, string $codeDotationPrefixe)
     {
-        if ($codeImmo === '213' || $codeDotationPrefixe === 'FORCER_ZERO') {
-            return (object) [
-                'col1' => 0.00, 'col2' => 0.00, 'col3' => 0.00, 'col4' => 0.00
-            ];
-        }
+        $cumul = fn ($collection): float => max(0.0, (float) $collection
+            ->filter(fn ($i) => str_starts_with((string) $i->compte, $codeAmort))
+            ->sum(fn ($i) => (float) $i->solde_crediteur - (float) $i->solde_debiteur));
 
-        $cumulDebut = 0.00;
-        $sorties = 0.00;
-        $dotationExercice = 0.00;
+        $cumulDebut = $cumul($itemsPrev);
+        $cumulFin = $cumul($items);
+        $dotationComptable = max(0.0, (float) $items
+            ->filter(fn ($i) => str_starts_with((string) $i->compte, $codeDotationPrefixe))
+            ->sum(fn ($i) => (float) $i->solde_debiteur - (float) $i->solde_crediteur));
 
-        if ($items->isNotEmpty()) {
-            $dotationExercice = (float) $items->filter(fn($i) => str_starts_with($i->compte, $codeDotationPrefixe))
-                                             ->sum(fn($i) => $i->solde_debiteur - $i->solde_crediteur);
-        }
-
-        if ($items->isEmpty() || $dotationExercice == 0) {
-            switch ($codeImmo) {
-                case '211': $dotationExercice = 4105.60; break;
-                case '222': $dotationExercice = 25895.83; break;
-                case '228': $dotationExercice = 2354.17; break;
-                case '233': $dotationExercice = 1795.58; break;
-                case '234': $dotationExercice = 235873.00; break;
-                default:    $dotationExercice = 0.00; break;
-            }
-        }
-
-        $cumulFin = $cumulDebut + $dotationExercice - $sorties;
+        // Sans détail de dotation, la hausse nette du cumul est la meilleure
+        // information disponible dans les deux balances de clôture.
+        $dotationExercice = $dotationComptable > 0
+            ? $dotationComptable
+            : max(0.0, $cumulFin - $cumulDebut);
+        $sorties = max(0.0, $cumulDebut + $dotationExercice - $cumulFin);
 
         return (object) [
             'col1' => $cumulDebut,
@@ -1243,6 +1361,60 @@ class LiasseController extends Controller
             'col3' => $sorties,
             'col4' => $cumulFin
         ];
+    }
+
+    private function calculerLigneStock($items, $itemsPrev, array|string $codesBrut, array|string $codesProvision): object
+    {
+        $codesBrut = (array) $codesBrut;
+        $codesProvision = (array) $codesProvision;
+        $filtre = function ($item, array $codes): bool {
+            foreach ($codes as $code) {
+                if (str_starts_with((string) $item->compte, $code)) return true;
+            }
+            return false;
+        };
+        $calcul = function ($collection) use ($codesBrut, $codesProvision, $filtre): array {
+            $brut = (float) $collection
+                ->filter(fn ($i) => $filtre($i, $codesBrut))
+                ->sum(fn ($i) => (float) $i->solde_debiteur - (float) $i->solde_crediteur);
+            $provision = (float) $collection
+                ->filter(fn ($i) => $filtre($i, $codesProvision))
+                ->sum(fn ($i) => (float) $i->solde_crediteur - (float) $i->solde_debiteur);
+
+            return ['brut' => $brut, 'provision' => $provision, 'net' => $brut - $provision];
+        };
+
+        $final = $calcul($items);
+        $initial = $calcul($itemsPrev);
+
+        return (object) [
+            'final_brut' => $final['brut'],
+            'final_provision' => $final['provision'],
+            'final_net' => $final['net'],
+            'initial_brut' => $initial['brut'],
+            'initial_provision' => $initial['provision'],
+            'initial_net' => $initial['net'],
+            // La colonne H du modèle T20 est la variation du montant brut : B - E.
+            'variation' => $final['brut'] - $initial['brut'],
+        ];
+    }
+
+    private function totaliserLignesStock(iterable $lignes): object
+    {
+        $total = (object) [
+            'final_brut' => 0.0, 'final_provision' => 0.0, 'final_net' => 0.0,
+            'initial_brut' => 0.0, 'initial_provision' => 0.0, 'initial_net' => 0.0,
+            'variation' => 0.0,
+        ];
+
+        foreach ($lignes as $ligne) {
+            if ($ligne === null) continue;
+            foreach (array_keys(get_object_vars($total)) as $champ) {
+                $total->{$champ} += (float) $ligne->{$champ};
+            }
+        }
+
+        return $total;
     }
 
     private function initialiserLigneProvision()

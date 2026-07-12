@@ -18,7 +18,7 @@ class SocieteSeeder extends Seeder
         if ($user) {
             DB::table('societes')->insert([
                 'user_id'     => $user->id,
-                'nom_societe' => 'Alpha Digital SARL',
+                'nom_societe' => 'D3 Soft SARL AU',
                 'if'          => '12345678',
                 'ice'         => '001234567000089',
                 'rc'          => '99999',

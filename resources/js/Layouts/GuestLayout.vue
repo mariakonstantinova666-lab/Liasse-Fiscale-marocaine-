@@ -4,18 +4,21 @@ import { Link } from '@inertiajs/vue3';
 </script>
 
 <template>
-    <div
-        class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0"
-    >
-        <div>
-            <Link href="/">
-                <ApplicationLogo class="h-20 w-20 fill-current text-gray-500" />
-            </Link>
+    <div class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-slate-950 px-4 py-10 sm:px-6">
+        <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+            <div class="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-indigo-500/20 blur-3xl"></div>
+            <div class="absolute -bottom-40 -right-24 h-96 w-96 rounded-full bg-cyan-400/10 blur-3xl"></div>
         </div>
 
-        <div
-            class="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg"
-        >
+        <div class="relative text-center">
+            <Link href="/">
+                <ApplicationLogo class="mx-auto h-16 w-16 fill-current text-white" />
+            </Link>
+            <p class="mt-4 text-xs font-bold uppercase tracking-[0.28em] text-indigo-300">Liasse Expert</p>
+            <p class="mt-2 text-sm text-slate-400">Gestion fiscale marocaine</p>
+        </div>
+
+        <div class="relative mt-8 w-full overflow-hidden rounded-2xl border border-white/10 bg-white px-6 py-7 shadow-2xl shadow-black/30 sm:max-w-md sm:px-8">
             <slot />
         </div>
     </div>

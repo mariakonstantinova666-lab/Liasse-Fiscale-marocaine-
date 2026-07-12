@@ -22,11 +22,13 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Register" />
+        <Head title="Inscription" />
+
+        <div class="mb-6"><h1 class="text-2xl font-bold tracking-tight text-slate-900">Créer un compte</h1><p class="mt-1 text-sm text-slate-500">Configurez votre accès à Liasse Expert.</p></div>
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="Nom" />
 
                 <TextInput
                     id="name"
@@ -57,7 +59,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="password" value="Mot de passe" />
 
                 <TextInput
                     id="password"
@@ -74,7 +76,7 @@ const submit = () => {
             <div class="mt-4">
                 <InputLabel
                     for="password_confirmation"
-                    value="Confirm Password"
+                    value="Confirmer le mot de passe"
                 />
 
                 <TextInput
@@ -97,7 +99,7 @@ const submit = () => {
                     :href="route('login')"
                     class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Already registered?
+                    Déjà inscrit ?
                 </Link>
 
                 <PrimaryButton
@@ -105,7 +107,7 @@ const submit = () => {
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
-                    Register
+                    S'inscrire
                 </PrimaryButton>
             </div>
         </form>

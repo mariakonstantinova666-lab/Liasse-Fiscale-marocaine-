@@ -1,3 +1,183 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :root {
+        color-scheme: light;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        --brand-950: #172554;
+        --brand-800: #1e40af;
+        --brand-700: #1d4ed8;
+        --brand-600: #2563eb;
+        --ink-900: #0f172a;
+        --ink-700: #334155;
+        --line: #dbe3ef;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-slate-50 text-slate-900 antialiased;
+        background:
+            linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(241, 245, 249, 0.98)),
+            radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 32rem);
+    }
+
+    :focus-visible {
+        @apply outline-none ring-2 ring-blue-600 ring-offset-2;
+    }
+}
+
+@layer components {
+    .ui-card {
+        @apply rounded-lg border border-slate-200 bg-white shadow-sm;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 30px rgba(15, 23, 42, 0.04);
+    }
+
+    .ui-button-primary {
+        @apply inline-flex items-center justify-center rounded-lg bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800 disabled:cursor-not-allowed disabled:opacity-50;
+    }
+
+    .ui-button-secondary {
+        @apply inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-800;
+    }
+
+    .ui-input {
+        @apply w-full rounded-lg border-slate-300 bg-white text-sm shadow-sm transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-blue-600;
+    }
+
+    .ui-table-shell {
+        @apply overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm;
+    }
+
+    .ui-page-title {
+        @apply text-xl font-bold tracking-tight text-slate-900 sm:text-2xl;
+    }
+
+    .ui-muted {
+        @apply text-sm text-slate-500;
+    }
+
+    .liasse-ui {
+        @apply mx-auto w-full max-w-[1600px] text-slate-700;
+    }
+
+    .liasse-ui > div,
+    .liasse-ui .container,
+    .liasse-ui .container-fluid {
+        @apply max-w-full;
+    }
+
+    .liasse-ui h1,
+    .liasse-ui h2,
+    .liasse-ui h5 {
+        @apply tracking-tight text-slate-900;
+    }
+
+    .liasse-panel,
+    .liasse-ui > form,
+    .liasse-ui > section {
+        border-radius: 0.5rem;
+        border: 1px solid #e2e8f0;
+        background-color: #ffffff;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 14px 32px rgba(15, 23, 42, 0.035);
+    }
+
+    .liasse-ui table {
+        @apply w-full border-separate border-spacing-0 text-xs sm:text-sm;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .liasse-ui table thead {
+        @apply sticky top-0 z-20;
+    }
+
+    .liasse-ui table thead th {
+        @apply border-b border-r border-slate-300 bg-slate-900 px-3 py-3 text-xs font-bold uppercase tracking-wide text-white;
+    }
+
+    .liasse-ui table tbody td {
+        @apply border-b border-r border-slate-200 px-3 py-2.5 align-middle;
+    }
+
+    .liasse-ui table tbody tr:not([class*="bg-"]):nth-child(even) {
+        @apply bg-slate-50/70;
+    }
+
+    .liasse-ui table tbody tr {
+        @apply transition-colors duration-150;
+    }
+
+    .liasse-ui table tbody tr:hover {
+        @apply bg-indigo-50/60;
+    }
+
+    .liasse-ui input:not([type="checkbox"]):not([type="radio"]),
+    .liasse-ui select,
+    .liasse-ui textarea {
+        @apply rounded-lg border-slate-300 bg-white text-sm shadow-sm transition focus:border-blue-600 focus:ring-blue-600;
+    }
+
+    .liasse-ui button[type="submit"] {
+        @apply rounded-lg shadow-sm transition duration-200;
+    }
+
+    .liasse-ui .overflow-x-auto {
+        @apply rounded-lg border border-slate-200 shadow-sm;
+        scrollbar-color: #94a3b8 #f1f5f9;
+        scrollbar-width: thin;
+    }
+
+    .app-shell {
+        @apply flex min-h-screen bg-slate-50;
+    }
+
+    .app-sidebar {
+        @apply fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-shrink-0 flex-col border-r border-slate-200 bg-white text-slate-700 shadow-2xl transition-transform duration-300 lg:static lg:translate-x-0 lg:shadow-none;
+    }
+
+    .sidebar-section-title {
+        @apply px-3 text-[11px] font-black uppercase tracking-[0.16em] text-slate-400;
+    }
+
+    .sidebar-link {
+        @apply flex min-h-10 items-center rounded-lg px-3 py-2 text-sm font-semibold text-slate-600 transition hover:bg-blue-50 hover:text-blue-800;
+    }
+
+    .sidebar-link-active {
+        @apply bg-blue-700 text-white shadow-sm hover:bg-blue-700 hover:text-white;
+    }
+
+    .sidebar-code {
+        @apply mr-3 flex h-6 min-w-8 items-center justify-center rounded border border-slate-200 bg-slate-50 font-mono text-[10px] font-black text-slate-500;
+    }
+
+    .sidebar-link-active .sidebar-code {
+        @apply border-blue-500 bg-blue-600 text-white;
+    }
+
+    .status-pill {
+        @apply inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-bold;
+    }
+
+    .sidebar-scroll a {
+        @apply rounded-lg transition-all duration-200;
+    }
+
+    .sidebar-scroll a:hover {
+        @apply translate-x-0.5;
+    }
+}
+
+@media (max-width: 640px) {
+    .liasse-ui table {
+        min-width: 760px;
+    }
+
+    .liasse-ui {
+        @apply text-xs;
+    }
+}
