@@ -3,6 +3,17 @@
 @section('content')
 @php $fmt = fn ($v) => number_format((float) $v, 2, ',', ' '); @endphp
 <div class="max-w-4xl mx-auto">
+    <div class="mb-4 rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-900">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+                <p class="font-bold">Generation EDI XML</p>
+                <p class="mt-1">Le fichier XML sera genere uniquement si aucun controle bloquant n'est detecte.</p>
+            </div>
+            <a href="{{ route('liasse.edi.index') }}" class="inline-flex justify-center rounded-lg bg-blue-700 px-4 py-2 text-sm font-bold text-white shadow-sm transition hover:bg-blue-800">
+                Preparer le fichier EDI (XML)
+            </a>
+        </div>
+    </div>
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-slate-800">Contrôle de cohérence — Exercice {{ $exercice }}</h2>
         <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Modèle marocain</span>
@@ -37,11 +48,23 @@
                     <div>
                         <h3 class="font-bold text-slate-700 flex items-center gap-2">
                             {{ $regle['titre'] }}
+                            <span class="text-[10px] font-semibold uppercase bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">{{ $regle['id'] ?? 'CTRL' }}</span>
                             @unless($regle['bloquant'])
                                 <span class="text-[10px] font-semibold uppercase bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full">non bloquant</span>
                             @endunless
                         </h3>
+                        <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
+                            {{ $regle['severity'] ?? ($regle['bloquant'] ? 'Erreur' : 'Avertissement') }}
+                            @if(!empty($regle['tableau'])) · {{ $regle['tableau'] }} @endif
+                            @if(!empty($regle['rubrique'])) · {{ $regle['rubrique'] }} @endif
+                        </p>
                         <p class="text-sm text-slate-500 mt-1">{{ $regle['message'] }}</p>
+                        @if(!empty($regle['regle']))
+                            <p class="mt-2 text-xs text-slate-500"><strong>Règle :</strong> {{ $regle['regle'] }}</p>
+                        @endif
+                        @if(!empty($regle['suggestion']))
+                            <p class="mt-1 text-xs text-slate-500"><strong>Suggestion :</strong> {{ $regle['suggestion'] }}</p>
+                        @endif
                     </div>
                     <span class="text-lg font-bold {{ $regle['ok'] ? 'text-green-600' : ($regle['bloquant'] ? 'text-red-600' : 'text-amber-600') }}">
                         {{ $regle['ok'] ? '✅' : '❌' }}
@@ -55,3 +78,4 @@
     </div>
 </div>
 @endsection
+

@@ -31,7 +31,7 @@
                 </tr>
 
                 <tr class="hover:bg-slate-50 border-b border-slate-200">
-                    <td class="p-2 border border-slate-200 pl-4 font-medium text-slate-600">(Décision du __/__/____)</td>
+                    <td class="p-2 border border-slate-200 pl-4 font-medium text-slate-600">(Décision du {{ $data['decision_date'] ?? '__/__/____' }})</td>
                     <td class="p-1 border border-slate-200"><input type="text" name="f[ligne1_montantA]" value="{{ $data['ligne1_montantA'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
                     <td class="p-2 border border-slate-200 pl-4 font-medium text-slate-600">- Réserve légale</td>
                     <td class="p-1 border border-slate-200"><input type="text" name="f[ligne1_montantB]" value="{{ $data['ligne1_montantB'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>

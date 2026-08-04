@@ -16,15 +16,27 @@ class SocieteSeeder extends Seeder
         $user = DB::table('users')->first();
 
         if ($user) {
-            DB::table('societes')->insert([
-                'user_id'     => $user->id,
+            $payload = [
                 'nom_societe' => 'D3 Soft SARL AU',
                 'if'          => '12345678',
                 'ice'         => '001234567000089',
                 'rc'          => '99999',
-                'created_at'  => now(),
+                'cnss'        => '8912345',
+                'patente'     => '34567890',
+                'adresse'     => 'Avenue de la Paix, Imm Chourouk Bloc B3, 1er étage, App 5, Tanger 90000',
                 'updated_at'  => now(),
-            ]);
+            ];
+
+            $exists = DB::table('societes')->where('user_id', $user->id)->exists();
+
+            if ($exists) {
+                DB::table('societes')->where('user_id', $user->id)->update($payload);
+            } else {
+                DB::table('societes')->insert($payload + [
+                    'user_id'    => $user->id,
+                    'created_at' => now(),
+                ]);
+            }
         }
     }
 }

@@ -16,6 +16,8 @@ class Societe extends Model
         'ice',
         'rc',
         'cnss',
+        'patente',
+        'adresse',
     ];
 
     /**

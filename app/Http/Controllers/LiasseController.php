@@ -333,6 +333,21 @@ class LiasseController extends Controller
         $exercice = session('annee_exercice', 2025);
         $userId = Auth::id();
         $items = BalanceItem::where('user_id', $userId)->where('exercice', $exercice)->get();
+        $sourceData = LiasseData::where('user_id', $userId)
+            ->where('exercice', $exercice)
+            ->where('tableau_code', 'passage_fiscal')
+            ->pluck('valeur', 'cle')
+            ->toArray();
+        $sourceNumber = function (string $key, ?float $fallback = null) use ($sourceData): ?float {
+            if (!array_key_exists($key, $sourceData)) {
+                return $fallback;
+            }
+
+            $value = str_replace(["\xc2\xa0", ' '], '', (string) $sourceData[$key]);
+            $value = str_replace(',', '.', $value);
+
+            return is_numeric($value) ? (float) $value : $fallback;
+        };
 
         $totalProduits = (float) $items->filter(fn($i) => str_starts_with($i->compte, '7'))->sum(fn($i) => $i->solde_crediteur - $i->solde_debiteur);
         $totalCharges = (float) $items->filter(fn($i) => str_starts_with($i->compte, '6'))->sum(fn($i) => $i->solde_debiteur - $i->solde_crediteur);
@@ -346,11 +361,11 @@ class LiasseController extends Controller
         $beneficeNetComptable = $montantComptable > 0 ? $montantComptable : 0.00;
         $perteNetteComptable = $montantComptable < 0 ? abs($montantComptable) : 0.00;
 
-        $reintegrationsCourantes = $this->calculerMontantFiscal($items, ['6143_fake']); 
-        $reintegrationsNonCourantes = $this->calculerMontantFiscal($items, ['6581_fake']);
+        $reintegrationsCourantes = $sourceNumber('reintegrations_courantes_total', $this->calculerMontantFiscal($items, ['6143_fake'])); 
+        $reintegrationsNonCourantes = $sourceNumber('reintegrations_non_courantes_total', $this->calculerMontantFiscal($items, ['6581_fake']));
         
-        $deductionsCourantes = $this->calculerMontantFiscal($items, ['7182_fake']);
-        $deductionsNonCourantes = $this->calculerMontantFiscal($items, ['7581_fake']);
+        $deductionsCourantes = $sourceNumber('deductions_courantes_total', $this->calculerMontantFiscal($items, ['7182_fake']));
+        $deductionsNonCourantes = $sourceNumber('deductions_non_courantes_total', $this->calculerMontantFiscal($items, ['7581_fake']));
 
         $totalReintegrations = $reintegrationsCourantes + $reintegrationsNonCourantes;
         $totalDeductions = $deductionsCourantes + $deductionsNonCourantes;
@@ -360,7 +375,7 @@ class LiasseController extends Controller
         $beneficeBrutFiscal = $resultatBrutUnfiltered > 0 ? $resultatBrutUnfiltered : 0.00;
         $deficitBrutFiscal = $resultatBrutUnfiltered < 0 ? abs($resultatBrutUnfiltered) : 0.00;
 
-        $reportsDeficitaires = ['n-4' => 0.00, 'n-3' => 0.00, 'n-2' => 0.00, 'n-1' => 0.00];
+        $reportsDeficitaires = ['n-4' => 0.00, 'n-3' => 0.00, 'n-2' => 0.00, 'n-1' => $sourceNumber('reports_deficitaires_total', 0.00)];
         $totalReportsImputes = array_sum($reportsDeficitaires);
 
         $beneficeNetFiscal = $beneficeBrutFiscal > 0 ? max(0, $beneficeBrutFiscal - $totalReportsImputes) : 0.00;
@@ -383,8 +398,22 @@ class LiasseController extends Controller
                 '2. Non courantes' => $deductionsNonCourantes,
             ],
             'SYNTHESE_TOTAL' => [
-                'Total Réintégrations' => $totalReintegrations,
-                'Total Déductions' => $totalDeductions,
+                'Total Réintégrations' => $beneficeNetComptable + $totalReintegrations,
+                'Total Déductions' => $perteNetteComptable + $totalDeductions,
+            ],
+            'DETAIL_REINTEGRATIONS' => [
+                'Courantes' => [
+                    [
+                        'label' => $sourceData['reintegration_courante_0_label'] ?? 'Impôt sur les résultats / Cotisation Minimale (non déductible)',
+                        'montant' => $sourceNumber('reintegration_courante_0_montant', 0.00),
+                    ],
+                ],
+                'Non courantes' => [
+                    [
+                        'label' => $sourceData['reintegration_non_courante_0_label'] ?? 'Pénalités et amendes fiscales ou pénales',
+                        'montant' => $sourceNumber('reintegration_non_courante_0_montant', 0.00),
+                    ],
+                ],
             ],
             'IV. RESULTAT BRUT FISCAL' => [
                 'Bénéfice brut si T1 > T2 (A)' => $beneficeBrutFiscal,
@@ -771,9 +800,13 @@ class LiasseController extends Controller
     {
         $balanceService ??= app(BalanceService::class);
         $exercice = session('annee_exercice', 2025);
-        $items = $balanceService->lignesExercice(Auth::id(), $exercice);
+        $userId = Auth::id();
+        [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent($userId, $exercice);
+        $liasseData = LiasseData::where('user_id', $userId)
+            ->where('exercice', $exercice)
+            ->get();
 
-        $controles = $control->verifier($items);
+        $controles = $control->verifierLiasse($items, $liasseData, $itemsPrev);
         $bloquants = collect($controles)->filter(fn ($r) => $r['bloquant'] && !$r['ok'])->count();
         $anomalies = collect($controles)->filter(fn ($r) => !$r['ok'])->count();
         $valide = $bloquants === 0;
@@ -1051,9 +1084,9 @@ class LiasseController extends Controller
 
         return view('liasse.tableau_financement', compact('exercice', 'synthese', 'fluxRows', 'fluxTotal'));
     }
-    public function methodesEvaluation()     { return $this->genericView('liasse.methodes_evaluation'); }      // T23
-    public function derogations()            { return $this->genericView('liasse.derogations'); }              // T24
-    public function changementsMethodes()    { return $this->genericView('liasse.changements_methodes'); }     // T25
+    public function methodesEvaluation()     { return $this->genericEditable('liasse.methodes_evaluation', 'methodes_evaluation'); }      // T23
+    public function derogations()            { return $this->genericEditable('liasse.derogations', 'derogations'); }              // T24
+    public function changementsMethodes()    { return $this->genericEditable('liasse.changements_methodes', 'changements_methodes'); }     // T25
     public function calculIsEncouragees()    { return $this->genericView('liasse.calcul_is_encouragees'); }    // T26
 
     /**
@@ -1424,3 +1457,5 @@ class LiasseController extends Controller
         ];
     }
 }
+
+

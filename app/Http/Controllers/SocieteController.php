@@ -24,6 +24,8 @@ class SocieteController extends Controller
             'ice'         => 'nullable|string|max:15',
             'rc'          => 'nullable|string|max:50',
             'cnss'        => 'nullable|string|max:50',
+            'patente'     => 'nullable|string|max:50',
+            'adresse'     => 'nullable|string|max:500',
         ]);
 
         $societe = Societe::updateOrCreate(

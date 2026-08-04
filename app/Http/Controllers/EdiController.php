@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Services\EdiGenerationException;
+use App\Services\EdiXmlGeneratorService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+
+class EdiController extends Controller
+{
+    public function index(EdiXmlGeneratorService $edi): \Illuminate\View\View
+    {
+        $exercice = (int) session('annee_exercice', 2025);
+        $context = $edi->context(Auth::id(), $exercice);
+        $controles = $context['controls'];
+        $bloquants = collect($controles)->filter(fn ($rule) => $rule['bloquant'] && !$rule['ok'])->values();
+        $avertissements = collect($controles)->filter(fn ($rule) => !$rule['ok'] && !$rule['bloquant'])->count();
+
+        return view('liasse.edi', [
+            'exercice' => $exercice,
+            'societe' => $context['societe'],
+            'controles' => $controles,
+            'bloquants' => $bloquants,
+            'avertissements' => $avertissements,
+            'nombreChamps' => $context['liasseData']->count(),
+            'nombreLignesBalance' => $context['items']->count(),
+            'nombreLignesBalancePrecedente' => $context['itemsPrev']->count(),
+        ]);
+    }
+
+    public function generate(EdiXmlGeneratorService $edi): BinaryFileResponse|RedirectResponse
+    {
+        $exercice = (int) session('annee_exercice', 2025);
+
+        try {
+            $result = $edi->generate(Auth::id(), $exercice);
+        } catch (EdiGenerationException $exception) {
+            return redirect()
+                ->route('liasse.edi.index')
+                ->with('error', $exception->getMessage())
+                ->with('edi_blocking_errors', $exception->blockingErrors());
+        }
+
+        return response()
+            ->download($result['path'], $result['filename'], ['Content-Type' => 'application/xml'])
+            ->deleteFileAfterSend(false);
+    }
+}

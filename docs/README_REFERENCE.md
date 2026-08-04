@@ -353,6 +353,69 @@ Résumé opérationnel :
 | Solde TVA fin | Balance N |
 | Solde TVA début | Balance N-1 corrigée |
 
+## Complément - Documents sources D3 Soft 2026
+
+Trois documents complètent les références historiques du dossier `docs/` :
+
+| Fichier | Rôle |
+|---|---|
+| `Documents_Sources_Liasse_V4_avec_donnees_fictives (1).xlsx` | Classeur de référence fonctionnelle : documents sources, tableaux alimentés et règles de génération. |
+| `Dossier_Fiscal_D3Soft_2026.xlsx` | Fichier utilisateur à importer dans l'application. Il contient les données sources à extraire et valider. |
+| `D3Simpl2_N_N-1_Liasse_Fiscale (2).pdf` | Rendu PDF attendu de la liasse après combinaison correcte des balances et des documents sources. |
+
+### Structure du fichier à importer
+
+| Feuille | Données | Tableaux alimentés |
+|---|---|---|
+| `Sommaire` | Index du dossier fiscal. | Aucun directement. |
+| `Fiche société` | Identification, forme juridique, adresse, IF, ICE, RC, CNSS, patente, régime TVA, capital et associé unique. | T00, T13. |
+| `Registre des immobilisations` | Détail par bien : date d'entrée, valeur d'origine, taux, durée, cumul début, dotation, cumul fin. | T16. |
+| `Règles fiscales` | Résultat comptable, réintégrations, déductions, reports, résultat fiscal, IS et cotisation minimale. | T03. |
+| `Décision AG` | Date AG, exercice concerné, résultat N-1, réserve légale, dividendes, report à nouveau. | T14. |
+| `Informations complémentaires` | Statuts des modules conditionnels et détail des locations/baux. | T07, T09, T10, T11, T18, T19, T21 selon les cas. |
+| `Politique comptable` | Textes de méthodes, dérogations et changements de méthodes. | T23, T24, T25. |
+
+### Règles de génération identifiées
+
+Les documents sources ne remplacent pas la balance. Ils complètent uniquement les tableaux qui ne peuvent pas être générés de manière fiable depuis les comptes seuls.
+
+| Source | Tableaux | Règle |
+|---|---|---|
+| Balance comptable N + N-1 | T01, T02, T04, T05, T06, T08, T09, T12, T20, T22 | Génération automatique depuis les comptes. N alimente l'exercice courant ; N-1 alimente l'exercice précédent, les ouvertures et stocks initiaux. |
+| Fiche société | T00, T13 | Reprise des données d'identification et du capital. Pour D3 Soft : capital 200 000 DH, 2 000 parts, valeur nominale 100 DH, associé unique M. EL FASSI Abdelilah. |
+| Registre immobilisations | T16 uniquement | Le détail par bien alimente les dotations aux amortissements. Le document V4 indique que T04 et T08 restent `100% Balance`. |
+| Règles fiscales | T03 | Résultat comptable -2 665,62 DH ; réintégrations : 2 040 DH de pénalités et 3 000 DH de cotisation minimale ; total réintégrations 5 040 DH ; déductions 0 ; résultat fiscal 2 374,38 DH. |
+| Décision AG | T14 | Affectation du résultat N-1 : pas de réserve légale, pas de dividendes, report à nouveau de 38 000 DH selon le dossier importé. |
+| Informations complémentaires | T07, T09, T10, T11, T18, T19, T21 | Modules majoritairement non concernés. T19 est concerné : bureaux et locaux commerciaux, bailleur TAZI Abdelkader, contrat du 01/01/2024, loyer annuel 52 800 DH. |
+| Politique comptable | T23, T24, T25 | Reprise textuelle : stocks au coût de production, immobilisations au coût d'acquisition et amortissement linéaire, créances à valeur nominale, dettes à valeur de remboursement, aucune dérogation, aucun changement de méthode. |
+
+### Transformations attendues
+
+L'import des documents sources doit :
+
+1. Identifier chaque feuille du dossier importé par son nom.
+2. Extraire les feuilles simples sous forme `champ => valeur`.
+3. Extraire les feuilles structurées sous forme de lignes et colonnes métier.
+4. Mapper chaque donnée vers le tableau fiscal et la clé interne cible.
+5. Conserver l'origine : document source, feuille, ligne, colonne, date d'import, utilisateur et statut.
+6. Ne pas écraser les valeurs calculées depuis la balance lorsque le document V4 indique que le tableau est `100% Balance`.
+7. Afficher une prévisualisation à valider avant alimentation des tableaux.
+
+### Points à implémenter ultérieurement
+
+- Parseur spécifique du dossier fiscal D3 Soft, au lieu d'une extraction générique cellule par cellule.
+- Dictionnaire de correspondance feuille/champ/tableau/clé interne.
+- Prévisualisation par tableau fiscal concerné.
+- Protection explicite des tableaux déjà calculés depuis la balance.
+- Statuts complets : importé, analysé, validation nécessaire, validé, rejeté/corrigé.
+- Affichage de traçabilité dans les tableaux : balance, document source ou saisie manuelle.
+
+### Points de vigilance sur le dossier importé
+
+- Le `Registre des immobilisations` du fichier `Dossier_Fiscal_D3Soft_2026.xlsx` contient des dotations détaillées qui ne correspondent pas exactement aux agrégats attendus dans le document V4 pour T04/T08. Le document V4 précise que T04 et T08 restent générés depuis la balance ; le registre doit donc alimenter T16 et être contrôlé, mais ne doit pas écraser les montants balance-only.
+- La feuille `Décision AG` présente le résultat N-1 comme une perte de `38 000` DH. Pour T14, cette donnée doit être interprétée avec le bon sens fiscal/comptable : perte reportée positive dans l'affectation, résultat à affecter négatif si le tableau demande le signe comptable.
+- La feuille `Informations complémentaires` fournit le détail T19 du bail, mais ne contient pas l'identifiant IF/CIN du bailleur présent dans le classeur V4. Ce champ devra être optionnel, complété manuellement ou demandé à l'utilisateur lors de la validation.
+
 ## Conclusion
 
 La correction du fichier de référence confirme que la gestion N/N-1 doit être strictement symétrique :

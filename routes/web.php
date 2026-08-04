@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\BalanceController;
+use App\Http\Controllers\EdiController;
 use App\Http\Controllers\LiasseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SourceDocumentController;
 use App\Http\Controllers\SocieteController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -28,6 +30,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [BalanceController::class, 'index'])->name('dashboard');
     Route::post('/balance/import', [BalanceController::class, 'import'])->name('balance.import');
 
+    Route::resource('source-documents', SourceDocumentController::class)
+        ->only(['index', 'create', 'store', 'show', 'destroy']);
+    Route::post('/source-documents/{source_document}/analyze', [SourceDocumentController::class, 'analyze'])
+        ->name('source-documents.analyze');
+    Route::post('/source-documents/{source_document}/validate', [SourceDocumentController::class, 'validateExtraction'])
+        ->name('source-documents.validate');
+
     // --- MA SOCIÉTÉ (création / mise à jour) ---
     Route::post('/societe', [SocieteController::class, 'save'])->name('societe.save');
 
@@ -42,6 +51,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/provisions', [LiasseController::class, 'provisions'])->name('provisions');
         Route::get('/tva', [LiasseController::class, 'tva'])->name('tva');
         Route::get('/controle', [LiasseController::class, 'controle'])->name('controle');
+        Route::get('/edi', [EdiController::class, 'index'])->name('edi.index');
+        Route::post('/edi/generate', [EdiController::class, 'generate'])->name('edi.generate');
 
         // --- Tableaux supplémentaires (T05 → T26) ---
         Route::get('/esg', [LiasseController::class, 'esg'])->name('esg');
@@ -75,3 +86,4 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
