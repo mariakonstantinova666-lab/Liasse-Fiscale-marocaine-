@@ -20,9 +20,12 @@ use RuntimeException;
  */
 class EdiXmlGeneratorService
 {
+    private array $calculatedMappingMissing = [];
+
     public function __construct(
         private BalanceService $balanceService,
-        private LiasseControlService $controlService
+        private LiasseControlService $controlService,
+        private EdiCalculatedTableExportService $calculatedExporter
     ) {
     }
 
@@ -88,7 +91,7 @@ class EdiXmlGeneratorService
     }
 
     /**
-     * @return array{societe:?Societe, items:Collection, itemsPrev:Collection, liasseData:Collection, controls:array<int, array<string, mixed>>, exercice:int}
+     * @return array{societe:?Societe, user_id:int, items:Collection, itemsPrev:Collection, liasseData:Collection, controls:array<int, array<string, mixed>>, exercice:int}
      */
     public function context(int $userId, int $exercice): array
     {
@@ -102,6 +105,7 @@ class EdiXmlGeneratorService
 
         return [
             'societe' => Societe::query()->where('user_id', $userId)->first(),
+            'user_id' => $userId,
             'items' => $items,
             'itemsPrev' => $itemsPrev,
             'liasseData' => $liasseData,
@@ -210,7 +214,9 @@ class EdiXmlGeneratorService
     private function buildMappedValues(array $context): array
     {
         $data = $this->indexedLiasseData($context['liasseData']);
-        $values = [];
+        $calculated = $this->calculatedExporter->export((int) $context['user_id'], (int) $context['exercice']);
+        $this->calculatedMappingMissing = $calculated['missing'];
+        $values = $calculated['values'];
 
         $this->appendComputedPassageFiscalValues($values, $context, $data);
 
@@ -377,10 +383,29 @@ class EdiXmlGeneratorService
             $this->validateRequiredTableCoverage($values),
             $this->validateNoDuplicateCells($values),
             $this->validateCodesExistInCatalog($values),
+            $this->validateCalculatedMappings(),
             $this->validateKnownLiasseValuesAreMapped($context, $values)
         );
 
         return $errors;
+    }
+
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    private function validateCalculatedMappings(): array
+    {
+        if ($this->calculatedMappingMissing === []) {
+            return [];
+        }
+
+        return [$this->ediError(
+            'EDI_CALCULATED_MAPPING_MISSING',
+            'Mappings EDI calcules incomplets',
+            'Cellules calculees sans code EDI officiel retrouve : '.implode(', ', array_slice($this->calculatedMappingMissing, 0, 30)).'.',
+            'Les tableaux calcules doivent etre exportes uniquement avec des codes presents dans ref_codes_edi.',
+            'Completer ou corriger le catalogue de codification EDI, puis relancer la generation.'
+        )];
     }
 
     /**

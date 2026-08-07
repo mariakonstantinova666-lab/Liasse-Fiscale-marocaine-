@@ -42,8 +42,8 @@
         </div>
     </div>
 
-    <div class="rounded-lg border {{ $bloquants->isEmpty() ? 'border-emerald-200 bg-emerald-50' : 'border-red-200 bg-red-50' }} p-5">
-        @if($bloquants->isEmpty())
+    <div class="rounded-lg border {{ $bloquantsAffiches->isEmpty() ? 'border-emerald-200 bg-emerald-50' : 'border-red-200 bg-red-50' }} p-5">
+        @if($bloquantsAffiches->isEmpty())
             <p class="font-bold text-emerald-900">Generation autorisee</p>
             <p class="mt-1 text-sm text-emerald-800">
                 Aucune erreur bloquante detectee. Le fichier XML peut etre cree.
@@ -52,16 +52,16 @@
                 @endif
             </p>
         @else
-            <p class="font-bold text-red-900">Generation bloquee : {{ $bloquants->count() }} erreur(s) bloquante(s)</p>
+            <p class="font-bold text-red-900">Generation bloquee : {{ $bloquantsAffiches->count() }} erreur(s) bloquante(s)</p>
             <p class="mt-1 text-sm text-red-800">
-                Le fichier EDI ne doit pas etre cree tant que ces controles ne sont pas corriges.
+                Le fichier EDI ne doit pas etre cree tant que ces controles ou validations XML ne sont pas corriges.
             </p>
         @endif
     </div>
 
-    @if($bloquants->isNotEmpty())
+    @if($bloquantsAffiches->isNotEmpty())
         <div class="space-y-3">
-            @foreach($bloquants as $regle)
+            @foreach($bloquantsAffiches as $regle)
                 <div class="rounded-lg border-l-4 border-red-500 bg-white p-4 shadow-sm">
                     <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                         <div>

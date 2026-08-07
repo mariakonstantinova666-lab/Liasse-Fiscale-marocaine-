@@ -12,24 +12,27 @@ class RefCodesEdiSeeder extends Seeder
 {
     public function run(): void
     {
-        $excelFile = base_path('Codification des cellules modèle Normal.xlsx');
+        $excelFile = collect([
+            base_path('Codification des cellules modèle Normal.xlsx'),
+            base_path('Codification des cellules modÃ¨le Normal.xlsx'),
+        ])->first(fn (string $path) => File::exists($path));
         $csvFile = base_path('import_edi.csv');
 
-        if (File::exists($excelFile)) {
+        if ($excelFile !== null) {
             $count = $this->importFromExcel($excelFile);
-            $this->command?->info("Succès : {$count} codes EDI importés depuis le fichier Excel de codification.");
+            $this->command?->info("Succes : {$count} codes EDI importes depuis le fichier Excel de codification.");
 
             return;
         }
 
         if (File::exists($csvFile)) {
             $count = $this->importFromCsv($csvFile);
-            $this->command?->warn("Succès : {$count} codes EDI importés depuis import_edi.csv. Attention : ce CSV peut perdre la ventilation par tableau.");
+            $this->command?->warn("Succes : {$count} codes EDI importes depuis import_edi.csv. Attention : ce CSV peut perdre la ventilation par tableau.");
 
             return;
         }
 
-        $this->command?->error('Aucun fichier de codification EDI trouvé.');
+        $this->command?->error('Aucun fichier de codification EDI trouve.');
     }
 
     private function importFromExcel(string $file): int
@@ -50,11 +53,17 @@ class RefCodesEdiSeeder extends Seeder
 
             for ($col = 1; $col <= $highestColumn; $col++) {
                 $value = $this->clean($sheet->getCell([$col, $row])->getValue());
-                if (preg_match('/code\s*=\s*(\d+)/i', $value, $matches) === 1) {
+                $codeSource = $value;
+                if (preg_match('/code\s*=/i', $value) === 1 && $row < $highestRow) {
+                    $nextValue = $this->clean($sheet->getCell([$col, $row + 1])->getValue());
+                    $codeSource = trim($value.' '.$nextValue);
+                }
+
+                if (preg_match('/code\s*=\s*(\d+)/i', $codeSource, $matches) === 1) {
                     $rowCodes[] = [
                         'code' => $matches[1],
                         'col' => $col,
-                        'type' => $this->extractType($value),
+                        'type' => $this->extractType($codeSource),
                     ];
                 }
             }
@@ -70,7 +79,7 @@ class RefCodesEdiSeeder extends Seeder
 
                 for ($col = 1; $col <= $highestColumn; $col++) {
                     $header = $this->clean($sheet->getCell([$col, $row])->getValue());
-                    if ($header !== '' && !str_contains(strtolower($header), 'code =')) {
+                    if ($this->isColumnHeader($header)) {
                         $columnHeaders[$col] = $header;
                     }
                 }
@@ -163,6 +172,15 @@ class RefCodesEdiSeeder extends Seeder
     private function extractType(string $value): string
     {
         return preg_match('/Type\s*=\s*([A-Za-z]+)/i', $value, $matches) === 1 ? $matches[1] : '';
+    }
+
+    private function isColumnHeader(string $value): bool
+    {
+        if ($value === '' || str_contains(strtolower($value), 'code =')) {
+            return false;
+        }
+
+        return preg_match('/^(\d+\)|\(Type|Type\s*=)/i', $value) !== 1;
     }
 
     private function isTableTitleContinuation(string $currentTableau, string $label): bool
