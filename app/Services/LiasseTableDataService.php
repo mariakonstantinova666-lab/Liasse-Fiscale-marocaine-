@@ -34,7 +34,7 @@ class LiasseTableDataService
                 'Immobilisations en recherche et développement' => $this->calculerLigneActif($items, '221', '2821', $itemsPrev),
                 'Brevets, marques, droits et valeurs similaires' => $this->calculerLigneActif($items, '222', '2822', $itemsPrev),
                 'Fonds commercial' => $this->calculerLigneActif($items, '223', '2823', $itemsPrev),
-                'Autres immobilisations corporelles' => $this->calculerLigneActif($items, '228', '2828', $itemsPrev),
+                'Autres immobilisations incorporelles' => $this->calculerLigneActif($items, '228', '2828', $itemsPrev),
             ],
             'IMMOBILISATIONS CORPORELLES ( c )' => [
                 'Terrains' => $this->calculerLigneActif($items, '231', '2831', $itemsPrev),
