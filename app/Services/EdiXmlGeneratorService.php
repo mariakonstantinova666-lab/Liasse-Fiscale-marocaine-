@@ -229,18 +229,47 @@ class EdiXmlGeneratorService
             foreach ($fields as $key => $value) {
                 $cell = $this->directCellCode($tableauCode, $key);
                 if ($cell !== null) {
-                    $values[] = $this->mappedValue($tableauId, $cell, $value);
+                    $values[] = $this->mappedValue($tableauId, $cell, $value, null, $this->shouldFormatNumeric($tableauCode, $key));
                     continue;
                 }
 
                 $dynamic = $this->dynamicCellCode($tableauCode, $key);
                 if ($dynamic !== null) {
-                    $values[] = $this->mappedValue($tableauId, $dynamic['code'], $value, $dynamic['line']);
+                    $values[] = $this->mappedValue($tableauId, $dynamic['code'], $value, $dynamic['line'], $this->shouldFormatNumeric($tableauCode, $key));
                 }
             }
         }
 
+        $this->appendDefaultNumericTotals($values, $data, 'plus_values');
+        $this->appendDefaultNumericTotals($values, $data, 'titres_participation');
+
         return $this->deduplicateMappedValues($values);
+    }
+
+    /**
+     * Ajoute les totaux numériques codifiés des tableaux déclaratifs vides.
+     * Les lignes de détail et les champs texte restent exportés uniquement
+     * lorsqu'ils existent dans liasse_data.
+     *
+     * @param array<int, array{tableau:int, code:int, valeur:string, ligne:?int}> $values
+     * @param array<string, array<string, string>> $data
+     */
+    private function appendDefaultNumericTotals(array &$values, array $data, string $tableauCode): void
+    {
+        $tableauId = $this->tableauId($tableauCode);
+        if ($tableauId === null) {
+            return;
+        }
+
+        foreach ((array) config('edi.direct_cells.'.$tableauCode, []) as $key => $code) {
+            if (!str_starts_with((string) $key, 'total_')
+                || !$this->shouldFormatNumeric($tableauCode, (string) $key)
+                || isset($data[$tableauCode][(string) $key])) {
+                continue;
+            }
+
+            $values[] = $this->mappedValue($tableauId, (int) $code, 0);
+        }
     }
 
     /**
@@ -327,6 +356,20 @@ class EdiXmlGeneratorService
             return is_numeric($code) ? ['code' => (int) $code, 'line' => ((int) $matches[1]) + 1] : null;
         }
 
+        if ($tableauCode === 'plus_values'
+            && preg_match('/^r(\d+)_c(\d+)$/', $key, $matches) === 1) {
+            $code = config('edi.dynamic_rows.plus_values.r.c'.$matches[2]);
+
+            return is_numeric($code) ? ['code' => (int) $code, 'line' => ((int) $matches[1]) + 1] : null;
+        }
+
+        if ($tableauCode === 'titres_participation'
+            && preg_match('/^r(\d+)_c(\d+)$/', $key, $matches) === 1) {
+            $code = config('edi.dynamic_rows.titres_participation.r.c'.$matches[2]);
+
+            return is_numeric($code) ? ['code' => (int) $code, 'line' => ((int) $matches[1]) + 1] : null;
+        }
+
         if ($tableauCode === 'passage_fiscal'
             && preg_match('/^(reintegration_courante|reintegration_non_courante|deduction_courante|deduction_non_courante)_(\d+)_(label|montant)$/', $key, $matches) === 1) {
             $code = config('edi.dynamic_rows.passage_fiscal.'.$matches[1].'.'.$matches[3]);
@@ -340,14 +383,27 @@ class EdiXmlGeneratorService
     /**
      * @return array{tableau:int, code:int, valeur:string, ligne:?int}
      */
-    private function mappedValue(int $tableauId, int $code, mixed $value, ?int $line = null): array
+    private function mappedValue(int $tableauId, int $code, mixed $value, ?int $line = null, bool $formatNumeric = true): array
     {
         return [
             'tableau' => $tableauId,
             'code' => $code,
-            'valeur' => $this->formatValue($value),
+            'valeur' => $formatNumeric ? $this->formatValue($value) : trim((string) ($value ?? '')),
             'ligne' => $line,
         ];
+    }
+
+    private function shouldFormatNumeric(string $tableauCode, string $key): bool
+    {
+        if ($tableauCode === 'plus_values') {
+            return !preg_match('/^(r\d+_c(1|2)|total_c2)$/', $key);
+        }
+
+        if ($tableauCode === 'titres_participation') {
+            return !preg_match('/^(r\d+_c(1|2|3|8)|total_c(2|3|8))$/', $key);
+        }
+
+        return true;
     }
 
     /**

@@ -40,6 +40,8 @@ class EdiCalculatedTableExportService
         $this->exportBilanActif($values, $missing, $userId, $exercice);
         $this->exportBilanPassif($values, $missing, $userId, $exercice);
         $this->exportCpc($values, $missing, $userId, $exercice);
+        $this->exportEsg($values, $missing, $userId, $exercice);
+        $this->exportDetailCpc($values, $missing, $userId, $exercice);
         $this->exportImmobilisations($values, $missing, $userId, $exercice);
         $this->exportAmortissements($values, $missing, $userId, $exercice);
         $this->exportProvisions($values, $missing, $userId, $exercice);
@@ -155,6 +157,73 @@ class EdiCalculatedTableExportService
         }
     }
 
+    private function exportEsg(array &$values, array &$missing, int $userId, int $exercice): void
+    {
+        $tableauId = $this->tableauId('esg');
+        if ($tableauId === null) {
+            $missing[] = 'esg : identifiant de tableau absent dans config/edi.php.';
+            return;
+        }
+
+        $computed = $this->liasseTables->esg($userId, $exercice);
+        foreach ($computed['rows'] as $row) {
+            if (isset($row['section']) || !isset($row['k'])) {
+                continue;
+            }
+
+            $label = $this->canonicalEsgLabel((string) $row['l']);
+            $key = (string) $row['k'];
+            $this->appendCatalogValue($values, $missing, $tableauId, $label, ['Exercice'], $computed['n'][$key] ?? 0, ['ETAT DES SOLDES DE GESTION (E.S.G)']);
+            $this->appendCatalogValue($values, $missing, $tableauId, $label, ['Exercice Précédent', 'Exercice Precedent'], $computed['p'][$key] ?? 0, ['ETAT DES SOLDES DE GESTION (E.S.G)']);
+        }
+    }
+
+    private function exportDetailCpc(array &$values, array &$missing, int $userId, int $exercice): void
+    {
+        $tableauId = $this->tableauId('detail_cpc');
+        if ($tableauId === null) {
+            $missing[] = 'detail_cpc : identifiant de tableau absent dans config/edi.php.';
+            return;
+        }
+
+        $computed = $this->liasseTables->detailCpc($userId, $exercice);
+        $rows = array_values(array_filter(
+            $computed['rows'],
+            fn (array $row) => !isset($row['section']) && !isset($row['poste'])
+        ));
+
+        $currentCodes = $this->detailCpcCodesByColumn('EXERCICE');
+        $previousCodes = $this->detailCpcCodesByColumn('EXERCICE PRECEDENT');
+
+        if (count($currentCodes) !== count($rows)) {
+            $missing[] = 'detail_cpc : nombre de lignes exercice different du catalogue EDI ('.count($rows).' lignes liasse / '.count($currentCodes).' codes).';
+        }
+
+        if (count($previousCodes) !== count($rows)) {
+            $missing[] = 'detail_cpc : nombre de lignes exercice precedent different du catalogue EDI ('.count($rows).' lignes liasse / '.count($previousCodes).' codes).';
+        }
+
+        foreach ($rows as $index => $row) {
+            if (isset($currentCodes[$index])) {
+                $values[] = [
+                    'tableau' => $tableauId,
+                    'code' => $currentCodes[$index],
+                    'valeur' => number_format((float) ($row['n'] ?? 0), 2, '.', ''),
+                    'ligne' => null,
+                ];
+            }
+
+            if (isset($previousCodes[$index])) {
+                $values[] = [
+                    'tableau' => $tableauId,
+                    'code' => $previousCodes[$index],
+                    'valeur' => number_format((float) ($row['p'] ?? 0), 2, '.', ''),
+                    'ligne' => null,
+                ];
+            }
+        }
+    }
+
     private function appendCatalogValue(array &$values, array &$missing, int $tableauId, string $label, array $columns, mixed $amount, array $catalogTables = []): void
     {
         $code = $this->findCode($label, $columns, $catalogTables);
@@ -245,20 +314,40 @@ class EdiCalculatedTableExportService
         $computed = $this->liasseTables->provisions($userId, $exercice);
         $table = ['TABLEAU DES PROVISIONS'];
         $columns = [
-            'col1' => ['Montant début exercice'],
+            'col1' => ['Montant debut exercice'],
             'col2' => ["Dotations d'exploitation"],
-            'col3' => ['Dotations financières'],
+            'col3' => ['Dotations financieres'],
             'col4' => ['Dotations non courantes'],
             'col5' => ["Reprises d'exploitation"],
-            'col6' => ['Reprises financières'],
+            'col6' => ['Reprises financieres'],
             'col7' => ['Reprises non courantes'],
+            'col8' => ['Montant fin exercice'],
         ];
 
-        foreach ($computed['provisionsData'] as $section => $rows) {
-            $this->appendRowColumns($values, $missing, $tableauId, $this->canonicalProvisionLabel($section), $computed['totauxProvisions'][$section], $columns, $table);
-            foreach ($rows as $label => $row) {
-                $this->appendRowColumns($values, $missing, $tableauId, $this->canonicalProvisionLabel($label), $row, $columns, $table);
-            }
+        $empty = (object) ['col1' => 0.0, 'col2' => 0.0, 'col3' => 0.0, 'col4' => 0.0, 'col5' => 0.0, 'col6' => 0.0, 'col7' => 0.0];
+        $depreciation = $computed['provisionsData']["PROVISIONS POUR DEPRECIATION DE L'ACTIF"] ?? [];
+        $actifImmobilise = $this->sumRows(array_slice($depreciation, 0, 4, true), ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7']);
+        $actifCirculant = $this->sumRows(array_slice($depreciation, 4, 4, true), ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7']);
+        $tresorerie = $this->sumRows(array_slice($depreciation, 8, 1, true), ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7']);
+        $reglementees = clone $empty;
+        $durables = $computed['totauxProvisions']['PROVISIONS DURABLES POUR RISQUES ET CHARGES'] ?? clone $empty;
+        $autres = $computed['totauxProvisions']['AUTRES PROVISIONS POUR RISQUES ET CHARGES'] ?? clone $empty;
+        $sousTotalA = $this->sumRows([$actifImmobilise, $reglementees], ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7']);
+        $sousTotalB = $this->sumRows([$durables, $actifCirculant, $autres, $tresorerie], ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7']);
+        $total = $this->sumRows([$sousTotalA, $sousTotalB], ['col1', 'col2', 'col3', 'col4', 'col5', 'col6', 'col7']);
+
+        foreach ([
+            "1. Provisions pour depreciation de l'actif immobilise" => $actifImmobilise,
+            '2. Provisions reglementees' => $reglementees,
+            'SOUS TOTAL (A)' => $sousTotalA,
+            '3. Provisions durables pour risques et charges' => $durables,
+            "4. Provisions pour depreciation de l'actif circulant (hors tresorerie)" => $actifCirculant,
+            '5. Autres provisions pour risques et charge' => $autres,
+            '6. Provisions pour depreciation des comptes de tresorerie' => $tresorerie,
+            'SOUS TOTAL (B)' => $sousTotalB,
+            'TOTAL (A+B)' => $total,
+        ] as $label => $row) {
+            $this->appendRowColumns($values, $missing, $tableauId, $label, $this->withProvisionEnding($row), $columns, $table);
         }
     }
 
@@ -353,6 +442,20 @@ class EdiCalculatedTableExportService
         foreach ($columns as $property => $columnLabels) {
             $this->appendCatalogValue($values, $missing, $tableauId, $label, $columnLabels, $row->{$property} ?? 0, $tables);
         }
+    }
+
+    private function withProvisionEnding(object $row): object
+    {
+        $row = clone $row;
+        $row->col8 = (float) ($row->col1 ?? 0)
+            + (float) ($row->col2 ?? 0)
+            + (float) ($row->col3 ?? 0)
+            + (float) ($row->col4 ?? 0)
+            - (float) ($row->col5 ?? 0)
+            - (float) ($row->col6 ?? 0)
+            - (float) ($row->col7 ?? 0);
+
+        return $row;
     }
 
     private function findCode(string $label, array $columns, array $catalogTables = []): ?int
@@ -531,6 +634,41 @@ class EdiCalculatedTableExportService
         return $column;
     }
 
+    /**
+     * Les codes du detail CPC contiennent des lignes d'en-tete de poste sans
+     * montant dans la vue. L'export retient uniquement les lignes valorisees.
+     *
+     * @return array<int, int>
+     */
+    private function detailCpcCodesByColumn(string $column): array
+    {
+        if (!Schema::hasTable('ref_codes_edi')) {
+            return [];
+        }
+
+        return DB::table('ref_codes_edi')
+            ->where('tableau', 'DETAIL DES POSTES DU C.P.C.')
+            ->where('col1', $column)
+            ->where('col2', 'Double')
+            ->get(['code_edi', 'libelle', 'col3'])
+            ->reject(fn ($row) => $this->isDetailCpcHeadingLabel((string) $row->libelle))
+            ->sortBy(fn ($row) => $this->catalogCellRow((string) $row->col3))
+            ->pluck('code_edi')
+            ->map(fn ($code) => (int) $code)
+            ->values()
+            ->all();
+    }
+
+    private function isDetailCpcHeadingLabel(string $label): bool
+    {
+        return preg_match('/^(611|612|613\/614|617|618|638|658|711|712|713|718|719|738)\b/u', trim($label)) === 1;
+    }
+
+    private function catalogCellRow(string $cell): int
+    {
+        return (int) (preg_replace('/\D+/', '', $cell) ?: 0);
+    }
+
     private function normalize(string $value): string
     {
         $value = html_entity_decode($value, ENT_QUOTES | ENT_HTML5, 'UTF-8');
@@ -546,6 +684,53 @@ class EdiCalculatedTableExportService
     private function compactKey(string $value): string
     {
         return preg_replace('/\s+/', '', $value) ?? $value;
+    }
+
+    private function canonicalEsgLabel(string $label): string
+    {
+        $label = str_replace("\u{00a0}", ' ', $label);
+
+        return [
+            "1   Ventes de marchandises (en l'état )" => "1. Ventes de Marchandises ( en l'état)",
+            '2   -  Achats revendus de marchandises' => '2. (-) Achats revendus de marchandises',
+            "I   MARGES BRUTES SUR VENTES EN L'ETAT" => "I. (=) MARGE BRUTE SUR VENTES EN L'ETAT",
+            "II   +  PRODUCTION DE L'EXERCICE (3+4+5)" => "II. (+) PRODUCTION DE L'EXERCICE (3+4+5)",
+            '3   Ventes de biens et services produits' => '3. Ventes de biens et services produits',
+            '4   Variation de stocks de produits' => '4. Variation stocks produits',
+            "5   Immobilisations produites par l'entreprise pour elle même" => "5. Immobilisations produites par l'entreprise pour elle-même",
+            "III   -  CONSOMMATION DE L'EXERCICE (6+7)" => "III. (-) CONSOMMATION DE L'EXERCICE (6+7)",
+            '6   Achats consommés de matières et fournitures' => '6. Achats consommés de matières et fournitures',
+            '7   Autres charges externes' => '7. Autres charges externes',
+            'IV   VALEUR AJOUTEE ( I+II+III )' => 'IV. (=) VALEUR AJOUTEE (I+II+III)',
+            "8   +  Subventions d'exploitation" => "8. (+) Subventions d'exploitation",
+            "V   RESULTAT BRUT D'EXPLOITATION (E.B.E)" => "V. (=) EXCEDENT BRUT D'EXPLOITATION (EBE) OU INSUFFISANCE BRUTE D'EXPLOITATION (IBE)",
+            '9   -  Impôts et taxes' => '9. (-) Impôts et taxes',
+            '10   -  Charges de personnel' => '10. (-) Charges de personnel',
+            "11   +  Autres produits d'exploitation" => "11. (+) Autres produits d'exploitation",
+            "12   -  Autres charges d'exploitation" => "12. (-) Autres charges d'exploitation",
+            "13   +  Reprises d'exploitation: transfert de charges" => "13. (+) Reprises d'exploitation, transferts de charges",
+            "14   -  Dotations d'exploitation" => "14. (-) Dotations d'exploitation",
+            'VI   RESULTAT D\'EXPLOITATION ( + ou - )' => 'VI. (=) RESULTAT D\'EXPLOITATION (+ou-)',
+            'VII   RESULTAT FINANCIER' => 'VII. (+/-) RESULTAT FINANCIER',
+            'VIII   RESULTAT COURANT ( + ou - )' => 'VIII. (=) RESULTAT COURANT (+ou- )',
+            'IX   RESULTAT NON COURANT ( + ou - )' => 'IX. (+/-) RESULTAT NON COURANT',
+            '15   -  Impôts sur les resultats' => '15. (-) IMPOTS SUR LES RESULTATS',
+            "X   RESULTAT NET DE L'EXERCICE ( + ou - )" => "X. (=) RESULTAT NET DE L'EXERCICE",
+            "1   RESULTAT NET DE L'EXERCICE ( + ou - )" => "1. Résultat net de l'exercice",
+            '- Benefice (+)' => 'Bénéfice +',
+            '- Perte   (-)' => 'Perte -',
+            "2   +  Dotations d'exploitation" => "2. (+) Dotations d'exploitation (1)",
+            '3   +  Dotations financières' => '3. (+) Dotations financières (1)',
+            '4   +  Dotations non courantes' => '4. (+) Dotations non courantes (1)',
+            "5   -  Reprises d'exploitation" => "5. (-) Reprises d'exploitation (2)",
+            '6   -  Reprises financières' => '6. (-) Reprises financières (2)',
+            '7   -  Reprises non courantes (2) (3)' => '7. (-) Reprises non courantes (2)(3)',
+            '8   -  Produits des cession des immobilisations (1)' => "8. (-) Produits des cessions d'immobilisations (1)",
+            '9   +  Valeurs nettes des immobilisations cédées' => '9. (+) Valeurs nettes d\'amortiss. des immo. cédées',
+            'I   CAPACITE D\'AUTOFINANCEMENT ( C.A.F )' => 'I. CAPACITE D\'AUTOFINANCEMENT (C.A.F.)',
+            '10   -  Distributions de bénéfices' => '10. (-) Distributions de bénéfices',
+            'II   AUTOFINANCEMENT' => 'II. AUTOFINANCEMENT',
+        ][$label] ?? $label;
     }
 
     private function canonicalActifLabel(string $label): string
@@ -757,3 +942,4 @@ class EdiCalculatedTableExportService
         return array_values($unique);
     }
 }
+
