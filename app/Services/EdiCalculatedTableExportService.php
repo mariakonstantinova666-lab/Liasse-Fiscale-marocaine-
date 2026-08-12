@@ -135,6 +135,15 @@ class EdiCalculatedTableExportService
             $this->appendCatalogValue($values, $missing, $tableauId, $label, ['EXERCICE'], $row->montant ?? 0, ['Bilan (passif)']);
             $this->appendCatalogValue($values, $missing, $tableauId, $label, ['EXERCICE PRECEDENT', 'EXERCICE PRÉCÉDENT'], $row->montant_prec ?? 0, ['Bilan (passif)']);
         }
+
+        foreach ([13402, 13403, 13413, 13414] as $code) {
+            $values[] = [
+                'tableau' => $tableauId,
+                'code' => $code,
+                'valeur' => '0.00',
+                'ligne' => null,
+            ];
+        }
     }
 
     private function exportCpc(array &$values, array &$missing, int $userId, int $exercice): void
