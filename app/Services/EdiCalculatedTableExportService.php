@@ -435,6 +435,13 @@ class EdiCalculatedTableExportService
             $this->appendCatalogValue($values, $missing, $tableauId, $label, ['Exercice précédent Emplois', 'Emplois Exercice précédent'], $row['p_emploi'] ?? 0, $table);
             $this->appendCatalogValue($values, $missing, $tableauId, $label, ['Exercice précédent Ressources', 'Ressources Exercice précédent'], $row['p_ressource'] ?? 0, $table);
         }
+
+        $this->appendRowColumns($values, $missing, $tableauId, 'TOTAL GENERAL', $computed['fluxTotal'], [
+            'n_emploi' => ['EXERCICE EMPLOIS'],
+            'n_ressource' => ['EXERCICE RESSOURCES'],
+            'p_emploi' => ['EXERCICE PRECEDENT EMPLOIS'],
+            'p_ressource' => ['EXERCICE PRECEDENT RESSOURCES'],
+        ], $table);
     }
 
     private function appendRowColumns(array &$values, array &$missing, int $tableauId, string $label, object $row, array $columns, array $tables): void
