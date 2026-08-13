@@ -73,7 +73,17 @@ return [
             'perte_nette' => 820,
             'reintegrations_total' => 18009,
             'deductions_total' => 18012,
-            'reports_deficitaires_total' => 831,
+            'total_montant_plus' => 833,
+            'total_montant_moins' => 834,
+            'benefice_brut_fiscal' => 839,
+            'deficit_brut_fiscal' => 840,
+            'benefice_net_fiscal' => 6874,
+            'deficit_net_fiscal' => 6875,
+            'cumul_amortissements_differes' => 854,
+            'deficits_restants_n4' => 864,
+            'deficits_restants_n3' => 865,
+            'deficits_restants_n2' => 866,
+            'deficits_restants_n1' => 867,
         ],
 
         'repartition_capital' => [
@@ -180,6 +190,7 @@ return [
 
     'non_edi_fields' => [
         'affectation_resultats.decision_date',
+        'passage_fiscal.reports_deficitaires_total',
     ],
 
     'dynamic_rows' => [

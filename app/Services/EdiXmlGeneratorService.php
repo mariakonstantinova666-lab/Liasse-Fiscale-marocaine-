@@ -289,12 +289,31 @@ class EdiXmlGeneratorService
             + $this->numberFromData($data, 'passage_fiscal', 'reintegrations_non_courantes_total');
         $deductions = $this->numberFromData($data, 'passage_fiscal', 'deductions_courantes_total')
             + $this->numberFromData($data, 'passage_fiscal', 'deductions_non_courantes_total');
+        $reports = $this->numberFromData($data, 'passage_fiscal', 'reports_deficitaires_total');
+        $totalMontantPlus = max(0.0, $resultatComptable) + $reintegrations;
+        $totalMontantMoins = max(0.0, -$resultatComptable) + $deductions;
+        $resultatBrutFiscal = $totalMontantPlus - $totalMontantMoins;
+        $beneficeBrutFiscal = max(0.0, $resultatBrutFiscal);
+        $deficitBrutFiscal = max(0.0, -$resultatBrutFiscal);
+        $beneficeNetFiscal = max(0.0, $beneficeBrutFiscal - $reports);
+        $deficitNetFiscal = $deficitBrutFiscal;
 
         foreach ([
             'benefice_net' => max(0.0, $resultatComptable),
             'perte_nette' => max(0.0, -$resultatComptable),
             'reintegrations_total' => $reintegrations,
             'deductions_total' => $deductions,
+            'total_montant_plus' => $totalMontantPlus,
+            'total_montant_moins' => $totalMontantMoins,
+            'benefice_brut_fiscal' => $beneficeBrutFiscal,
+            'deficit_brut_fiscal' => $deficitBrutFiscal,
+            'benefice_net_fiscal' => $beneficeNetFiscal,
+            'deficit_net_fiscal' => $deficitNetFiscal,
+            'cumul_amortissements_differes' => 0.0,
+            'deficits_restants_n4' => 0.0,
+            'deficits_restants_n3' => 0.0,
+            'deficits_restants_n2' => 0.0,
+            'deficits_restants_n1' => 0.0,
         ] as $key => $value) {
             $code = $this->directCellCode('passage_fiscal', $key);
             if ($code !== null) {
