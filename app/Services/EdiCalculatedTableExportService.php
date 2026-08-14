@@ -812,6 +812,7 @@ class EdiCalculatedTableExportService
             'IMMOBILISATIONS CORPORELLES' => 'IMMOBILISATIONS CORPORELLES',
             'Installations techniques, matériel et outillage' => 'Installat. techniques, matériel et outillage',
             'Mobilier, matériel de bureau et aménagement' => 'Mobilier, matériel bureau et aménagements',
+            'Matériel informatique' => 'Matériel',
         ][$label] ?? $label;
     }
 

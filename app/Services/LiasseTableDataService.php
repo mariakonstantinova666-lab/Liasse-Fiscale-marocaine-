@@ -274,9 +274,10 @@ class LiasseTableDataService
                 'Constructions' => $this->calculerLigneImmo($items, '232', $itemsPrev),
                 'Installations techniques, matériel et outillage' => $this->calculerLigneImmo($items, '233', $itemsPrev),
                 'Matériel de transport' => $this->calculerLigneImmo($items, '234', $itemsPrev),
-                'Mobilier, matériel de bureau et aménagement' => $this->calculerLigneImmo($items, '235', $itemsPrev),
+                'Mobilier, matériel de bureau et aménagement' => $this->calculerLigneImmo($items, '235', $itemsPrev, ['2355']),
                 'Autres immobilisations corporelles' => $this->calculerLigneImmo($items, '238', $itemsPrev),
                 'Immobilisations corporelles en cours' => $this->calculerLigneImmo($items, '239', $itemsPrev),
+                'Matériel informatique' => $this->calculerLigneImmo($items, '2355', $itemsPrev),
             ],
         ];
 
@@ -1086,16 +1087,26 @@ class LiasseTableDataService
         ];
     }
 
-    private function calculerLigneImmo(Collection $items, string $codePrefixe, ?Collection $itemsPrev = null): object
+    private function calculerLigneImmo(Collection $items, string $codePrefixe, ?Collection $itemsPrev = null, array $excludePrefixes = []): object
     {
-        $brut = function (?Collection $collection) use ($codePrefixe): float {
+        $brut = function (?Collection $collection) use ($codePrefixe, $excludePrefixes): float {
             if ($collection === null || $collection->isEmpty()) {
                 return 0.0;
             }
 
-            $solde = (float) $collection->filter(fn ($item) => str_starts_with((string) $item->compte, $codePrefixe)
-                && !str_starts_with((string) $item->compte, '28')
-                && !str_starts_with((string) $item->compte, '29'))
+            $solde = (float) $collection->filter(function ($item) use ($codePrefixe, $excludePrefixes) {
+                $compte = (string) $item->compte;
+
+                foreach ($excludePrefixes as $excludePrefix) {
+                    if (str_starts_with($compte, $excludePrefix)) {
+                        return false;
+                    }
+                }
+
+                return str_starts_with($compte, $codePrefixe)
+                    && !str_starts_with($compte, '28')
+                    && !str_starts_with($compte, '29');
+            })
                 ->sum(fn ($item) => (float) $item->solde_debiteur - (float) $item->solde_crediteur);
 
             return $solde < 0 ? abs($solde) : $solde;
