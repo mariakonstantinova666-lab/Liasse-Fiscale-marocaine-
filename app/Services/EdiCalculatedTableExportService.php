@@ -855,10 +855,24 @@ class EdiCalculatedTableExportService
     private function canonicalStockLabel(string $label): string
     {
         return [
+            'Matières premières' => '3- Matières premières',
+            'Matières consommables' => '4- Matières consommables',
+            'Pièces détachées' => '5 - Pièces détachées',
+            'Récupérables' => '7 * récupérables',
+            'Vendus' => '8 * vendus',
+            'Perdus' => '9 * perdus',
             'Total I. Stocks Approvisionnement' => '10- Total stocks approvisionnement',
-            'Total II. Stocks En-cours Production de Biens et Services' => '4- Total stocks en cours',
+            'Produits en cours' => '11- Produits en cours',
+            'Études en cours' => '12- Etudes en cours',
+            'Travaux en cours' => '13- Travaux en cours',
+            'Services en cours' => '14- Services en cours',
+            'Total II. Stocks En-cours Production de Biens et Services' => '15- Total Stocks des en cours',
             'Produits finis' => '16- Produits finis',
+            'Biens finis' => '17- Biens finis',
             'Total III. Stocks Produits finis' => '18- Total Stocks Produits et Biens finis',
+            'Déchets' => '19- Déchets',
+            'Rebuts' => '20- Rebuts',
+            'Matières de récupération' => '21- Matières de récupération',
             'Total IV. Stocks Produits Résiduels' => '22- Total Stocks Produits résiduels',
             'TOTAL GENERAL' => '23- TOTAL GENERAL (ligne 10+15+18+22)',
         ][$label] ?? $label;
