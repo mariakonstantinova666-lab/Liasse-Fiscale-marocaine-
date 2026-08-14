@@ -143,6 +143,11 @@ return [
             'total_c11' => 2063,
         ],
 
+        'locations_baux' => [
+            'total_c10' => 1279,
+            'total_c11' => 1280,
+        ],
+
         'methodes_evaluation' => [
             'methode_0_1' => 14342,
             'methode_0_2' => 14343,

@@ -240,10 +240,42 @@ class EdiXmlGeneratorService
             }
         }
 
+        $this->appendComputedLocationsBauxTotals($values, $data);
         $this->appendDefaultNumericTotals($values, $data, 'plus_values');
         $this->appendDefaultNumericTotals($values, $data, 'titres_participation');
 
         return $this->deduplicateMappedValues($values);
+    }
+
+    /**
+     * @param array<int, array{tableau:int, code:int, valeur:string, ligne:?int}> $values
+     * @param array<string, array<string, string>> $data
+     */
+    private function appendComputedLocationsBauxTotals(array &$values, array $data): void
+    {
+        $tableauId = $this->tableauId('locations_baux');
+        if ($tableauId === null || !isset($data['locations_baux'])) {
+            return;
+        }
+
+        foreach ([
+            'total_c10' => '/^r\d+_c10$/',
+            'total_c11' => '/^r\d+_c11$/',
+        ] as $totalKey => $pattern) {
+            $code = $this->directCellCode('locations_baux', $totalKey);
+            if ($code === null) {
+                continue;
+            }
+
+            $total = 0.0;
+            foreach ($data['locations_baux'] as $key => $value) {
+                if (preg_match($pattern, (string) $key) === 1) {
+                    $total += $this->numberValue($value);
+                }
+            }
+
+            $values[] = $this->mappedValue($tableauId, $code, $this->formatAmount($total));
+        }
     }
 
     /**
