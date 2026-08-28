@@ -26,7 +26,7 @@
                 <button id="sidebar-close" type="button" class="ml-auto rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden" aria-label="Fermer le menu">✕</button>
             </div>
             
-            <div class="flex-grow overflow-y-auto sidebar-scroll p-4 space-y-6">
+            <div id="sidebar-scroll" class="flex-grow overflow-y-auto sidebar-scroll p-4 space-y-6">
                 <a href="{{ route('dashboard') }}" class="flex items-center p-3 rounded-lg transition {{ request()->routeIs('dashboard') ? 'bg-blue-700 text-white shadow-lg shadow-blue-900/20' : 'text-slate-400 hover:bg-slate-900' }}">
                     <span class="mr-3 text-lg">📊</span> <span class="font-medium">Tableau de bord</span>
                 </a>
@@ -118,10 +118,23 @@
         (() => {
             const sidebar = document.getElementById('app-sidebar');
             const overlay = document.getElementById('sidebar-overlay');
+            const scrollContainer = document.getElementById('sidebar-scroll');
             const openButton = document.getElementById('sidebar-open');
             const closeButton = document.getElementById('sidebar-close');
+            const scrollKey = 'liasse.sidebar.scrollTop';
             const open = () => { sidebar?.classList.remove('-translate-x-full'); overlay?.classList.remove('hidden'); };
             const close = () => { sidebar?.classList.add('-translate-x-full'); overlay?.classList.add('hidden'); };
+            const saveSidebarScroll = () => {
+                if (scrollContainer) sessionStorage.setItem(scrollKey, String(scrollContainer.scrollTop));
+            };
+            const restoreSidebarScroll = () => {
+                const value = sessionStorage.getItem(scrollKey);
+                if (scrollContainer && value !== null) scrollContainer.scrollTop = Number(value) || 0;
+            };
+            restoreSidebarScroll();
+            requestAnimationFrame(restoreSidebarScroll);
+            scrollContainer?.addEventListener('scroll', saveSidebarScroll, { passive: true });
+            scrollContainer?.querySelectorAll('a[href]')?.forEach(link => link.addEventListener('click', saveSidebarScroll));
             openButton?.addEventListener('click', open);
             closeButton?.addEventListener('click', close);
             overlay?.addEventListener('click', close);
