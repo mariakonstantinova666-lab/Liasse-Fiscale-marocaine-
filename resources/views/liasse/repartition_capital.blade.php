@@ -7,11 +7,11 @@
     <div class="flex justify-between items-center mb-4 border-b pb-2">
         <div>
             <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">
-                ÉTAT DE RÉPARTITION DU CAPITAL SOCIAL
+                Tableau T13 — ETAT DE REPARTITION DU CAPITAL SOCIAL
             </h2>
             <p class="text-sm text-slate-500 mt-1">Exercice : <strong>{{ $exercice }}</strong></p>
         </div>
-        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau N° 13 — Exercice {{ $exercice }}</span>
+        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau T13 — Exercice {{ $exercice }}</span>
     </div>
 
     <p class="text-sm text-slate-600 mb-2">Montant du capital : <input type="text" name="f[montant_capital]" value="{{ $data['montant_capital'] ?? '' }}" class="bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded border border-slate-200"></p>

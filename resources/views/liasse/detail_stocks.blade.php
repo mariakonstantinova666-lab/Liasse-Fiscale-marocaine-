@@ -5,10 +5,10 @@
 <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
     <div class="flex justify-between items-center mb-4 border-b pb-2">
         <div>
-            <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">État détaillé des stocks</h2>
+            <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">Tableau T20 — ETAT DETAILLE DES STOCKS</h2>
             <p class="text-sm text-slate-500 mt-1">Exercice : <strong>{{ $exercice }}</strong></p>
         </div>
-        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau N° 20</span>
+        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau T20</span>
     </div>
 
     <div class="overflow-x-auto">

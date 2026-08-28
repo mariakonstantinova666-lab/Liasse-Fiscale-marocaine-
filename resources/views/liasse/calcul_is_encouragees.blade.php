@@ -7,11 +7,11 @@
     <div class="flex justify-between items-center mb-4 border-b pb-2">
         <div>
             <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">
-                État pour le calcul de l'impôt sur les sociétés — Entreprises encouragées
+                Tableau T26 — ETAT POUR LE CALCUL DE L'IMPOT SUR LES SOCIETES - ENTREPRISES ENCOURAGEES
             </h2>
             <p class="text-sm text-slate-500 mt-1">Exercice : <strong>{{ $exercice ?? session('annee_exercice', 2025) }}</strong></p>
         </div>
-        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau N° 26 — Exercice {{ $exercice ?? session('annee_exercice', 2025) }}</span>
+        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau T26 — Exercice {{ $exercice ?? session('annee_exercice', 2025) }}</span>
     </div>
 
     <div class="overflow-x-auto">

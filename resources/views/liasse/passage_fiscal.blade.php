@@ -5,7 +5,7 @@
     <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
         
         <div class="mb-6 border-b pb-4">
-            <h2 class="text-xl font-bold text-gray-800">TABLEAU N° 4 : PASSAGE DU RESULTAT NET COMPTABLE AU RESULTAT NET FISCAL</h2>
+            <h2 class="text-xl font-bold text-gray-800">Tableau T03 — PASSAGE DU RESULTAT NET COMPTABLE AU RESULTAT NET FISCAL</h2>
             <p class="text-sm text-gray-500 font-medium">EXERCICE : {{ $exercice }}</p>
         </div>
 

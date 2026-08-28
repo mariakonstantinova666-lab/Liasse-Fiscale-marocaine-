@@ -5,10 +5,10 @@
 <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
     <div class="flex justify-between items-center mb-4 border-b pb-2">
         <div>
-            <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">Tableau de financement de l'exercice</h2>
+            <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">Tableau T22 — TABLEAU DE FINANCEMENT DE L'EXERCICE</h2>
             <p class="text-sm text-slate-500 mt-1">Exercice : <strong>{{ $exercice }}</strong></p>
         </div>
-        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau N° 22</span>
+        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau T22</span>
     </div>
 
     <h3 class="font-bold text-slate-700 mt-4 mb-2">I — SYNTHÈSE DES MASSES DU BILAN</h3>

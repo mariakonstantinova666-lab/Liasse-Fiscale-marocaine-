@@ -38,19 +38,19 @@ const saveSociete = () => societeForm.post(route('societe.save'), {
 });
 
 const liasseTableaux = [
-    ['T01', 'Bilan Actif', 'liasse.bilan_actif'], ['T01', 'Bilan Passif', 'liasse.bilan_passif'],
-    ['T02', 'Compte de produits et charges', 'liasse.cpc'], ['T03', 'Passage fiscal', 'liasse.passage_fiscal'],
-    ['T04', 'Immobilisations', 'liasse.immobilisations'], ['T08', 'Amortissements', 'liasse.amortissements'],
-    ['T09', 'Provisions', 'liasse.provisions'], ['T12', 'Detail de la TVA', 'liasse.tva'],
-    ['T05', 'Soldes intermediaires de gestion', 'liasse.esg'], ['T06', 'Detail des postes CPC', 'liasse.detail_cpc'],
-    ['T07', 'Biens en credit-bail', 'liasse.credit_bail'], ['T10', 'Plus ou moins-values', 'liasse.plus_values'],
-    ['T11', 'Titres de participation', 'liasse.titres_participation'], ['T13', 'Repartition du capital', 'liasse.repartition_capital'],
+    ['T01-A', 'Bilan Actif', 'liasse.bilan_actif'], ['T01-B', 'Bilan Passif', 'liasse.bilan_passif'],
+    ['T02', 'CPC', 'liasse.cpc'], ['T03', 'Passage fiscal', 'liasse.passage_fiscal'],
+    ['T04', 'Immobilisations', 'liasse.immobilisations'], ['T05', 'ESG', 'liasse.esg'],
+    ['T06', 'Detail CPC', 'liasse.detail_cpc'], ['T07', 'Credit-bail', 'liasse.credit_bail'],
+    ['T08', 'Amortissements', 'liasse.amortissements'], ['T09', 'Provisions', 'liasse.provisions'],
+    ['T10', 'Plus/moins-values', 'liasse.plus_values'], ['T11', 'Titres de participation', 'liasse.titres_participation'],
+    ['T12', 'Detail TVA', 'liasse.tva'], ['T13', 'Repartition du capital', 'liasse.repartition_capital'],
     ['T14', 'Affectation des resultats', 'liasse.affectation_resultats'], ['T15', 'Calcul impot encouragement', 'liasse.calcul_impot_encouragement'],
     ['T16', 'Dotations aux amortissements', 'liasse.dotations_amortissements'], ['T17', 'Plus-values de fusion', 'liasse.plus_values_fusion'],
     ['T18', 'Interets des emprunts', 'liasse.interets_emprunts'], ['T19', 'Locations et baux', 'liasse.locations_baux'],
     ['T20', 'Etat detaille des stocks', 'liasse.detail_stocks'], ['T21', 'Operations en devises', 'liasse.operations_devises'],
-    ['T22', 'Tableau de financement', 'liasse.tableau_financement'], ['T23', "Methodes d'evaluation", 'liasse.methodes_evaluation'],
-    ['T24', 'Etat des derogations', 'liasse.derogations'], ['T25', 'Changements de methodes', 'liasse.changements_methodes'],
+    ['T22', 'TFT / Tableau de financement', 'liasse.tableau_financement'], ['T23', "Methodes d'evaluation", 'liasse.methodes_evaluation'],
+    ['T24', 'Derogations', 'liasse.derogations'], ['T25', 'Changements de methodes', 'liasse.changements_methodes'],
     ['T26', 'Calcul IS entreprises encouragees', 'liasse.calcul_is_encouragees'], ['OK', 'Controle de coherence', 'liasse.controle'],
 ].map(([code, name, route]) => ({ code, name, route }));
 

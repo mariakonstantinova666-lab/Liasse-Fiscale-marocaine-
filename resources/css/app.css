@@ -71,10 +71,39 @@
         @apply max-w-full;
     }
 
+    .liasse-ui > div:has(table),
+    .liasse-ui > div:has(form table) {
+        @apply rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:p-6;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 18px 38px rgba(15, 23, 42, 0.045);
+    }
+
     .liasse-ui h1,
     .liasse-ui h2,
     .liasse-ui h5 {
         @apply tracking-tight text-slate-900;
+    }
+
+    .liasse-ui h1,
+    .liasse-ui h2 {
+        @apply text-xl font-black uppercase leading-tight sm:text-2xl;
+    }
+
+    .liasse-ui h5 {
+        @apply text-sm font-black uppercase text-slate-800;
+    }
+
+    .liasse-ui > div:has(table) > .flex:first-child,
+    .liasse-ui > div > form > .flex:first-child {
+        @apply mb-5 gap-4 border-b border-slate-200 pb-4;
+    }
+
+    .liasse-ui > div:has(table) > .flex:first-child span,
+    .liasse-ui > div > form > .flex:first-child span {
+        @apply inline-flex w-fit items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700;
+    }
+
+    .liasse-ui p {
+        @apply leading-relaxed;
     }
 
     .liasse-panel,
@@ -96,11 +125,12 @@
     }
 
     .liasse-ui table thead th {
-        @apply border-b border-r border-slate-300 bg-slate-900 px-3 py-3 text-xs font-bold uppercase tracking-wide text-white;
+        @apply border-b border-r border-slate-300 bg-slate-900 px-3 py-3 text-xs font-black uppercase tracking-wide text-white;
+        line-height: 1.35;
     }
 
     .liasse-ui table tbody td {
-        @apply border-b border-r border-slate-200 px-3 py-2.5 align-middle;
+        @apply border-b border-r border-slate-200 px-3 py-2.5 align-middle leading-relaxed;
     }
 
     .liasse-ui table tbody tr:not([class*="bg-"]):nth-child(even) {
@@ -115,20 +145,80 @@
         @apply bg-indigo-50/60;
     }
 
+    .liasse-ui table td[class*="text-right"],
+    .liasse-ui table th[class*="text-right"] {
+        @apply font-mono tabular-nums;
+    }
+
+    .liasse-ui table tbody tr[class*="font-bold"] td,
+    .liasse-ui table tbody tr[class*="font-black"] td,
+    .liasse-ui table tfoot td {
+        @apply font-black;
+    }
+
+    .liasse-ui table tbody tr[class*="bg-slate-200"] td,
+    .liasse-ui table tbody tr[class*="bg-gray-100"] td,
+    .liasse-ui table tbody tr[class*="bg-slate-100"] td {
+        @apply border-slate-300 text-slate-900;
+    }
+
+    .liasse-ui table tbody tr[class*="bg-slate-800"] td,
+    .liasse-ui table tbody tr[class*="bg-gray-800"] td,
+    .liasse-ui table tfoot tr[class*="bg-slate-800"] td {
+        @apply border-slate-700 bg-slate-900 text-white;
+    }
+
+    .liasse-ui table tbody tr[class*="bg-slate-300"] td {
+        @apply border-slate-400 bg-slate-200 text-slate-950;
+    }
+
     .liasse-ui input:not([type="checkbox"]):not([type="radio"]),
     .liasse-ui select,
     .liasse-ui textarea {
-        @apply rounded-lg border-slate-300 bg-white text-sm shadow-sm transition focus:border-blue-600 focus:ring-blue-600;
+        @apply rounded-lg border-slate-300 bg-white text-sm shadow-sm transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-blue-600;
+    }
+
+    .liasse-ui input:not([type="checkbox"]):not([type="radio"]) {
+        @apply min-h-10;
+    }
+
+    .liasse-ui textarea {
+        @apply min-h-16;
+    }
+
+    .liasse-ui button,
+    .liasse-ui a[class*="bg-blue"],
+    .liasse-ui a[class*="bg-indigo"] {
+        @apply inline-flex min-h-10 items-center justify-center rounded-lg px-4 py-2.5 text-sm font-bold shadow-sm transition duration-200;
     }
 
     .liasse-ui button[type="submit"] {
-        @apply rounded-lg shadow-sm transition duration-200;
+        @apply bg-blue-700 text-white hover:bg-blue-800 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500;
     }
 
     .liasse-ui .overflow-x-auto {
         @apply rounded-lg border border-slate-200 shadow-sm;
         scrollbar-color: #94a3b8 #f1f5f9;
         scrollbar-width: thin;
+    }
+
+    .liasse-ui .overflow-x-auto::-webkit-scrollbar {
+        height: 10px;
+    }
+
+    .liasse-ui .overflow-x-auto::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 999px;
+    }
+
+    .liasse-ui .overflow-x-auto::-webkit-scrollbar-thumb {
+        background: #94a3b8;
+        border-radius: 999px;
+        border: 2px solid #f1f5f9;
+    }
+
+    .liasse-ui .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+        background: #64748b;
     }
 
     .app-shell {

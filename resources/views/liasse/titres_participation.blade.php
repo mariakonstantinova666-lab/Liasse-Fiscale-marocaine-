@@ -7,11 +7,11 @@
     <div class="flex justify-between items-center mb-4 border-b pb-2">
         <div>
             <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">
-                TABLEAU DES TITRES DE PARTICIPATION
+                Tableau T11 — TABLEAU DES TITRES DE PARTICIPATION
             </h2>
             <p class="text-sm text-slate-500 mt-1">Exercice : <strong>{{ $exercice }}</strong></p>
         </div>
-        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau N° 11 — Exercice {{ $exercice }}</span>
+        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau T11 — Exercice {{ $exercice }}</span>
     </div>
 
     <div class="overflow-x-auto">

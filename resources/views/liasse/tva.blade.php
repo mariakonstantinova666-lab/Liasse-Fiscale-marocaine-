@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto p-6 bg-white shadow-md rounded-lg">
     <div class="flex justify-between items-center border-b pb-4 mb-6">
-        <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wide">Détail de la Taxe sur la Valeur Ajoutée</h2>
+        <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wide">Tableau T12 — DETAIL DE LA TAXE SUR LA VALEUR AJOUTEE</h2>
         <span class="text-sm font-semibold text-gray-600">Exercice : {{ $exercice }}</span>
     </div>
 

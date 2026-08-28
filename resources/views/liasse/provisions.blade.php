@@ -4,12 +4,9 @@
 <div class="container mx-auto px-4 py-6">
     <div class="flex justify-between items-center mb-6">
         <div>
-            <h1 class="text-2xl font-bold text-gray-800">Tableau N°6 : TABLEAU DES PROVISIONS</h1>
+            <h1 class="text-2xl font-bold text-gray-800">Tableau T09 — TABLEAU DES PROVISIONS</h1>
             <p class="text-sm text-gray-500">Exercice : {{ $exercice }}</p>
         </div>
-        <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-lg shadow transition">
-            Enregistrer le T6
-        </button>
     </div>
 
     <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden">

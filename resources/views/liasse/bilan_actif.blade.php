@@ -3,7 +3,7 @@
 @section('content')
 <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
     <div class="flex justify-between items-center mb-4 border-b pb-2">
-        <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">BILAN - ACTIF</h2>
+        <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">Tableau T01-A — BILAN - ACTIF</h2>
         <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Au 31/12/{{ $exercice }}</span>
     </div>
     

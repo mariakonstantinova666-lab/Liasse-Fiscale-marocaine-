@@ -7,11 +7,11 @@
     <div class="flex justify-between items-center mb-4 border-b pb-2">
         <div>
             <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">
-                ÉTAT DES PLUS-VALUES CONSTATÉES EN CAS DE FUSION
+                Tableau T17 — ETAT DES PLUS-VALUES CONSTATEES EN CAS DE FUSION
             </h2>
             <p class="text-sm text-slate-500 mt-1">Exercice : <strong>{{ $exercice ?? session('annee_exercice', 2025) }}</strong></p>
         </div>
-        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau N° 17 — Exercice {{ $exercice ?? session('annee_exercice', 2025) }}</span>
+        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau T17 — Exercice {{ $exercice ?? session('annee_exercice', 2025) }}</span>
     </div>
 
     <div class="overflow-x-auto">
