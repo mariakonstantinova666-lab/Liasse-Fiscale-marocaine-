@@ -5,6 +5,7 @@ import { computed, ref } from 'vue';
 
 const props = defineProps({
     items: Array,
+    itemsPrecedent: { type: Array, default: () => [] },
     societe: Object,
     exerciceActif: [String, Number],
     exercicePrecedent: [String, Number],
@@ -18,6 +19,13 @@ const n1Importe = computed(() => props.exercicesImportes.includes(Number(props.e
 const importProgress = computed(() => Number(nImporte.value) + Number(n1Importe.value));
 const exerciceDu = computed(() => `01/01/${props.exerciceActif}`);
 const exerciceAu = computed(() => `31/12/${props.exerciceActif}`);
+const balanceSelection = ref('n');
+const balances = computed(() => [
+    { key: 'n', label: 'Balance N', year: props.exerciceActif, imported: nImporte.value, rows: props.items || [] },
+    { key: 'n1', label: 'Balance N-1', year: props.exercicePrecedent, imported: n1Importe.value, rows: props.itemsPrecedent || [] },
+]);
+const selectedBalance = computed(() => balances.value.find(balance => balance.key === balanceSelection.value) || balances.value[0]);
+const selectedItems = computed(() => selectedBalance.value?.rows || []);
 
 const form = useForm({ annee: props.exerciceActif || '', balance: null });
 const handleSubmit = () => form.post(route('balance.import'), { forceFormData: true });
@@ -126,7 +134,46 @@ const money = value => Number(value || 0).toLocaleString('fr-FR', { minimumFract
 
                 <section class="ui-card p-5 sm:p-6"><div><p class="text-xs font-bold uppercase tracking-wider text-indigo-600">Liasse fiscale</p><h2 class="mt-1 text-lg font-bold text-slate-900">Acces aux tableaux</h2></div><div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"><a v-for="tableau in liasseTableaux" :key="tableau.route" :href="route(tableau.route)" class="group flex items-center gap-3 rounded-xl border border-slate-200 p-3.5 transition duration-200 hover:-translate-y-0.5 hover:border-indigo-300 hover:bg-indigo-50/60 hover:shadow-sm"><span class="flex h-10 min-w-10 items-center justify-center rounded-lg bg-slate-100 px-2 text-[10px] font-black text-slate-600 transition group-hover:bg-indigo-600 group-hover:text-white">{{ tableau.code }}</span><span class="text-sm font-semibold leading-tight text-slate-700 group-hover:text-indigo-800">{{ tableau.name }}</span><span class="ml-auto text-slate-300 transition group-hover:translate-x-0.5 group-hover:text-indigo-500">></span></a></div></section>
 
-                <section class="ui-card overflow-hidden"><div class="flex items-center justify-between border-b border-slate-200 p-5 sm:px-6"><div><p class="text-xs font-bold uppercase tracking-wider text-indigo-600">Balance comptable</p><h2 class="mt-1 text-lg font-bold text-slate-900">Lignes importees</h2></div><span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{{ items?.length || 0 }} lignes</span></div><div v-if="items?.length" class="max-h-[520px] overflow-auto"><table class="min-w-full text-sm"><thead class="sticky top-0 z-10 bg-slate-800 text-xs uppercase tracking-wide text-white"><tr><th class="px-5 py-3 text-left">Compte</th><th class="px-5 py-3 text-left">Libelle</th><th class="px-5 py-3 text-right">Debit</th><th class="px-5 py-3 text-right">Credit</th></tr></thead><tbody class="divide-y divide-slate-100"><tr v-for="item in items" :key="item.id" class="odd:bg-white even:bg-slate-50/60 hover:bg-indigo-50"><td class="px-5 py-3 font-mono font-bold text-slate-900">{{ item.compte }}</td><td class="px-5 py-3 text-slate-600">{{ item.libelle }}</td><td class="px-5 py-3 text-right font-mono tabular-nums">{{ money(item.solde_debiteur) }} DH</td><td class="px-5 py-3 text-right font-mono tabular-nums">{{ money(item.solde_crediteur) }} DH</td></tr></tbody></table></div><div v-else class="px-6 py-14 text-center"><div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400">-</div><p class="mt-3 font-semibold text-slate-700">Aucune balance importee</p><p class="mt-1 text-sm text-slate-500">Utilisez le formulaire ci-dessus pour commencer.</p></div></section>
+                <section class="ui-card overflow-hidden">
+                    <div class="border-b border-slate-200 p-5 sm:px-6">
+                        <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+                            <div>
+                                <p class="text-xs font-bold uppercase tracking-wider text-indigo-600">Balance comptable</p>
+                                <h2 class="mt-1 text-lg font-bold text-slate-900">Lignes importees</h2>
+                            </div>
+                            <span class="w-fit rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">{{ selectedItems.length }} lignes</span>
+                        </div>
+                        <div class="mt-5 grid gap-3 sm:grid-cols-2">
+                            <button v-for="balance in balances" :key="balance.key" type="button" @click="balanceSelection = balance.key" class="rounded-xl border p-4 text-left transition" :class="balanceSelection === balance.key ? 'border-indigo-300 bg-indigo-50 shadow-sm' : 'border-slate-200 bg-white hover:border-slate-300'">
+                                <div class="flex items-center justify-between gap-3">
+                                    <p class="text-sm font-black text-slate-900">{{ balance.label }}</p>
+                                    <span class="rounded-full px-2.5 py-1 text-[10px] font-bold" :class="balance.imported ? 'bg-emerald-100 text-emerald-700' : 'bg-amber-100 text-amber-700'">{{ balance.imported ? 'Importee' : 'A importer' }}</span>
+                                </div>
+                                <p class="mt-1 text-xs font-semibold text-slate-500">Exercice {{ balance.year }}</p>
+                            </button>
+                        </div>
+                    </div>
+                    <div v-if="selectedItems.length" class="max-h-[520px] overflow-auto">
+                        <table class="min-w-full text-sm">
+                            <thead class="sticky top-0 z-10 bg-slate-800 text-xs uppercase tracking-wide text-white">
+                                <tr><th class="px-5 py-3 text-left">Compte</th><th class="px-5 py-3 text-left">Libelle</th><th class="px-5 py-3 text-right">Debit</th><th class="px-5 py-3 text-right">Credit</th></tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr v-for="item in selectedItems" :key="`${selectedBalance.key}-${item.id}`" class="odd:bg-white even:bg-slate-50/60 hover:bg-indigo-50">
+                                    <td class="px-5 py-3 font-mono font-bold text-slate-900">{{ item.compte }}</td>
+                                    <td class="px-5 py-3 text-slate-600">{{ item.libelle }}</td>
+                                    <td class="px-5 py-3 text-right font-mono tabular-nums">{{ money(item.solde_debiteur) }} DH</td>
+                                    <td class="px-5 py-3 text-right font-mono tabular-nums">{{ money(item.solde_crediteur) }} DH</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div v-else class="px-6 py-14 text-center">
+                        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400">-</div>
+                        <p class="mt-3 font-semibold text-slate-700">{{ selectedBalance.label }} non importee</p>
+                        <p class="mt-1 text-sm text-slate-500">Importez la balance de l'exercice {{ selectedBalance.year }} pour consulter ses lignes.</p>
+                    </div>
+                </section>
             </div>
         </div>
     </AuthenticatedLayout>

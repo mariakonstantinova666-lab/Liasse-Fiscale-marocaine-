@@ -26,10 +26,15 @@ class BalanceController extends Controller
         $societe = DB::table('societes')->where('user_id', $userId)->first();
 
         $items = [];
+        $itemsPrecedent = [];
         $exercicesImportes = [];
         if ($societe && $exercice) {
             $items = BalanceItem::where('societe_id', $societe->id)
                                 ->where('exercice', $exercice)
+                                ->get();
+
+            $itemsPrecedent = BalanceItem::where('societe_id', $societe->id)
+                                ->where('exercice', $exercice - 1)
                                 ->get();
 
             // Années déjà importées : pilote le bandeau d'historisation N / N-1
@@ -39,6 +44,7 @@ class BalanceController extends Controller
         // On retourne le composant Vue "Dashboard" via Inertia
         return Inertia::render('Dashboard', [
             'items' => $items,
+            'itemsPrecedent' => $itemsPrecedent,
             'societe' => $societe,
             'exerciceActif' => $exercice,
             'exercicePrecedent' => $exercice - 1,
