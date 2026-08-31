@@ -38,17 +38,17 @@
                     <th rowspan="2" class="p-2 border border-slate-300 align-middle bg-slate-800">
                         MONTANT BRUT AU DÉBUT<br>DE L'EXERCICE
                     </th>
-                    <th colspan="2" class="p-2 border border-slate-300 bg-emerald-700 dark:border-slate-600 dark:bg-emerald-800">AUGMENTATIONS</th>
-                    <th colspan="2" class="p-2 border border-slate-300 bg-rose-700 dark:border-slate-600 dark:bg-rose-800">DIMINUTIONS</th>
+                    <th colspan="2" class="p-2 border border-slate-300 bg-emerald-700 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100">AUGMENTATIONS</th>
+                    <th colspan="2" class="p-2 border border-slate-300 bg-rose-700 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100">DIMINUTIONS</th>
                     <th rowspan="2" class="p-2 border border-slate-300 align-middle bg-slate-800">
                         MONTANT BRUT À LA FIN<br>DE L'EXERCICE
                     </th>
                 </tr>
                 <tr>
-                    <th class="p-2 border border-slate-300 bg-emerald-600 font-medium dark:border-slate-600 dark:bg-emerald-700">Acquisitions</th>
-                    <th class="p-2 border border-slate-300 bg-emerald-600 font-medium dark:border-slate-600 dark:bg-emerald-700">Virements poste à poste</th>
-                    <th class="p-2 border border-slate-300 bg-rose-600 font-medium dark:border-slate-600 dark:bg-rose-700">Cessions ou retraits</th>
-                    <th class="p-2 border border-slate-300 bg-rose-600 font-medium dark:border-slate-600 dark:bg-rose-700">Virements poste à poste</th>
+                    <th class="p-2 border border-slate-300 bg-emerald-600 font-medium dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100">Acquisitions</th>
+                    <th class="p-2 border border-slate-300 bg-emerald-600 font-medium dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100">Virements poste à poste</th>
+                    <th class="p-2 border border-slate-300 bg-rose-600 font-medium dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100">Cessions ou retraits</th>
+                    <th class="p-2 border border-slate-300 bg-rose-600 font-medium dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100">Virements poste à poste</th>
                 </tr>
             </thead>
             <tbody>
