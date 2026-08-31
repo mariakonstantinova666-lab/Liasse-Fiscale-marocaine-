@@ -18,7 +18,7 @@
                         <th scope="col" rowspan="2" class="px-2 py-4 text-right border-r border-gray-200 align-middle">Montant début exercice<br><span class="text-gray-400 font-normal lowercase">(1)</span></th>
                         <th scope="col" colspan="3" class="px-2 py-2 text-center border-r border-gray-200 border-b">DOTATIONS</th>
                         <th scope="col" colspan="3" class="px-2 py-2 text-center border-r border-gray-200 border-b">REPRISES</th>
-                        <th scope="col" rowspan="2" class="px-2 py-4 text-right align-middle bg-blue-50/50">Montant fin exercice<br><span class="text-gray-400 font-normal lowercase">(8 = 1+2+3+4-5-6-7)</span></th>
+                        <th scope="col" rowspan="2" class="px-2 py-4 text-right align-middle bg-blue-50/50 dark:!border-slate-600 dark:!bg-slate-900 dark:!text-slate-100">Montant fin exercice<br><span class="text-gray-400 font-normal lowercase dark:!text-slate-300">(8 = 1+2+3+4-5-6-7)</span></th>
                     </tr>
                     <tr>
                         <th scope="col" class="px-2 py-2 text-right border-r border-gray-200 font-normal lowercase text-gray-500">Exploitat. (2)</th>

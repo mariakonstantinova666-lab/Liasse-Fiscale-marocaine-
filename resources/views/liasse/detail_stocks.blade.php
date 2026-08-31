@@ -28,12 +28,12 @@
             </thead>
             <tbody>
                 @foreach($stockSections as $section => $lignes)
-                    <tr class="bg-slate-200 font-bold uppercase">
+                    <tr class="liasse-section bg-slate-200 font-bold uppercase dark:bg-slate-800 dark:text-slate-100">
                         <td colspan="8" class="p-2 border border-slate-300">{{ $section }}</td>
                     </tr>
                     @foreach($lignes as $ligne)
                         @if(isset($ligne['group']))
-                            <tr class="bg-slate-50 italic font-semibold"><td colspan="8" class="p-2 pl-4 border border-slate-200">- {{ $ligne['group'] }}</td></tr>
+                            <tr class="liasse-subsection bg-slate-50 italic font-semibold dark:bg-slate-900 dark:text-slate-300"><td colspan="8" class="p-2 pl-4 border border-slate-200 dark:border-slate-700">- {{ $ligne['group'] }}</td></tr>
                             @continue
                         @endif
                         @php($v = $ligne['values'])
@@ -49,7 +49,7 @@
                         </tr>
                     @endforeach
                     @php($t = $stockTotals[$section])
-                    <tr class="bg-slate-100 font-bold">
+                    <tr class="liasse-total-strong bg-slate-100 font-bold dark:bg-slate-700 dark:text-white">
                         <td class="p-2 text-right border border-slate-300">Total</td>
                         @foreach(['final_brut','final_provision','final_net','initial_brut','initial_provision','initial_net','variation'] as $champ)
                             <td class="p-2 text-right border border-slate-300">{{ $fmt($t->{$champ}) }}</td>

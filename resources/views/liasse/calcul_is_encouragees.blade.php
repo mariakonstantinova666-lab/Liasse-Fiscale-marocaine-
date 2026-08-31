@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
+<div class="liasse-t26 bg-white shadow-lg rounded-sm border border-slate-200 p-6">
     <form method="POST" action="{{ route('liasse.save', 'calcul_is_encouragees') }}">
     @csrf
     <div class="flex justify-between items-center mb-4 border-b pb-2">

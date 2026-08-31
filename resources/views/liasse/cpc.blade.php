@@ -608,5 +608,67 @@
         white-space: nowrap;
         font-variant-numeric: tabular-nums;
     }
+
+    .dark .cpc-excel {
+        background: #0f172a;
+        border-color: #1e293b;
+        color: #cbd5e1;
+    }
+
+    .dark .cpc-excel .cpc-table {
+        color: #cbd5e1;
+        border-color: #475569 !important;
+    }
+
+    .dark .cpc-excel .cpc-table th,
+    .dark .cpc-excel .cpc-table td {
+        border-color: #475569 !important;
+    }
+
+    .dark .cpc-excel .cpc-head-main {
+        background: #1e293b !important;
+        color: #f8fafc !important;
+    }
+
+    .dark .cpc-excel .cpc-head-sub {
+        background: #1e293b !important;
+        color: #f1f5f9 !important;
+    }
+
+    .dark .cpc-excel .cpc-head-index {
+        background: #1e293b !important;
+        color: #f8fafc !important;
+    }
+
+    .dark .cpc-excel .cpc-table tbody tr:hover td {
+        background: rgba(99, 102, 241, 0.1);
+    }
+
+    .dark .cpc-excel .section-row td {
+        background: #1e293b !important;
+        color: #f8fafc !important;
+        border-color: #475569 !important;
+    }
+
+    .dark .cpc-excel .total-row td {
+        background: #1e293b !important;
+        color: #f1f5f9 !important;
+    }
+
+    .dark .cpc-excel .result-row td {
+        background: #1e293b !important;
+        color: #ffffff !important;
+        border-top-color: #64748b !important;
+        border-bottom-color: #64748b !important;
+    }
+
+    .dark .cpc-excel .note-row td {
+        background: #0f172a !important;
+        color: #94a3b8 !important;
+    }
+
+    .dark .cpc-excel .spacer-row td {
+        background: #0f172a !important;
+    }
 </style>
 @endsection

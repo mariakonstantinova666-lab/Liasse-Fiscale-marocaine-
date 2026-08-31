@@ -25,15 +25,15 @@
             <tbody>
                 @foreach($rows as $row)
                     @if(isset($row['section']))
-                        <tr class="bg-slate-300 font-black text-slate-900 border-t border-slate-400">
+                        <tr class="liasse-section bg-slate-300 font-black text-slate-900 border-t border-slate-400 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-600">
                             <td colspan="3" class="p-2 border border-slate-300 uppercase tracking-wide">{{ $row['section'] }}</td>
                         </tr>
                     @elseif(isset($row['poste']))
-                        <tr class="bg-slate-200 font-bold text-slate-900 border-t border-slate-300">
+                        <tr class="liasse-subsection bg-slate-200 font-bold text-slate-900 border-t border-slate-300 dark:bg-slate-900 dark:text-slate-200 dark:border-slate-700">
                             <td colspan="3" class="p-2 border border-slate-300">{{ $row['poste'] }}</td>
                         </tr>
                     @elseif(!empty($row['total']))
-                        <tr class="bg-slate-100 font-bold text-slate-900 border-y border-slate-400">
+                        <tr class="liasse-total-strong bg-slate-100 font-bold text-slate-900 border-y border-slate-400 dark:bg-slate-700 dark:text-white dark:border-slate-500">
                             <td class="p-2 border border-slate-300 pl-4">{{ $row['l'] }}</td>
                             <td class="p-2 border border-slate-300 text-right font-mono">{!! $fmt($row['n']) !!}</td>
                             <td class="p-2 border border-slate-300 text-right font-mono">{!! $fmt($row['p']) !!}</td>

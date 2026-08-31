@@ -4,7 +4,6 @@
 
 @layer base {
     :root {
-        color-scheme: light;
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         --brand-950: #172554;
         --brand-800: #1e40af;
@@ -20,20 +19,26 @@
     }
 
     body {
-        @apply bg-slate-50 text-slate-900 antialiased;
+        @apply bg-slate-50 text-slate-900 antialiased transition-colors dark:bg-slate-950 dark:text-slate-100;
         background:
             linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(241, 245, 249, 0.98)),
             radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 32rem);
     }
 
+    .dark body {
+        background:
+            linear-gradient(180deg, rgba(2, 6, 23, 0.98), rgba(15, 23, 42, 0.98)),
+            radial-gradient(circle at top left, rgba(59, 130, 246, 0.12), transparent 32rem);
+    }
+
     :focus-visible {
-        @apply outline-none ring-2 ring-blue-600 ring-offset-2;
+        @apply outline-none ring-2 ring-blue-600 ring-offset-2 dark:ring-blue-500 dark:ring-offset-slate-950;
     }
 }
 
 @layer components {
     .ui-card {
-        @apply rounded-lg border border-slate-200 bg-white shadow-sm;
+        @apply rounded-lg border border-slate-200 bg-white shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900;
         box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 12px 30px rgba(15, 23, 42, 0.04);
     }
 
@@ -42,27 +47,27 @@
     }
 
     .ui-button-secondary {
-        @apply inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-800;
+        @apply inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-blue-300 hover:bg-blue-50 hover:text-blue-800 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:border-blue-500 dark:hover:bg-slate-800 dark:hover:text-white;
     }
 
     .ui-input {
-        @apply w-full rounded-lg border-slate-300 bg-white text-sm shadow-sm transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-blue-600;
+        @apply w-full rounded-lg border-slate-300 bg-white text-sm text-slate-900 shadow-sm transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-blue-600 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:border-blue-500 dark:focus:ring-blue-500;
     }
 
     .ui-table-shell {
-        @apply overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm;
+        @apply overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900;
     }
 
     .ui-page-title {
-        @apply text-xl font-bold tracking-tight text-slate-900 sm:text-2xl;
+        @apply text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100 sm:text-2xl;
     }
 
     .ui-muted {
-        @apply text-sm text-slate-500;
+        @apply text-sm text-slate-500 dark:text-slate-400;
     }
 
     .liasse-ui {
-        @apply mx-auto w-full max-w-[1600px] text-slate-700;
+        @apply mx-auto w-full max-w-[1600px] text-slate-700 dark:text-slate-300;
     }
 
     .liasse-ui > div,
@@ -73,14 +78,14 @@
 
     .liasse-ui > div:has(table),
     .liasse-ui > div:has(form table) {
-        @apply rounded-lg border border-slate-200 bg-white p-4 shadow-sm sm:p-6;
+        @apply rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-800 dark:bg-slate-900 sm:p-6;
         box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 18px 38px rgba(15, 23, 42, 0.045);
     }
 
     .liasse-ui h1,
     .liasse-ui h2,
     .liasse-ui h5 {
-        @apply tracking-tight text-slate-900;
+        @apply tracking-tight text-slate-900 dark:text-slate-100;
     }
 
     .liasse-ui h1,
@@ -89,17 +94,21 @@
     }
 
     .liasse-ui h5 {
-        @apply text-sm font-black uppercase text-slate-800;
+        @apply text-sm font-black uppercase text-slate-800 dark:text-slate-200;
     }
 
     .liasse-ui > div:has(table) > .flex:first-child,
     .liasse-ui > div > form > .flex:first-child {
-        @apply mb-5 gap-4 border-b border-slate-200 pb-4;
+        @apply mb-5 gap-4 border-b border-slate-200 pb-4 dark:border-slate-700;
     }
 
     .liasse-ui > div:has(table) > .flex:first-child span,
     .liasse-ui > div > form > .flex:first-child span {
-        @apply inline-flex w-fit items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700;
+        @apply inline-flex w-fit items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700 dark:bg-slate-800 dark:text-slate-300;
+    }
+
+    .dark .liasse-ui span[class*="bg-slate-100"][class*="text-slate-"] {
+        @apply border border-slate-600 bg-slate-800 text-slate-200;
     }
 
     .liasse-ui p {
@@ -113,6 +122,17 @@
         border: 1px solid #e2e8f0;
         background-color: #ffffff;
         box-shadow: 0 1px 2px rgba(15, 23, 42, 0.05), 0 14px 32px rgba(15, 23, 42, 0.035);
+    }
+
+    .dark .liasse-panel,
+    .dark .liasse-ui > form,
+    .dark .liasse-ui > section {
+        border-color: #1e293b;
+        background-color: #0f172a;
+    }
+
+    .dark .liasse-ui [class*="bg-white"]:has(table) {
+        @apply border-slate-800 bg-slate-900;
     }
 
     .liasse-ui table {
@@ -129,12 +149,42 @@
         line-height: 1.35;
     }
 
+    .dark .liasse-ui table thead th {
+        @apply border-slate-600;
+    }
+
     .liasse-ui table tbody td {
         @apply border-b border-r border-slate-200 px-3 py-2.5 align-middle leading-relaxed;
     }
 
+    .dark .liasse-ui table tbody {
+        @apply bg-slate-900 text-slate-300;
+    }
+
+    .dark .liasse-ui table tbody td {
+        @apply border-slate-700;
+    }
+
+    .dark .liasse-ui table tbody td[class*="bg-white"],
+    .dark .liasse-ui table tbody td[class*="bg-slate-50"],
+    .dark .liasse-ui table tbody td[class*="bg-gray-50"] {
+        @apply bg-slate-900 text-slate-400;
+    }
+
+    .dark .liasse-ui table [class*="bg-blue-50"] {
+        @apply bg-blue-500/10;
+    }
+
+    .dark .liasse-ui table [class*="bg-blue-100"] {
+        @apply bg-blue-500/20;
+    }
+
     .liasse-ui table tbody tr:not([class*="bg-"]):nth-child(even) {
         @apply bg-slate-50/70;
+    }
+
+    .dark .liasse-ui table tbody tr:not([class*="bg-"]):nth-child(even) {
+        @apply bg-slate-950/20;
     }
 
     .liasse-ui table tbody tr {
@@ -143,6 +193,12 @@
 
     .liasse-ui table tbody tr:hover {
         @apply bg-indigo-50/60;
+    }
+
+    .dark .liasse-ui table tbody tr:hover,
+    .dark .liasse-ui table tbody tr[class*="hover:bg-slate-50"]:hover,
+    .dark .liasse-ui table tbody tr[class*="hover:bg-gray-50"]:hover {
+        @apply bg-indigo-500/10;
     }
 
     .liasse-ui table td[class*="text-right"],
@@ -162,6 +218,18 @@
         @apply border-slate-300 text-slate-900;
     }
 
+    .dark .liasse-ui table tbody tr[class*="bg-slate-100"] td,
+    .dark .liasse-ui table tbody tr[class*="bg-slate-50"] td,
+    .dark .liasse-ui table tbody tr[class*="bg-gray-50"] td {
+        @apply border-slate-700 bg-slate-800 text-slate-200;
+    }
+
+    .dark .liasse-ui table tbody tr[class*="bg-slate-200"] td,
+    .dark .liasse-ui table tbody tr[class*="bg-gray-100"] td,
+    .dark .liasse-ui table tbody tr[class*="bg-gray-200"] td {
+        @apply border-slate-600 bg-slate-800 text-slate-100;
+    }
+
     .liasse-ui table tbody tr[class*="bg-slate-800"] td,
     .liasse-ui table tbody tr[class*="bg-gray-800"] td,
     .liasse-ui table tfoot tr[class*="bg-slate-800"] td {
@@ -172,10 +240,74 @@
         @apply border-slate-400 bg-slate-200 text-slate-950;
     }
 
+    .dark .liasse-ui table tbody tr[class*="bg-slate-300"] td,
+    .dark .liasse-ui table tbody tr[class*="bg-gray-300"] td {
+        @apply border-slate-600 bg-slate-800 text-slate-100;
+    }
+
+    .dark .liasse-ui table tbody tr[class*="bg-yellow-50"] td {
+        @apply border-amber-800 bg-amber-500/10 text-amber-200;
+    }
+
+    .dark .liasse-ui table tbody tr.liasse-section td {
+        @apply border-slate-600 bg-slate-800 text-slate-100;
+    }
+
+    .dark .liasse-ui table tbody tr.liasse-subsection td {
+        @apply border-slate-700 bg-slate-900 text-slate-200;
+    }
+
+    .dark .liasse-ui table tbody tr.liasse-total-strong td {
+        @apply border-slate-600 bg-slate-800 text-slate-100;
+    }
+
+    .dark .liasse-ui .liasse-t26 input:not([type="checkbox"]):not([type="radio"]) {
+        @apply border-slate-600 bg-slate-950 text-slate-100 focus:bg-slate-900;
+    }
+
+    .dark .liasse-ui [class*="text-slate-900"],
+    .dark .liasse-ui [class*="text-gray-900"] {
+        @apply text-slate-100;
+    }
+
+    .dark .liasse-ui [class*="text-slate-800"],
+    .dark .liasse-ui [class*="text-gray-800"] {
+        @apply text-slate-200;
+    }
+
+    .dark .liasse-ui [class*="text-slate-700"],
+    .dark .liasse-ui [class*="text-gray-700"] {
+        @apply text-slate-300;
+    }
+
+    .dark .liasse-ui [class*="text-slate-600"],
+    .dark .liasse-ui [class*="text-gray-600"] {
+        @apply text-slate-400;
+    }
+
+    .dark .liasse-ui [class*="text-blue-900"] {
+        @apply text-blue-300;
+    }
+
+    .dark .liasse-ui [class*="text-blue-950"] {
+        @apply text-blue-200;
+    }
+
     .liasse-ui input:not([type="checkbox"]):not([type="radio"]),
     .liasse-ui select,
     .liasse-ui textarea {
         @apply rounded-lg border-slate-300 bg-white text-sm shadow-sm transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-blue-600;
+    }
+
+    .dark .liasse-ui input:not([type="checkbox"]):not([type="radio"]),
+    .dark .liasse-ui select,
+    .dark .liasse-ui textarea {
+        @apply border-slate-600 bg-slate-800 text-slate-100 caret-blue-300 placeholder:text-slate-500 focus:border-blue-500 focus:bg-slate-700 focus:ring-blue-500;
+    }
+
+    .dark .liasse-ui input::selection,
+    .dark .liasse-ui textarea::selection {
+        @apply bg-blue-500 text-white;
     }
 
     .liasse-ui input:not([type="checkbox"]):not([type="radio"]) {
@@ -202,6 +334,11 @@
         scrollbar-width: thin;
     }
 
+    .dark .liasse-ui .overflow-x-auto {
+        @apply border-slate-700;
+        scrollbar-color: #64748b #0f172a;
+    }
+
     .liasse-ui .overflow-x-auto::-webkit-scrollbar {
         height: 10px;
     }
@@ -209,6 +346,10 @@
     .liasse-ui .overflow-x-auto::-webkit-scrollbar-track {
         background: #f1f5f9;
         border-radius: 999px;
+    }
+
+    .dark .liasse-ui .overflow-x-auto::-webkit-scrollbar-track {
+        background: #0f172a;
     }
 
     .liasse-ui .overflow-x-auto::-webkit-scrollbar-thumb {
@@ -221,8 +362,17 @@
         background: #64748b;
     }
 
+    .dark .liasse-ui .overflow-x-auto::-webkit-scrollbar-thumb {
+        background: #64748b;
+        border-color: #0f172a;
+    }
+
+    .dark .liasse-ui .overflow-x-auto::-webkit-scrollbar-thumb:hover {
+        background: #94a3b8;
+    }
+
     .app-shell {
-        @apply flex min-h-screen bg-slate-50;
+        @apply flex min-h-screen bg-slate-50 dark:bg-slate-950;
     }
 
     .app-sidebar {

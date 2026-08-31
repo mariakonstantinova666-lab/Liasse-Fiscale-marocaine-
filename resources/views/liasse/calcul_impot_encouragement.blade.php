@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
+<div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6 dark:border-slate-800 dark:bg-slate-900">
     <form method="POST" action="{{ route('liasse.save', 'calcul_impot_encouragement') }}">
         @csrf
-    <div class="flex justify-between items-center mb-4 border-b pb-2">
+    <div class="flex justify-between items-center mb-4 border-b pb-2 dark:border-slate-700">
         <div>
             <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">
                 Tableau T15 — ETAT POUR LE CALCUL DE L'IMPOT DU PAR LES ENTREPRISES BENEFICIANTS DES MESURES D'ENCOURAGEMENT AUX INVESTISSEMENTS
@@ -169,7 +169,7 @@
         <p class="text-[10px] text-slate-400">(1) Faire figurer dans ces cases la moitié du montant figurant dans la colonne 3 - même ligne</p>
         <p class="text-[10px] text-slate-400">(2) Faire figurer dans ces cases la moitié du montant figurant dans la colonne 2 - même ligne</p>
     </div>
-        <div class="mt-4 flex justify-end"><button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700">💾 Enregistrer le tableau</button></div>
+        <div class="mt-4 flex justify-end"><button type="submit" class="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900">💾 Enregistrer le tableau</button></div>
     </form>
 </div>
 @endsection

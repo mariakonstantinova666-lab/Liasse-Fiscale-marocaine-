@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container mx-auto p-6">
-    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
+    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 dark:bg-slate-900">
         
-        <div class="mb-6 border-b pb-4">
+        <div class="mb-6 border-b pb-4 dark:border-slate-700">
             <h2 class="text-xl font-bold text-gray-800">Tableau T03 — PASSAGE DU RESULTAT NET COMPTABLE AU RESULTAT NET FISCAL</h2>
             <p class="text-sm text-gray-500 font-medium">EXERCICE : {{ $exercice }}</p>
         </div>
@@ -25,7 +25,7 @@
                     </tr>
                     <tr>
                         <td class="border border-gray-300 p-2 pl-6">Bénéfice net</td>
-                        <td class="border border-gray-300 p-2 text-right font-mono text-blue-600">
+                        <td class="border border-gray-300 p-2 text-right font-mono text-blue-600 dark:text-blue-300">
                             {{ number_format($fiscalData['I. RESULTAT NET COMPTABLE']['Bénéfice net'], 2, '.', ' ') }}
                         </td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
@@ -33,7 +33,7 @@
                     <tr>
                         <td class="border border-gray-300 p-2 pl-6">Perte nette</td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
-                        <td class="border border-gray-300 p-2 text-right font-mono text-red-600">
+                        <td class="border border-gray-300 p-2 text-right font-mono text-red-600 dark:text-red-300">
                             {{ number_format($fiscalData['I. RESULTAT NET COMPTABLE']['Perte nette'], 2, '.', ' ') }}
                         </td>
                     </tr>
@@ -50,7 +50,7 @@
                     </tr>
                     @foreach($fiscalData['DETAIL_REINTEGRATIONS']['Courantes'] ?? [] as $detail)
                         @if(($detail['montant'] ?? 0) > 0)
-                            <tr class="bg-yellow-50">
+                            <tr class="bg-yellow-50 dark:[&>td]:!border-slate-700 dark:[&>td]:!bg-slate-800 dark:[&>td]:!text-slate-100">
                                 <td class="border border-gray-300 p-2 pl-10 text-sm">{{ $detail['label'] }}</td>
                                 <td class="border border-gray-300 p-2 text-right font-mono">
                                     {{ number_format($detail['montant'], 2, '.', ' ') }}
@@ -68,7 +68,7 @@
                     </tr>
                     @foreach($fiscalData['DETAIL_REINTEGRATIONS']['Non courantes'] ?? [] as $detail)
                         @if(($detail['montant'] ?? 0) > 0)
-                            <tr class="bg-yellow-50">
+                            <tr class="bg-yellow-50 dark:[&>td]:!border-slate-700 dark:[&>td]:!bg-slate-800 dark:[&>td]:!text-slate-100">
                                 <td class="border border-gray-300 p-2 pl-10 text-sm">{{ $detail['label'] }}</td>
                                 <td class="border border-gray-300 p-2 text-right font-mono">
                                     {{ number_format($detail['montant'], 2, '.', ' ') }}
@@ -96,7 +96,7 @@
                         </td>
                     </tr>
 
-                    <tr class="bg-yellow-50 font-bold text-gray-900">
+                    <tr class="bg-yellow-50 font-bold text-gray-900 dark:[&>td]:!border-slate-600 dark:[&>td]:!bg-slate-800 dark:[&>td]:!text-slate-100">
                         <td class="border border-gray-300 p-2.5 text-center">TOTAL (I + II + III)</td>
                         <td class="border border-gray-300 p-2 text-right font-mono">
                             {{ number_format($fiscalData['SYNTHESE_TOTAL']['Total Réintégrations'], 2, '.', ' ') }}
@@ -112,14 +112,14 @@
                     <tr>
                         <td class="border border-gray-300 p-2 pl-6">Bénéfice brut si T1 > T2 (A)</td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
-                        <td class="border border-gray-300 p-2 text-right font-mono text-green-600 font-bold">
+                        <td class="border border-gray-300 p-2 text-right font-mono text-green-600 font-bold dark:text-green-300">
                             {{ number_format($fiscalData['IV. RESULTAT BRUT FISCAL']['Bénéfice brut si T1 > T2 (A)'], 2, '.', ' ') }}
                         </td>
                     </tr>
                     <tr>
                         <td class="border border-gray-300 p-2 pl-6">Déficit brut fiscal si T2 > T1 (B)</td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
-                        <td class="border border-gray-300 p-2 text-right font-mono text-red-600 font-bold">
+                        <td class="border border-gray-300 p-2 text-right font-mono text-red-600 font-bold dark:text-red-300">
                             {{ number_format($fiscalData['IV. RESULTAT BRUT FISCAL']['Déficit brut fiscal si T2 > T1 (B)'], 2, '.', ' ') }}
                         </td>
                     </tr>
@@ -143,14 +143,14 @@
                     <tr>
                         <td class="border border-gray-300 p-2 pl-6">Bénéfice net fiscal (A - C)</td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
-                        <td class="border border-gray-300 p-2 text-right font-mono font-bold text-green-700">
+                        <td class="border border-gray-300 p-2 text-right font-mono font-bold text-green-700 dark:text-green-300">
                             {{ number_format($fiscalData['VI. RESULTAT NET FISCAL']['Bénéfice net fiscal (A-C)'], 2, '.', ' ') }}
                         </td>
                     </tr>
                     <tr>
                         <td class="border border-gray-300 p-2 pl-6">ou Déficit net fiscal (B)</td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
-                        <td class="border border-gray-300 p-2 text-right font-mono font-bold text-red-700">
+                        <td class="border border-gray-300 p-2 text-right font-mono font-bold text-red-700 dark:text-red-300">
                             {{ number_format($fiscalData['VI. RESULTAT NET FISCAL']['ou déficit net fiscal (B)'], 2, '.', ' ') }}
                         </td>
                     </tr>

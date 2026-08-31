@@ -4,16 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Liasse Expert - Maria Data</title>
+    <script>
+        (() => {
+            let theme = 'system';
+            try {
+                const stored = localStorage.getItem('theme');
+                theme = ['light', 'dark', 'system'].includes(stored) ? stored : 'system';
+            } catch (error) {}
+            const systemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const dark = theme === 'dark' || (theme === 'system' && systemDark);
+            document.documentElement.classList.toggle('dark', dark);
+            document.documentElement.dataset.theme = theme;
+            document.documentElement.dataset.resolvedTheme = dark ? 'dark' : 'light';
+            document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+        })();
+    </script>
     @vite(['resources/css/app.css'])
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         .sidebar-scroll::-webkit-scrollbar { width: 4px; }
         .sidebar-scroll::-webkit-scrollbar-track { background: #0f172a; }
         .sidebar-scroll::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-sans antialiased">
-    <div class="flex min-h-screen lg:h-screen lg:overflow-hidden">
+<body class="bg-slate-50 text-slate-900 font-sans antialiased dark:bg-slate-950 dark:text-slate-100">
+    <div class="flex min-h-screen bg-slate-50 transition-colors dark:bg-slate-950 lg:h-screen lg:overflow-hidden">
         <div id="sidebar-overlay" class="fixed inset-0 z-40 hidden bg-slate-950/60 backdrop-blur-sm lg:hidden" aria-hidden="true"></div>
         
         <aside id="app-sidebar" class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-shrink-0 flex-col bg-slate-950 text-white shadow-2xl transition-transform duration-300 lg:static lg:translate-x-0">
@@ -82,6 +96,9 @@
                             <p class="truncate text-sm font-bold text-slate-100">{{ auth()->user()?->name ?? 'Maria Konstantinova' }}</p>
                         </div>
                     </div>
+                    <a href="{{ route('settings.index') }}" class="mb-2 flex w-full items-center justify-center rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-xs font-bold text-slate-300 transition hover:border-blue-400/60 hover:bg-blue-500/10 hover:text-blue-100">
+                        Paramètres
+                    </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-xs font-bold text-slate-300 transition hover:border-red-400/60 hover:bg-red-500/10 hover:text-red-200">
@@ -94,17 +111,17 @@
         </aside>
 
         <main class="flex min-h-screen min-w-0 flex-grow flex-col lg:min-h-0">
-            <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 px-4 shadow-sm backdrop-blur sm:px-6 lg:static lg:px-8">
+            <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 px-4 shadow-sm backdrop-blur sm:px-6 lg:static lg:px-8 dark:border-slate-800 dark:bg-slate-950/95">
                 <div class="flex items-center space-x-3">
-                    <button id="sidebar-open" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 lg:hidden" aria-label="Ouvrir le menu">☰</button>
-                    <span class="hidden max-w-[55vw] truncate font-black uppercase tracking-tight text-slate-800 sm:block">Liasse fiscale marocaine</span>
+                    <button id="sidebar-open" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 lg:hidden" aria-label="Ouvrir le menu">☰</button>
+                    <span class="hidden max-w-[55vw] truncate font-black uppercase tracking-tight text-slate-800 sm:block dark:text-slate-100">Liasse fiscale marocaine</span>
                     <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-[10px] font-bold text-emerald-700">{{ session('annee_exercice', 2026) }}</span>
                 </div>
             </header>
 
-            <div class="flex-grow overflow-y-auto bg-slate-50 p-3 sm:p-5 lg:p-8">
+            <div class="flex-grow overflow-y-auto bg-slate-50 p-3 sm:p-5 lg:p-8 dark:bg-slate-950">
                 @if(session('success'))
-                    <div class="max-w-7xl mx-auto mb-4 p-3 rounded-lg bg-green-100 text-green-800 text-sm border border-green-200">
+                    <div class="max-w-7xl mx-auto mb-4 p-3 rounded-lg bg-green-100 text-green-800 text-sm border border-green-200 dark:border-green-800 dark:bg-green-500/10 dark:text-green-300">
                         {{ session('success') }}
                     </div>
                 @endif

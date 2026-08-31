@@ -20,7 +20,7 @@
             </thead>
             <tbody>
                 @foreach($synthese as $row)
-                    <tr class="{{ !empty($row['total']) ? 'bg-slate-100 font-bold' : 'hover:bg-slate-50' }}">
+                    <tr class="{{ !empty($row['total']) ? 'bg-slate-100 font-bold dark:bg-slate-800/70 dark:text-slate-100' : 'hover:bg-slate-50 dark:hover:bg-indigo-500/10' }}">
                         <td class="p-2 border border-slate-300">{!! $row['l'] !!}</td>
                         <td class="p-2 border border-slate-300 text-right font-mono">{{ $fmt($row['n']) }}</td>
                         <td class="p-2 border border-slate-300 text-right font-mono">{{ $fmt($row['p']) }}</td>
@@ -42,9 +42,9 @@
             <tbody>
                 @foreach($fluxRows as $row)
                     @if(!empty($row['section']))
-                        <tr class="bg-slate-200 font-bold"><td colspan="5" class="p-2 border border-slate-300">{{ $row['section'] }}</td></tr>
+                        <tr class="bg-slate-200 font-bold dark:bg-slate-800 dark:text-slate-100"><td colspan="5" class="p-2 border border-slate-300 dark:border-slate-600">{{ $row['section'] }}</td></tr>
                     @else
-                        <tr class="{{ !empty($row['total']) ? 'bg-slate-100 font-bold' : 'hover:bg-slate-50' }}">
+                        <tr class="{{ !empty($row['total']) ? 'bg-slate-100 font-bold dark:bg-slate-800/70 dark:text-slate-100' : 'hover:bg-slate-50 dark:hover:bg-indigo-500/10' }}">
                             <td class="p-2 border border-slate-300">{{ $row['label'] }}</td>
                             @foreach(['n_emploi','n_ressource','p_emploi','p_ressource'] as $key)
                                 <td class="p-2 border border-slate-300 text-right font-mono">{{ $fmt($row[$key] ?? 0) }}</td>

@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
-    <div class="flex justify-between items-center mb-4 border-b pb-2">
+<div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6 dark:border-slate-800 dark:bg-slate-900">
+    <div class="flex justify-between items-center mb-4 border-b pb-2 dark:border-slate-700">
         <div>
             <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">
                 Tableau T04 — TABLEAU DES IMMOBILISATIONS AUTRES QUE FINANCIERES
@@ -38,17 +38,17 @@
                     <th rowspan="2" class="p-2 border border-slate-300 align-middle bg-slate-800">
                         MONTANT BRUT AU DÉBUT<br>DE L'EXERCICE
                     </th>
-                    <th colspan="2" class="p-2 border border-slate-300 bg-emerald-700">AUGMENTATIONS</th>
-                    <th colspan="2" class="p-2 border border-slate-300 bg-rose-700">DIMINUTIONS</th>
+                    <th colspan="2" class="p-2 border border-slate-300 bg-emerald-700 dark:border-slate-600 dark:bg-emerald-800">AUGMENTATIONS</th>
+                    <th colspan="2" class="p-2 border border-slate-300 bg-rose-700 dark:border-slate-600 dark:bg-rose-800">DIMINUTIONS</th>
                     <th rowspan="2" class="p-2 border border-slate-300 align-middle bg-slate-800">
                         MONTANT BRUT À LA FIN<br>DE L'EXERCICE
                     </th>
                 </tr>
                 <tr>
-                    <th class="p-2 border border-slate-300 bg-emerald-600 font-medium">Acquisitions</th>
-                    <th class="p-2 border border-slate-300 bg-emerald-600 font-medium">Virements poste à poste</th>
-                    <th class="p-2 border border-slate-300 bg-rose-600 font-medium">Cessions ou retraits</th>
-                    <th class="p-2 border border-slate-300 bg-rose-600 font-medium">Virements poste à poste</th>
+                    <th class="p-2 border border-slate-300 bg-emerald-600 font-medium dark:border-slate-600 dark:bg-emerald-700">Acquisitions</th>
+                    <th class="p-2 border border-slate-300 bg-emerald-600 font-medium dark:border-slate-600 dark:bg-emerald-700">Virements poste à poste</th>
+                    <th class="p-2 border border-slate-300 bg-rose-600 font-medium dark:border-slate-600 dark:bg-rose-700">Cessions ou retraits</th>
+                    <th class="p-2 border border-slate-300 bg-rose-600 font-medium dark:border-slate-600 dark:bg-rose-700">Virements poste à poste</th>
                 </tr>
             </thead>
             <tbody>
@@ -62,24 +62,24 @@
                             <tr class="hover:bg-slate-50 border-b border-slate-200">
                                 <td class="p-2 border border-slate-200 pl-6 font-medium text-slate-600">{{ $nomLigne }}</td>
                                 <td class="p-2 border border-slate-200 text-right font-mono font-semibold text-slate-800">{{ number_format($donnees->debut ?? 0, 2, ',', ' ') }}</td>
-                                <td class="p-2 border border-slate-200 text-right font-mono text-emerald-700">{{ number_format($donnees->acquisition ?? 0, 2, ',', ' ') }}</td>
+                                <td class="p-2 border border-slate-200 text-right font-mono text-emerald-700 dark:text-emerald-300">{{ number_format($donnees->acquisition ?? 0, 2, ',', ' ') }}</td>
                                 <td class="p-2 border border-slate-200 text-right font-mono text-slate-500">{{ number_format($donnees->virement_aug ?? 0, 2, ',', ' ') }}</td>
-                                <td class="p-2 border border-slate-200 text-right font-mono text-rose-700">{{ number_format($donnees->cession ?? 0, 2, ',', ' ') }}</td>
+                                <td class="p-2 border border-slate-200 text-right font-mono text-rose-700 dark:text-rose-300">{{ number_format($donnees->cession ?? 0, 2, ',', ' ') }}</td>
                                 <td class="p-2 border border-slate-200 text-right font-mono text-slate-500">{{ number_format($donnees->virement_dim ?? 0, 2, ',', ' ') }}</td>
-                                <td class="p-2 border border-slate-200 text-right font-mono font-bold text-slate-900 bg-slate-50">{{ number_format($donnees->fin ?? 0, 2, ',', ' ') }}</td>
+                                <td class="p-2 border border-slate-200 text-right font-mono font-bold text-slate-900 bg-slate-50 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">{{ number_format($donnees->fin ?? 0, 2, ',', ' ') }}</td>
                             </tr>
                         @endforeach
 
                         @if(isset($totauxImmo[$rubrique]))
                             @php $subTotal = $totauxImmo[$rubrique]; @endphp
                             <tr class="bg-slate-100 font-bold text-slate-900 border-y border-slate-400">
-                                <td class="p-2 border border-slate-300 uppercase text-right pr-3 text-blue-900">TOTAL {{ $rubrique }}</td>
-                                <td class="p-2 border border-slate-300 text-right font-mono text-blue-950">{{ number_format($subTotal->debut ?? 0, 2, ',', ' ') }}</td>
-                                <td class="p-2 border border-slate-300 text-right font-mono text-emerald-800">{{ number_format($subTotal->acquisition ?? 0, 2, ',', ' ') }}</td>
-                                <td class="p-2 border border-slate-300 text-right font-mono text-blue-950">{{ number_format($subTotal->virement_aug ?? 0, 2, ',', ' ') }}</td>
-                                <td class="p-2 border border-slate-300 text-right font-mono text-rose-800">{{ number_format($subTotal->cession ?? 0, 2, ',', ' ') }}</td>
-                                <td class="p-2 border border-slate-300 text-right font-mono text-blue-950">{{ number_format($subTotal->virement_dim ?? 0, 2, ',', ' ') }}</td>
-                                <td class="p-2 border border-slate-300 text-right font-mono text-blue-950">{{ number_format($subTotal->fin ?? 0, 2, ',', ' ') }}</td>
+                                <td class="p-2 border border-slate-300 uppercase text-right pr-3 text-blue-900 dark:text-blue-300">TOTAL {{ $rubrique }}</td>
+                                <td class="p-2 border border-slate-300 text-right font-mono text-blue-950 dark:text-blue-200">{{ number_format($subTotal->debut ?? 0, 2, ',', ' ') }}</td>
+                                <td class="p-2 border border-slate-300 text-right font-mono text-emerald-800 dark:text-emerald-300">{{ number_format($subTotal->acquisition ?? 0, 2, ',', ' ') }}</td>
+                                <td class="p-2 border border-slate-300 text-right font-mono text-blue-950 dark:text-blue-200">{{ number_format($subTotal->virement_aug ?? 0, 2, ',', ' ') }}</td>
+                                <td class="p-2 border border-slate-300 text-right font-mono text-rose-800 dark:text-rose-300">{{ number_format($subTotal->cession ?? 0, 2, ',', ' ') }}</td>
+                                <td class="p-2 border border-slate-300 text-right font-mono text-blue-950 dark:text-blue-200">{{ number_format($subTotal->virement_dim ?? 0, 2, ',', ' ') }}</td>
+                                <td class="p-2 border border-slate-300 text-right font-mono text-blue-950 dark:text-blue-200">{{ number_format($subTotal->fin ?? 0, 2, ',', ' ') }}</td>
                             </tr>
                         @endif
                     @endforeach

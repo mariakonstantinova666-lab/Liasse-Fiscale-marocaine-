@@ -30,6 +30,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [BalanceController::class, 'index'])->name('dashboard');
     Route::post('/balance/import', [BalanceController::class, 'import'])->name('balance.import');
 
+    Route::get('/settings', fn () => Inertia::render('Settings/Index'))->name('settings.index');
+
     Route::resource('source-documents', SourceDocumentController::class)
         ->only(['index', 'create', 'store', 'show', 'destroy']);
     Route::post('/source-documents/{source_document}/analyze', [SourceDocumentController::class, 'analyze'])
