@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use RuntimeException;
 
 /**
@@ -21,6 +22,9 @@ use RuntimeException;
 class EdiXmlGeneratorService
 {
     private array $calculatedMappingMissing = [];
+
+    /** @var array<string, 'date'|'double'|'entier'|'texte'>|null */
+    private ?array $ediTypesByCode = null;
 
     public function __construct(
         private BalanceService $balanceService,
@@ -244,6 +248,8 @@ class EdiXmlGeneratorService
         $this->appendDefaultNumericTotals($values, $data, 'plus_values');
         $this->appendDefaultNumericTotals($values, $data, 'titres_participation');
 
+        $values = $this->formatMappedValuesByOfficialType($values);
+
         return $this->deduplicateMappedValues($values);
     }
 
@@ -439,9 +445,91 @@ class EdiXmlGeneratorService
         return [
             'tableau' => $tableauId,
             'code' => $code,
-            'valeur' => $formatNumeric ? $this->formatValue($value) : trim((string) ($value ?? '')),
+            'valeur' => $this->formatValueForCode($code, $value, $formatNumeric),
             'ligne' => $line,
         ];
+    }
+
+    /**
+     * Le type officiel a priorite. Le booleen historique reste uniquement le
+     * fallback des environnements dont le catalogue n'est pas disponible.
+     */
+    private function formatValueForCode(int|string $code, mixed $value, bool $formatNumeric = true): string
+    {
+        $type = $this->ediTypesByCode()[(string) $code] ?? null;
+
+        return match ($type) {
+            'entier' => $this->formatIntegerValue($value),
+            'double' => $this->formatValue($value),
+            'texte', 'date' => trim((string) ($value ?? '')),
+            default => $formatNumeric ? $this->formatValue($value) : trim((string) ($value ?? '')),
+        };
+    }
+
+    /**
+     * @param array<int, array{tableau:int, code:int, valeur:string, ligne:?int}> $values
+     * @return array<int, array{tableau:int, code:int, valeur:string, ligne:?int}>
+     */
+    private function formatMappedValuesByOfficialType(array $values): array
+    {
+        $types = $this->ediTypesByCode();
+
+        foreach ($values as &$value) {
+            if (isset($types[(string) $value['code']])) {
+                $value['valeur'] = $this->formatValueForCode($value['code'], $value['valeur']);
+            }
+        }
+        unset($value);
+
+        return $values;
+    }
+
+    /** @return array<string, 'date'|'double'|'entier'|'texte'> */
+    private function ediTypesByCode(): array
+    {
+        if ($this->ediTypesByCode !== null) {
+            return $this->ediTypesByCode;
+        }
+
+        $this->ediTypesByCode = [];
+        if (!Schema::hasTable('ref_codes_edi')) {
+            return $this->ediTypesByCode;
+        }
+
+        foreach (DB::table('ref_codes_edi')->get(['code_edi', 'col2']) as $row) {
+            $type = $this->normalizeEdiType((string) $row->col2);
+            if ($type !== null) {
+                $this->ediTypesByCode[(string) $row->code_edi] = $type;
+            }
+        }
+
+        return $this->ediTypesByCode;
+    }
+
+    /** @return 'date'|'double'|'entier'|'texte'|null */
+    private function normalizeEdiType(string $type): ?string
+    {
+        $normalized = preg_replace('/[^a-z]/', '', strtolower(Str::ascii($type))) ?? '';
+
+        return match ($normalized) {
+            'dou', 'doub', 'doubl', 'double' => 'double',
+            'text', 'texte' => 'texte',
+            'entier' => 'entier',
+            'date' => 'date',
+            default => null,
+        };
+    }
+
+    private function formatIntegerValue(mixed $value): string
+    {
+        $value = trim((string) ($value ?? ''));
+        $normalized = str_replace(["\xc2\xa0", ' '], '', $value);
+
+        if (preg_match('/^([+-]?\d+)(?:[.,]0+)?$/', $normalized, $matches) === 1) {
+            return $matches[1];
+        }
+
+        return $value;
     }
 
     private function shouldFormatNumeric(string $tableauCode, string $key): bool
@@ -494,11 +582,41 @@ class EdiXmlGeneratorService
             $this->validateRequiredTableCoverage($values),
             $this->validateNoDuplicateCells($values),
             $this->validateCodesExistInCatalog($values),
+            $this->validateOfficialIntegerValues($values),
             $this->validateCalculatedMappings(),
             $this->validateKnownLiasseValuesAreMapped($context, $values)
         );
 
         return $errors;
+    }
+
+    /**
+     * @param array<int, array{tableau:int, code:int, valeur:string, ligne:?int}> $values
+     * @return array<int, array<string, mixed>>
+     */
+    private function validateOfficialIntegerValues(array $values): array
+    {
+        $types = $this->ediTypesByCode();
+        $invalid = [];
+
+        foreach ($values as $value) {
+            if (($types[(string) $value['code']] ?? null) === 'entier'
+                && preg_match('/^[+-]?\d+$/', $value['valeur']) !== 1) {
+                $invalid[] = $value['code'].' (valeur '.$value['valeur'].')';
+            }
+        }
+
+        if ($invalid === []) {
+            return [];
+        }
+
+        return [$this->ediError(
+            'EDI_INVALID_INTEGER_VALUE',
+            'Valeur incompatible avec un code EDI Entier',
+            'Valeurs comportant une fraction non nulle ou un format invalide : '.implode(', ', array_slice($invalid, 0, 20)).'.',
+            'Un code EDI de type Entier doit contenir uniquement un entier signe, sans fraction.',
+            'Corriger la valeur source sans la tronquer, puis relancer la generation.'
+        )];
     }
 
     /**
