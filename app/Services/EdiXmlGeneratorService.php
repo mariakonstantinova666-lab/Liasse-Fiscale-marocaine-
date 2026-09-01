@@ -392,9 +392,9 @@ class EdiXmlGeneratorService
      */
     private function dynamicCellCode(string $tableauCode, string $key): ?array
     {
-        if ($tableauCode === 'dotations_amortissements'
+        if (in_array($tableauCode, ['credit_bail', 'dotations_amortissements'], true)
             && preg_match('/^r(\d+)_c(\d+)$/', $key, $matches) === 1) {
-            $code = config('edi.dynamic_rows.dotations_amortissements.r.c'.$matches[2]);
+            $code = config('edi.dynamic_rows.'.$tableauCode.'.r.c'.$matches[2]);
 
             return is_numeric($code) ? ['code' => (int) $code, 'line' => ((int) $matches[1]) + 1] : null;
         }

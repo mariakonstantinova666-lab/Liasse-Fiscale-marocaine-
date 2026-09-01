@@ -1,6 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $parseAmount = static function ($value): float {
+        $normalized = str_replace(["\xC2\xA0", ' '], '', trim((string) $value));
+
+        if (str_contains($normalized, ',')) {
+            $normalized = str_replace('.', '', $normalized);
+            $normalized = str_replace(',', '.', $normalized);
+        }
+
+        return is_numeric($normalized) ? (float) $normalized : 0.0;
+    };
+
+    $visualTotals = array_fill_keys([4, 6, 7, 8, 9, 10], 0.0);
+    for ($i = 0; $i < 18; $i++) {
+        foreach (array_keys($visualTotals) as $column) {
+            $visualTotals[$column] += $parseAmount($data['r'.$i.'_c'.$column] ?? 0);
+        }
+    }
+@endphp
 <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
     <form method="POST" action="{{ route('liasse.save', 'credit_bail') }}">
     @csrf
@@ -35,7 +54,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for($i = 0; $i < 8; $i++)
+                @for($i = 0; $i < 18; $i++)
                     <tr class="hover:bg-slate-50 border-b border-slate-200">
                         <td class="p-1 border border-slate-200"><input type="text" name="f[r{{ $i }}_c1]" value="{{ $data['r'.$i.'_c1'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
                         <td class="p-1 border border-slate-200"><input type="text" name="f[r{{ $i }}_c2]" value="{{ $data['r'.$i.'_c2'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
@@ -52,16 +71,16 @@
                 @endfor
                 <tr class="bg-slate-100 font-bold text-slate-900 border-y border-slate-400">
                     <td class="p-2 border border-slate-300 uppercase text-left pr-3">Total</td>
-                    <td class="p-1 border border-slate-300"><input type="text" name="f[total_c2]" value="{{ $data['total_c2'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    <td class="p-1 border border-slate-300"><input type="text" name="f[total_c3]" value="{{ $data['total_c3'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    <td class="p-1 border border-slate-300"><input type="text" name="f[total_c4]" value="{{ $data['total_c4'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    <td class="p-1 border border-slate-300"><input type="text" name="f[total_c5]" value="{{ $data['total_c5'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    <td class="p-1 border border-slate-300"><input type="text" name="f[total_c6]" value="{{ $data['total_c6'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    <td class="p-1 border border-slate-300"><input type="text" name="f[total_c7]" value="{{ $data['total_c7'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    <td class="p-1 border border-slate-300"><input type="text" name="f[total_c8]" value="{{ $data['total_c8'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    <td class="p-1 border border-slate-300"><input type="text" name="f[total_c9]" value="{{ $data['total_c9'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    <td class="p-1 border border-slate-300"><input type="text" name="f[total_c10]" value="{{ $data['total_c10'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
-                    <td class="p-1 border border-slate-300"><input type="text" name="f[total_c11]" value="{{ $data['total_c11'] ?? '' }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
+                    <td class="p-2 border border-slate-300">&nbsp;</td>
+                    <td class="p-2 border border-slate-300">&nbsp;</td>
+                    <td class="p-2 border border-slate-300 text-right font-mono">{{ number_format($visualTotals[4], 2, ',', ' ') }}</td>
+                    <td class="p-2 border border-slate-300 text-center">-</td>
+                    <td class="p-2 border border-slate-300 text-right font-mono">{{ number_format($visualTotals[6], 2, ',', ' ') }}</td>
+                    <td class="p-2 border border-slate-300 text-right font-mono">{{ number_format($visualTotals[7], 2, ',', ' ') }}</td>
+                    <td class="p-2 border border-slate-300 text-right font-mono">{{ number_format($visualTotals[8], 2, ',', ' ') }}</td>
+                    <td class="p-2 border border-slate-300 text-right font-mono">{{ number_format($visualTotals[9], 2, ',', ' ') }}</td>
+                    <td class="p-2 border border-slate-300 text-right font-mono">{{ number_format($visualTotals[10], 2, ',', ' ') }}</td>
+                    <td class="p-2 border border-slate-300 text-center">-</td>
                 </tr>
             </tbody>
         </table>
