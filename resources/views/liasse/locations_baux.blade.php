@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $parseAmount = static function ($value): float {
+        $normalized = str_replace(["\xC2\xA0", ' '], '', trim((string) $value));
+
+        if (str_contains($normalized, ',')) {
+            $normalized = str_replace('.', '', $normalized);
+            $normalized = str_replace(',', '.', $normalized);
+        }
+
+        return is_numeric($normalized) ? (float) $normalized : 0.0;
+    };
+
+    $totalMontantAnnuel = 0.0;
+    $totalLoyerCharges = 0.0;
+
+    for ($i = 0; $i < 18; $i++) {
+        $totalMontantAnnuel += $parseAmount($data['r'.$i.'_c10'] ?? 0);
+        $totalLoyerCharges += $parseAmount($data['r'.$i.'_c11'] ?? 0);
+    }
+@endphp
 <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
     <form method="POST" action="{{ route('liasse.save', 'locations_baux') }}">
     @csrf
@@ -14,7 +34,10 @@
         <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau T19 — Exercice {{ $exercice ?? session('annee_exercice', 2025) }}</span>
     </div>
 
-    <div class="overflow-x-auto">
+    <p class="mb-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400">
+        Faites défiler horizontalement pour accéder aux colonnes 10 à 13 <span aria-hidden="true">→</span>
+    </p>
+    <div class="overflow-x-auto rounded-sm border border-slate-300 dark:border-slate-700" tabindex="0" aria-label="Tableau T19 à défilement horizontal">
         <table class="w-full text-xs text-left border-collapse border border-slate-300" style="min-width: 1700px;">
             <thead class="text-white text-center font-bold">
                 <tr>
@@ -38,7 +61,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for($i = 0; $i < 8; $i++)
+                @for($i = 0; $i < 18; $i++)
                     <tr class="hover:bg-slate-50 border-b border-slate-200">
                         <td class="p-1 border border-slate-200"><input type="text" name="f[r{{ $i }}_c1]" value="{{ $data['r'.$i.'_c1'] ?? '' }}" class="w-full bg-transparent text-left font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
                         <td class="p-1 border border-slate-200"><input type="text" name="f[r{{ $i }}_c2]" value="{{ $data['r'.$i.'_c2'] ?? '' }}" class="w-full bg-transparent text-left font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
@@ -58,8 +81,8 @@
 
                 <tr class="bg-slate-100 font-bold text-slate-900 border-y border-slate-400">
                     <td colspan="9" class="p-2 border border-slate-300 uppercase text-right pr-3 text-blue-900">Total</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
-                    <td class="p-2 border border-slate-300 text-right font-mono">&nbsp;</td>
+                    <td class="p-2 border border-slate-300 text-right font-mono">{{ number_format($totalMontantAnnuel, 2, ',', ' ') }}</td>
+                    <td class="p-2 border border-slate-300 text-right font-mono">{{ number_format($totalLoyerCharges, 2, ',', ' ') }}</td>
                     <td class="p-2 border border-slate-300 text-center">&nbsp;</td>
                     <td class="p-2 border border-slate-300 text-center">&nbsp;</td>
                 </tr>

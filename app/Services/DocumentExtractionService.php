@@ -5,7 +5,9 @@ namespace App\Services;
 use App\Models\SourceDocument;
 use App\Models\SourceDocumentExtraction;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Throwable;
 
@@ -143,7 +145,9 @@ class DocumentExtractionService
         }
 
         if (!isset($sheets['Fiche société'], $sheets['Registre des immobilisations'])) {
-            return [];
+            return isset($sheets['Modules conditionnels'])
+                ? $this->mapLocationsBaux($sheets['Modules conditionnels'])
+                : [];
         }
 
         $reglesFiscales = $spreadsheet->getSheetCount() > 3 ? $spreadsheet->getSheet(3) : null;
@@ -154,6 +158,7 @@ class DocumentExtractionService
             $reglesFiscales ? $this->mapReglesFiscales($reglesFiscales) : [],
             isset($sheets['Décision AG']) ? $this->mapAffectationResultats($this->readKeyValueSheet($sheets['Décision AG'])) : [],
             isset($sheets['Informations complémentaires']) ? $this->mapLocationsBaux($sheets['Informations complémentaires']) : [],
+            isset($sheets['Modules conditionnels']) ? $this->mapLocationsBaux($sheets['Modules conditionnels']) : [],
             isset($sheets['Politique comptable']) ? $this->mapPolitiqueComptable($this->readKeyValueSheet($sheets['Politique comptable'])) : []
         ), fn ($field) => ($field['cle'] ?? '') !== ''));
     }
@@ -336,34 +341,92 @@ class DocumentExtractionService
 
     private function mapLocationsBaux($sheet): array
     {
-        $fields = [];
-
         for ($row = 1; $row <= $sheet->getHighestRow(); $row++) {
-            if ($this->stringValue($sheet->getCellByColumnAndRow(1, $row)->getCalculatedValue()) !== 'Bien loué') {
+            $firstHeader = $this->normalizeHeader(
+                $this->stringValue($sheet->getCellByColumnAndRow(1, $row)->getCalculatedValue())
+            );
+
+            if (!in_array($firstHeader, ['bien loue', 'nature du bien loue'], true)) {
                 continue;
             }
 
             $dataRow = $row + 1;
-            $loyer = $this->stringValue($sheet->getCellByColumnAndRow(5, $dataRow)->getCalculatedValue());
-            $fields = [
-                'r0_c1' => $this->stringValue($sheet->getCellByColumnAndRow(1, $dataRow)->getCalculatedValue()),
-                'r0_c2' => '',
-                'r0_c3' => $this->stringValue($sheet->getCellByColumnAndRow(2, $dataRow)->getCalculatedValue()),
-                'r0_c4' => '',
-                'r0_c5' => $this->stringValue($sheet->getCellByColumnAndRow(3, $dataRow)->getCalculatedValue()),
-                'r0_c6' => '',
-                'r0_c7' => '',
-                'r0_c8' => '',
-                'r0_c9' => $this->stringValue($sheet->getCellByColumnAndRow(4, $dataRow)->getFormattedValue()),
-                'r0_c10' => $loyer,
-                'r0_c11' => $loyer,
-                'r0_c12' => 'X',
-                'r0_c13' => '',
-            ];
-            break;
+            $headers = [];
+            $highestColumn = Coordinate::columnIndexFromString($sheet->getHighestColumn());
+
+            for ($column = 1; $column <= $highestColumn; $column++) {
+                $header = $this->normalizeHeader(
+                    $this->stringValue($sheet->getCellByColumnAndRow($column, $row)->getCalculatedValue())
+                );
+
+                if ($header !== '') {
+                    $headers[$column] = $header;
+                }
+            }
+
+            $value = function (array $needles) use ($headers, $sheet, $dataRow): string {
+                foreach ($headers as $column => $header) {
+                    foreach ($needles as $needle) {
+                        if (str_contains($header, $needle)) {
+                            return $this->stringValue(
+                                $sheet->getCellByColumnAndRow($column, $dataRow)->getFormattedValue()
+                            );
+                        }
+                    }
+                }
+
+                return '';
+            };
+
+            $ownerIdentifier = $value(['if/cin proprietaire', 'if cin proprietaire']);
+            [$if, $cin] = $this->splitOwnerIfCin($ownerIdentifier);
+
+            if ($if === '') {
+                $if = preg_replace('/^\s*(?:N\s*)?IF\s*[:#-]?\s*/iu', '', $value(['n if', 'if du proprietaire'])) ?? '';
+            }
+
+            if ($cin === '') {
+                $cin = preg_replace('/^\s*(?:N\s*)?(?:CIN|CNI)\s*[:#-]?\s*/iu', '', $value(['n cin', 'n cni'])) ?? '';
+            }
+
+            return $this->fields('locations_baux', [
+                'r0_c1' => $value(['nature du bien loue', 'bien loue']),
+                'r0_c2' => $value(['lieu de situation']),
+                'r0_c3' => $value(['nom et prenoms', 'proprietaire/bailleur', 'bailleur']),
+                'r0_c4' => $value(['raison sociale']),
+                'r0_c5' => $value(['adresse proprietaire', 'adresse du bailleur', 'adresse']),
+                'r0_c6' => trim($if),
+                'r0_c7' => trim($cin),
+                'r0_c8' => $value(["carte d'etranger", 'carte etranger']),
+                'r0_c9' => $value(['date de conclusion', 'date contrat', 'date du contrat']),
+                'r0_c10' => $value(['montant annuel de location', 'loyer annuel']),
+                'r0_c11' => $value(['montant du loyer compris dans les charges', 'loyer compris dans les charges']),
+                'r0_c12' => $value(['bail ordinaire']),
+                'r0_c13' => $value(['leasing']),
+            ]);
         }
 
-        return $this->fields('locations_baux', $fields);
+        return [];
+    }
+
+    /**
+     * @return array{0:string,1:string}
+     */
+    private function splitOwnerIfCin(string $value): array
+    {
+        if (preg_match('/\bIF\s*[:#-]?\s*([A-Z0-9]+).*?\b(?:CIN|CNI)\s*[:#-]?\s*([A-Z0-9]+)/iu', $value, $matches) !== 1) {
+            return ['', ''];
+        }
+
+        return [trim($matches[1]), trim($matches[2])];
+    }
+
+    private function normalizeHeader(string $value): string
+    {
+        $value = mb_strtolower(Str::ascii($value));
+        $value = preg_replace('/[^a-z0-9\/\']+/u', ' ', $value) ?? '';
+
+        return trim(preg_replace('/\s+/u', ' ', $value) ?? '');
     }
 
     private function mapPolitiqueComptable(array $politique): array

@@ -446,6 +446,10 @@ class EdiXmlGeneratorService
 
     private function shouldFormatNumeric(string $tableauCode, string $key): bool
     {
+        if ($tableauCode === 'locations_baux') {
+            return preg_match('/^(r\d+_c(10|11)|total_c(10|11))$/', $key) === 1;
+        }
+
         if ($tableauCode === 'plus_values') {
             return !preg_match('/^(r\d+_c(1|2)|total_c2)$/', $key);
         }
