@@ -62,6 +62,19 @@ class EdiValueFormattingTest extends TestCase
         $this->assertSame('-125.50', $this->format($service, 1274, '-125.5'));
     }
 
+    public function test_official_double_percentage_suffix_is_removed_without_scaling(): void
+    {
+        $this->catalogCode(1082, 'Double');
+        $this->catalogCode(22, 'Double');
+        $service = app(EdiXmlGeneratorService::class);
+
+        $this->assertSame('20.00', $this->format($service, 1082, '20.00%'));
+        $this->assertSame('10.00', $this->format($service, 1082, '10.00%'));
+        $this->assertSame('20.00', $this->format($service, 1082, '20%'));
+        $this->assertSame('20.00', $this->format($service, 1082, '20,00%'));
+        $this->assertSame('367993.01', $this->format($service, 22, '367993.01'));
+    }
+
     public function test_text_and_date_values_are_not_converted(): void
     {
         $this->catalogCode(14041, 'Text');

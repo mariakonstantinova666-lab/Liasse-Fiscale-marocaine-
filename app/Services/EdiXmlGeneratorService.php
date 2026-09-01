@@ -614,7 +614,7 @@ class EdiXmlGeneratorService
 
         return match ($type) {
             'entier' => $this->formatIntegerValue($value),
-            'double' => $this->formatValue($value),
+            'double' => $this->formatDoubleValue($value),
             'texte', 'date' => trim((string) ($value ?? '')),
             default => $formatNumeric ? $this->formatValue($value) : trim((string) ($value ?? '')),
         };
@@ -1027,6 +1027,22 @@ class EdiXmlGeneratorService
         }
 
         return $value;
+    }
+
+    private function formatDoubleValue(mixed $value): string
+    {
+        $value = trim((string) ($value ?? ''));
+
+        if (str_ends_with($value, '%')) {
+            $percentage = trim(substr($value, 0, -1));
+            $numeric = str_replace(["\xc2\xa0", ' ', ','], ['', '', '.'], $percentage);
+
+            if ($percentage !== '' && is_numeric($numeric)) {
+                return $this->formatAmount((float) $numeric);
+            }
+        }
+
+        return $this->formatValue($value);
     }
 
     private function formatAmount(mixed $value): string
