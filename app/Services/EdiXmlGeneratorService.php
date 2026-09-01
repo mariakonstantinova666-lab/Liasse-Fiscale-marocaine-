@@ -100,6 +100,7 @@ class EdiXmlGeneratorService
     public function context(int $userId, int $exercice): array
     {
         [$items, $itemsPrev] = $this->balanceService->lignesAvecPrecedent($userId, $exercice);
+        $period = $this->periodForExercice($exercice);
         $liasseData = LiasseData::query()
             ->where('user_id', $userId)
             ->where('exercice', $exercice)
@@ -115,6 +116,8 @@ class EdiXmlGeneratorService
             'liasseData' => $liasseData,
             'controls' => $this->controlService->verifierLiasse($items, $liasseData, $itemsPrev),
             'exercice' => $exercice,
+            'period_start' => $period['start'],
+            'period_end' => $period['end'],
         ];
     }
 
@@ -155,6 +158,7 @@ class EdiXmlGeneratorService
         /** @var Societe|null $societe */
         $societe = $context['societe'] ?? null;
         $exercice = (int) ($context['exercice'] ?? now()->year);
+        $period = $this->periodForExercice($exercice);
         $node = $root->appendChild($dom->createElement('societe'));
 
         $this->appendTextElement($dom, $node, 'raisonSociale', $societe?->nom_societe);
@@ -164,8 +168,8 @@ class EdiXmlGeneratorService
         $this->appendTextElement($dom, $node, 'cnss', $societe?->cnss);
         $this->appendTextElement($dom, $node, 'patente', $societe?->patente);
         $this->appendTextElement($dom, $node, 'adresse', $societe?->adresse);
-        $this->appendTextElement($dom, $node, 'exerciceDu', sprintf('01/01/%d', $exercice));
-        $this->appendTextElement($dom, $node, 'exerciceAu', sprintf('31/12/%d', $exercice));
+        $this->appendTextElement($dom, $node, 'exerciceDu', $context['period_start'] ?? $period['start']);
+        $this->appendTextElement($dom, $node, 'exerciceAu', $context['period_end'] ?? $period['end']);
     }
 
     /**
@@ -247,10 +251,160 @@ class EdiXmlGeneratorService
         $this->appendComputedLocationsBauxTotals($values, $data);
         $this->appendDefaultNumericTotals($values, $data, 'plus_values');
         $this->appendDefaultNumericTotals($values, $data, 'titres_participation');
+        $this->appendConfiguredExtraValues($values, $context, $data);
 
         $values = $this->formatMappedValuesByOfficialType($values);
 
         return $this->deduplicateMappedValues($values);
+    }
+
+    /**
+     * @param array<int, array{tableau:int, code:int, valeur:mixed, ligne:?int}> $values
+     * @param array<string, mixed> $context
+     * @param array<string, array<string, string>> $data
+     */
+    private function appendConfiguredExtraValues(array &$values, array $context, array $data): void
+    {
+        foreach ((array) config('edi.extra_cells', []) as $tableauCode => $definition) {
+            $tableauId = $this->tableauId((string) $tableauCode);
+            $cells = (array) ($definition['cells'] ?? []);
+
+            if ($tableauId === null
+                || !$this->extraTableIsApplicable((string) $tableauCode, (array) $definition, $values, $data)) {
+                continue;
+            }
+
+            foreach ($cells as $cell) {
+                $code = $cell['code'] ?? null;
+                if (!is_numeric($code)) {
+                    continue;
+                }
+
+                $value = $this->resolveExtraValue((array) $cell, $context, $data[(string) $tableauCode] ?? []);
+                if ($value === null) {
+                    continue;
+                }
+
+                $values[] = [
+                    'tableau' => $tableauId,
+                    'code' => (int) $code,
+                    'valeur' => $value,
+                    'ligne' => null,
+                ];
+            }
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $definition
+     * @param array<int, array{tableau:int, code:int, valeur:mixed, ligne:?int}> $values
+     * @param array<string, array<string, string>> $data
+     */
+    private function extraTableIsApplicable(string $tableauCode, array $definition, array $values, array $data): bool
+    {
+        return match ($definition['applicability'] ?? null) {
+            'declared_rows' => $this->hasSignificantDeclaredRows(
+                $data[$tableauCode] ?? [],
+                $this->extraRowCount($definition)
+            ),
+            'significant_calculated_values' => $this->hasSignificantCalculatedValues(
+                $values,
+                $this->tableauId($tableauCode)
+            ),
+            default => false,
+        };
+    }
+
+    /** @param array<string, mixed> $definition */
+    private function extraRowCount(array $definition): int
+    {
+        return max(0, (int) collect($definition['cells'] ?? [])->max('row_count'));
+    }
+
+    /** @param array<string, string> $fields */
+    private function hasSignificantDeclaredRows(array $fields, int $rowCount): bool
+    {
+        foreach ($fields as $key => $value) {
+            if (preg_match('/^r(\d+)_c\d+$/', (string) $key, $matches) === 1
+                && (int) $matches[1] < $rowCount
+                && $this->isSignificantExtraValue($value)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /** @param array<int, array{tableau:int, code:int, valeur:mixed, ligne:?int}> $values */
+    private function hasSignificantCalculatedValues(array $values, ?int $tableauId): bool
+    {
+        if ($tableauId === null) {
+            return false;
+        }
+
+        foreach ($values as $value) {
+            if ($value['tableau'] === $tableauId && $this->isSignificantExtraValue($value['valeur'])) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function isSignificantExtraValue(mixed $value): bool
+    {
+        $value = trim((string) ($value ?? ''));
+        if ($value === '' || $value === '-') {
+            return false;
+        }
+
+        $numeric = rtrim(str_replace(["\xc2\xa0", ' ', ','], ['', '', '.'], $value), '%');
+
+        return !is_numeric($numeric) || abs((float) $numeric) > 0.0000001;
+    }
+
+    /**
+     * @param array<string, mixed> $cell
+     * @param array<string, mixed> $context
+     * @param array<string, string> $fields
+     */
+    private function resolveExtraValue(array $cell, array $context, array $fields): mixed
+    {
+        return match ($cell['source'] ?? null) {
+            'period_start' => $context['period_start'] ?? null,
+            'period_end' => $context['period_end'] ?? null,
+            'sum_declared_column' => $this->sumDeclaredColumn(
+                $fields,
+                (string) ($cell['column'] ?? ''),
+                (int) ($cell['row_count'] ?? 0)
+            ),
+            default => null,
+        };
+    }
+
+    /** @param array<string, string> $fields */
+    private function sumDeclaredColumn(array $fields, string $column, int $rowCount): float
+    {
+        $total = 0.0;
+        for ($row = 0; $row < $rowCount; $row++) {
+            $total += $this->numberValue($fields['r'.$row.'_'.$column] ?? 0);
+        }
+
+        return $total;
+    }
+
+    /**
+     * L'application suppose actuellement un exercice civil. Cette source
+     * centralisee pourra etre remplacee sans modifier la configuration EDI.
+     *
+     * @return array{start:string, end:string}
+     */
+    private function periodForExercice(int $exercice): array
+    {
+        return [
+            'start' => sprintf('01/01/%d', $exercice),
+            'end' => sprintf('31/12/%d', $exercice),
+        ];
     }
 
     /**

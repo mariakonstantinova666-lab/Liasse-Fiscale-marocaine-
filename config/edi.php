@@ -67,6 +67,30 @@ return [
         'changements_methodes' => 'Changements de methodes',
     ],
 
+    'extra_cells' => [
+        'dotations_amortissements' => [
+            'applicability' => 'declared_rows',
+            'cells' => [
+                [
+                    'code' => 22,
+                    'source' => 'sum_declared_column',
+                    'column' => 'c3',
+                    'row_count' => 16,
+                ],
+                ['code' => 50, 'source' => 'period_end'],
+                ['code' => 51, 'source' => 'period_start'],
+                ['code' => 52, 'source' => 'period_end'],
+            ],
+        ],
+
+        'detail_cpc' => [
+            'applicability' => 'significant_calculated_values',
+            'cells' => [
+                ['code' => 70, 'source' => 'period_end'],
+            ],
+        ],
+    ],
+
     'direct_cells' => [
         'passage_fiscal' => [
             'benefice_net' => 817,
