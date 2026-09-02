@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BalanceItem;
+use App\Models\SourceDocument;
 use App\Services\BalanceService;
+use App\Services\EdiXmlGeneratorService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 
 class BalanceController extends Controller
 {
-    public function index(BalanceService $balanceService)
+    public function index(BalanceService $balanceService, EdiXmlGeneratorService $edi)
     {
         $userId = Auth::id();
 
@@ -28,6 +31,10 @@ class BalanceController extends Controller
         $items = [];
         $itemsPrecedent = [];
         $exercicesImportes = [];
+        $sourceDocumentsCount = 0;
+        $liasseDataCount = 0;
+        $controlStatus = null;
+        $hasGeneratedEdi = false;
         if ($societe && $exercice) {
             $items = BalanceItem::where('societe_id', $societe->id)
                                 ->where('exercice', $exercice)
@@ -39,6 +46,24 @@ class BalanceController extends Controller
 
             // Années déjà importées : pilote le bandeau d'historisation N / N-1
             $exercicesImportes = $balanceService->exercicesImportes($societe->id);
+
+            $sourceDocumentsCount = SourceDocument::where('user_id', $userId)
+                ->where('societe_id', $societe->id)
+                ->where('exercice', $exercice)
+                ->count();
+
+            $ediContext = $edi->context($userId, (int) $exercice);
+            $liasseDataCount = $ediContext['liasseData']->count();
+            $controls = collect($ediContext['controls']);
+            $controlStatus = $controls->isEmpty()
+                ? null
+                : ($controls->contains(fn ($rule) => $rule['bloquant'] && !$rule['ok'])
+                    ? 'blocking'
+                    : ($controls->contains(fn ($rule) => !$rule['ok']) ? 'warning' : 'compliant'));
+
+            $ediFilenamePrefix = "liasse_edi_dgi_{$exercice}_";
+            $hasGeneratedEdi = collect(Storage::disk('local')->files("edi/{$userId}"))
+                ->contains(fn ($path) => str_starts_with(basename($path), $ediFilenamePrefix));
         }
 
         // On retourne le composant Vue "Dashboard" via Inertia
@@ -49,6 +74,10 @@ class BalanceController extends Controller
             'exerciceActif' => $exercice,
             'exercicePrecedent' => $exercice - 1,
             'exercicesImportes' => $exercicesImportes,
+            'sourceDocumentsCount' => $sourceDocumentsCount,
+            'liasseDataCount' => $liasseDataCount,
+            'controlStatus' => $controlStatus,
+            'hasGeneratedEdi' => $hasGeneratedEdi,
             'flash' => [
                 'success' => session('success'),
                 'error' => session('error')
