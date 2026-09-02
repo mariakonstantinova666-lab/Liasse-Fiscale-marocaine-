@@ -27,27 +27,27 @@
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 font-sans antialiased dark:bg-slate-950 dark:text-slate-100">
-    <div class="flex min-h-screen bg-slate-50 transition-colors dark:bg-slate-950 lg:h-screen lg:overflow-hidden">
+    <div class="app-shell lg:h-screen lg:overflow-hidden">
         <div id="sidebar-overlay" class="fixed inset-0 z-40 hidden bg-slate-950/60 backdrop-blur-sm lg:hidden" aria-hidden="true"></div>
         
-        <aside id="app-sidebar" class="fixed inset-y-0 left-0 z-50 flex w-72 -translate-x-full flex-shrink-0 flex-col bg-slate-950 text-white shadow-2xl transition-transform duration-300 lg:static lg:translate-x-0">
-            <div class="p-5 border-b border-slate-800 flex items-center space-x-3">
-                <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-indigo-600 shadow-lg shadow-indigo-950/40"><span class="text-lg font-black text-white">LX</span></div>
+        <aside id="app-sidebar" class="app-sidebar">
+            <div class="flex h-[72px] items-center gap-3 border-b border-slate-800 bg-slate-900/40 px-5">
+                <div class="shell-brand-mark"><span class="text-sm font-black tracking-tight">LX</span></div>
                 <div>
-                    <h1 class="text-lg font-bold tracking-tight text-white">LIASSE EXPERT</h1>
-                    <p class="text-[10px] text-blue-400 font-bold uppercase tracking-widest">Système Marocain</p>
+                    <h1 class="text-[15px] font-black tracking-tight text-white">LIASSE FISCALE</h1>
+                    <p class="mt-0.5 text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Gestion fiscale</p>
                 </div>
                 <button id="sidebar-close" type="button" class="ml-auto rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden" aria-label="Fermer le menu">✕</button>
             </div>
             
-            <div id="sidebar-scroll" class="flex-grow overflow-y-auto sidebar-scroll p-4 space-y-6">
-                <a href="{{ route('dashboard') }}" class="flex items-center p-3 rounded-lg transition {{ request()->routeIs('dashboard') ? 'bg-blue-700 text-white shadow-lg shadow-blue-900/20' : 'text-slate-400 hover:bg-slate-900' }}">
-                    <span class="mr-3 text-lg">📊</span> <span class="font-medium">Tableau de bord</span>
+            <div id="sidebar-scroll" class="sidebar-scroll flex-grow space-y-5 overflow-y-auto px-3 py-4">
+                <a href="{{ route('dashboard') }}" class="sidebar-link {{ request()->routeIs('dashboard') ? 'sidebar-link-active' : '' }}">
+                    <span class="sidebar-code" aria-hidden="true">DB</span> <span>Tableau de bord</span>
                 </a>
 
                 <div>
-                    <p class="text-[10px] font-black text-slate-500 uppercase px-3 mb-3 tracking-[0.2em]">Tableaux de la liasse</p>
-                    <div class="space-y-1 text-slate-400">
+                    <p class="sidebar-section-title mb-3">Tableaux de la liasse</p>
+                    <div class="space-y-1.5">
                         @foreach ([
                             ['bilan_actif', 'T01-A', 'Bilan Actif'],
                             ['bilan_passif', 'T01-B', 'Bilan Passif'],
@@ -77,18 +77,18 @@
                             ['changements_methodes', 'T25', 'Changements de méthodes'],
                             ['calcul_is_encouragees', 'T26', 'Calcul IS entreprises encouragées'],
                         ] as [$r, $t, $lbl])
-                            <a href="{{ route('liasse.'.$r) }}" class="flex items-center p-2 text-sm rounded-md transition {{ request()->routeIs('liasse.'.$r) ? 'text-blue-400 font-bold bg-slate-900' : 'hover:bg-slate-900' }}">
-                                <span class="w-8 font-mono text-[10px] {{ request()->routeIs('liasse.'.$r) ? 'text-blue-400' : 'text-slate-600' }}">{{ $t }}</span> {{ $lbl }}
+                            <a href="{{ route('liasse.'.$r) }}" class="sidebar-link {{ request()->routeIs('liasse.'.$r) ? 'sidebar-link-active' : '' }}">
+                                <span class="sidebar-code">{{ $t }}</span> <span>{{ $lbl }}</span>
                             </a>
                         @endforeach
                     </div>
                 </div>
             </div>
 
-            <div class="p-4 border-t border-slate-800 bg-slate-900/50">
-                <div class="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+            <div class="sidebar-user-panel">
+                <div class="sidebar-user-card">
                     <div class="mb-3 flex items-center gap-3">
-                        <div class="h-9 w-9 rounded-lg bg-indigo-600 flex items-center justify-center text-xs font-bold text-white shadow-md">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-700 text-xs font-bold text-white shadow-sm">
                             {{ strtoupper(mb_substr(auth()->user()?->name ?? 'M', 0, 1)) }}
                         </div>
                         <div class="min-w-0">
@@ -111,15 +111,18 @@
         </aside>
 
         <main class="flex min-h-screen min-w-0 flex-grow flex-col lg:min-h-0">
-            <header class="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white/95 px-4 shadow-sm backdrop-blur sm:px-6 lg:static lg:px-8 dark:border-slate-800 dark:bg-slate-950/95">
+            <header class="shell-header sticky top-0 z-30 flex h-[72px] items-center justify-between px-4 sm:px-6 lg:static lg:px-8">
                 <div class="flex items-center space-x-3">
-                    <button id="sidebar-open" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800 lg:hidden" aria-label="Ouvrir le menu">☰</button>
-                    <span class="hidden max-w-[55vw] truncate font-black uppercase tracking-tight text-slate-800 sm:block dark:text-slate-100">Liasse fiscale marocaine</span>
-                    <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-[10px] font-bold text-emerald-700">{{ session('annee_exercice', 2026) }}</span>
+                    <button id="sidebar-open" type="button" class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-slate-200 text-slate-600 transition hover:border-blue-200 hover:bg-blue-50 hover:text-blue-800 dark:border-slate-700 dark:text-slate-300 dark:hover:border-blue-500 dark:hover:bg-slate-800 lg:hidden" aria-label="Ouvrir le menu">☰</button>
+                    <div class="min-w-0">
+                        <span class="block max-w-[55vw] truncate text-sm font-bold tracking-tight text-slate-900 dark:text-slate-100">Liasse fiscale marocaine</span>
+                        <span class="hidden text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 sm:block">Espace de production fiscale</span>
+                    </div>
+                    <span class="status-pill border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-200">Exercice {{ session('annee_exercice', 2026) }}</span>
                 </div>
             </header>
 
-            <div class="flex-grow overflow-y-auto bg-slate-50 p-3 sm:p-5 lg:p-8 dark:bg-slate-950">
+            <div class="shell-content">
                 @if(session('success'))
                     <div class="max-w-7xl mx-auto mb-4 p-3 rounded-lg bg-green-100 text-green-800 text-sm border border-green-200 dark:border-green-800 dark:bg-green-500/10 dark:text-green-300">
                         {{ session('success') }}
