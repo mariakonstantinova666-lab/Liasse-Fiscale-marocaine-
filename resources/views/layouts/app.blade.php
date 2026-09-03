@@ -19,7 +19,7 @@
             document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
         })();
     </script>
-    @vite(['resources/css/app.css'])
+    @vite('resources/js/app.js')
     <style>
         .sidebar-scroll::-webkit-scrollbar { width: 4px; }
         .sidebar-scroll::-webkit-scrollbar-track { background: #0f172a; }
@@ -47,39 +47,64 @@
 
                 <div>
                     <p class="sidebar-section-title mb-3">Tableaux de la liasse</p>
-                    <div class="space-y-1.5">
+                    <div class="space-y-2">
                         @foreach ([
-                            ['bilan_actif', 'T01-A', 'Bilan Actif'],
-                            ['bilan_passif', 'T01-B', 'Bilan Passif'],
-                            ['cpc', 'T02', 'CPC'],
-                            ['passage_fiscal', 'T03', 'Passage fiscal'],
-                            ['immobilisations', 'T04', 'Immobilisations'],
-                            ['esg', 'T05', 'ESG'],
-                            ['detail_cpc', 'T06', 'Détail CPC'],
-                            ['credit_bail', 'T07', 'Crédit-bail'],
-                            ['amortissements', 'T08', 'Amortissements'],
-                            ['provisions', 'T09', 'Provisions'],
-                            ['plus_values', 'T10', 'Plus/moins-values'],
-                            ['titres_participation', 'T11', 'Titres de participation'],
-                            ['tva', 'T12', 'Détail TVA'],
-                            ['repartition_capital', 'T13', 'Répartition du capital'],
-                            ['affectation_resultats', 'T14', 'Affectation des résultats'],
-                            ['calcul_impot_encouragement', 'T15', 'Calcul impôt encouragement'],
-                            ['dotations_amortissements', 'T16', 'Dotations aux amortissements'],
-                            ['plus_values_fusion', 'T17', 'Plus-values de fusion'],
-                            ['interets_emprunts', 'T18', 'Intérêts des emprunts'],
-                            ['locations_baux', 'T19', 'Locations et baux'],
-                            ['detail_stocks', 'T20', 'État détaillé des stocks'],
-                            ['operations_devises', 'T21', 'Opérations en devises'],
-                            ['tableau_financement', 'T22', 'TFT / Tableau de financement'],
-                            ['methodes_evaluation', 'T23', "Méthodes d'évaluation"],
-                            ['derogations', 'T24', 'Dérogations'],
-                            ['changements_methodes', 'T25', 'Changements de méthodes'],
-                            ['calcul_is_encouragees', 'T26', 'Calcul IS entreprises encouragées'],
-                        ] as [$r, $t, $lbl])
-                            <a href="{{ route('liasse.'.$r) }}" class="sidebar-link {{ request()->routeIs('liasse.'.$r) ? 'sidebar-link-active' : '' }}">
-                                <span class="sidebar-code">{{ $t }}</span> <span>{{ $lbl }}</span>
-                            </a>
+                            ['label' => 'Synthèse financière', 'items' => [
+                                ['bilan_actif', 'T01-A', 'Bilan Actif'],
+                                ['bilan_passif', 'T01-B', 'Bilan Passif'],
+                                ['cpc', 'T02', 'CPC'],
+                                ['passage_fiscal', 'T03', 'Passage fiscal'],
+                                ['immobilisations', 'T04', 'Immobilisations'],
+                                ['esg', 'T05', 'ESG'],
+                                ['detail_cpc', 'T06', 'Détail CPC'],
+                            ]],
+                            ['label' => 'Immobilisations et risques', 'items' => [
+                                ['credit_bail', 'T07', 'Crédit-bail'],
+                                ['amortissements', 'T08', 'Amortissements'],
+                                ['provisions', 'T09', 'Provisions'],
+                                ['plus_values', 'T10', 'Plus/moins-values'],
+                                ['titres_participation', 'T11', 'Titres de participation'],
+                            ]],
+                            ['label' => 'Fiscalité et capital', 'items' => [
+                                ['tva', 'T12', 'Détail TVA'],
+                                ['repartition_capital', 'T13', 'Répartition du capital'],
+                                ['affectation_resultats', 'T14', 'Affectation des résultats'],
+                                ['calcul_impot_encouragement', 'T15', 'Calcul impôt encouragement'],
+                                ['dotations_amortissements', 'T16', 'Dotations aux amortissements'],
+                                ['plus_values_fusion', 'T17', 'Plus-values de fusion'],
+                            ]],
+                            ['label' => 'Engagements et annexes', 'items' => [
+                                ['interets_emprunts', 'T18', 'Intérêts des emprunts'],
+                                ['locations_baux', 'T19', 'Locations et baux'],
+                                ['detail_stocks', 'T20', 'État détaillé des stocks'],
+                                ['operations_devises', 'T21', 'Opérations en devises'],
+                                ['tableau_financement', 'T22', 'TFT / Tableau de financement'],
+                            ]],
+                            ['label' => 'Méthodes et déclarations', 'items' => [
+                                ['methodes_evaluation', 'T23', "Méthodes d'évaluation"],
+                                ['derogations', 'T24', 'Dérogations'],
+                                ['changements_methodes', 'T25', 'Changements de méthodes'],
+                                ['calcul_is_encouragees', 'T26', 'Calcul IS entreprises encouragées'],
+                            ]],
+                        ] as $group)
+                            @php
+                                $groupIsActive = collect($group['items'])->contains(
+                                    fn ($item) => request()->routeIs('liasse.'.$item[0])
+                                );
+                            @endphp
+                            <details class="sidebar-group" {{ $groupIsActive ? 'open' : '' }}>
+                                <summary class="sidebar-group-summary {{ $groupIsActive ? 'sidebar-group-summary-active' : '' }}">
+                                    <span>{{ $group['label'] }}</span>
+                                    <span class="sidebar-group-chevron" aria-hidden="true">›</span>
+                                </summary>
+                                <div class="space-y-1 pb-1 pt-1.5">
+                                    @foreach ($group['items'] as [$r, $t, $lbl])
+                                        <a href="{{ route('liasse.'.$r) }}" class="sidebar-link {{ request()->routeIs('liasse.'.$r) ? 'sidebar-link-active' : '' }}">
+                                            <span class="sidebar-code">{{ $t }}</span> <span>{{ $lbl }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </details>
                         @endforeach
                     </div>
                 </div>

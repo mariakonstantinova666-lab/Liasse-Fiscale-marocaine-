@@ -2,9 +2,15 @@
 
 @section('content')
 <div class="container mx-auto p-6 bg-white shadow-md rounded-lg">
-    <div class="flex justify-between items-center border-b pb-4 mb-6">
-        <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wide">Tableau T12 — DETAIL DE LA TAXE SUR LA VALEUR AJOUTEE</h2>
-        <span class="text-sm font-semibold text-gray-600">Exercice : {{ $exercice }}</span>
+    <div class="liasse-page-header">
+        <div class="liasse-page-heading">
+            <h2 class="liasse-page-title">Tableau T12 — DETAIL DE LA TAXE SUR LA VALEUR AJOUTEE</h2>
+            <div class="liasse-page-meta">
+                <span class="liasse-page-meta-item liasse-page-meta-exercise">Exercice : <strong>{{ $exercice }}</strong></span>
+                <span class="liasse-page-meta-item liasse-page-meta-closing">Clôture : <strong>31/12/{{ $exercice }}</strong></span>
+            </div>
+        </div>
+        <span class="liasse-page-badge">Tableau T12</span>
     </div>
 
     <div class="overflow-x-auto">

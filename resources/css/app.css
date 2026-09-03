@@ -431,6 +431,129 @@
         @apply border-blue-500/50 bg-blue-600 text-white;
     }
 
+    .sidebar-group {
+        @apply rounded-xl border border-slate-800/80 bg-slate-900/35 px-1.5 py-1;
+    }
+
+    .sidebar-group-summary {
+        @apply flex min-h-9 cursor-pointer list-none items-center justify-between gap-2 rounded-lg px-2.5 py-2 text-[10px] font-black uppercase tracking-[0.13em] text-slate-500 transition hover:bg-slate-900 hover:text-slate-300;
+    }
+
+    .sidebar-group-summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .sidebar-group-summary-active {
+        @apply text-blue-300;
+    }
+
+    .sidebar-group-chevron {
+        @apply text-lg leading-none text-slate-600 transition-transform duration-200;
+    }
+
+    .sidebar-group[open] .sidebar-group-chevron {
+        @apply rotate-90 text-slate-400;
+    }
+
+    .liasse-page-header.liasse-page-header {
+        @apply mb-5 flex min-h-[88px] w-full flex-col gap-4 border-x-0 border-b border-t-0 border-slate-200 bg-transparent pb-4 sm:flex-row sm:items-start sm:justify-between dark:border-slate-700;
+    }
+
+    .liasse-page-heading.liasse-page-heading {
+        @apply min-w-0 w-full sm:flex-1;
+    }
+
+    .liasse-ui .liasse-page-header .liasse-page-title {
+        margin: 0;
+        color: #0f172a;
+        font-size: 1.25rem;
+        font-weight: 900;
+        line-height: 1.25;
+        letter-spacing: -0.025em;
+        text-transform: uppercase;
+        overflow-wrap: anywhere;
+    }
+
+    .dark .liasse-ui .liasse-page-header .liasse-page-title {
+        color: #f1f5f9;
+    }
+
+    .liasse-ui .liasse-page-header .liasse-page-meta {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .liasse-ui .liasse-page-header .liasse-page-meta > span.liasse-page-meta-item {
+        box-sizing: border-box;
+        display: inline-flex;
+        height: 2rem;
+        min-height: 2rem;
+        margin: 0;
+        padding: 0.25rem 0.75rem;
+        transform: none;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #e2e8f0;
+        border-radius: 9999px;
+        background-color: #f8fafc;
+        color: #475569;
+        font-family: inherit;
+        font-size: 0.875rem;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 1.25rem;
+        letter-spacing: normal;
+        text-transform: none;
+        white-space: nowrap;
+    }
+
+    .liasse-ui .liasse-page-header .liasse-page-meta > span.liasse-page-meta-exercise {
+        flex: 0 0 160px;
+        flex-shrink: 0;
+        width: 160px;
+        min-width: 160px;
+        max-width: 160px;
+        inline-size: 160px;
+        min-inline-size: 160px;
+        max-inline-size: 160px;
+    }
+
+    .liasse-ui .liasse-page-header .liasse-page-meta > span.liasse-page-meta-closing {
+        flex: 0 0 208px;
+        flex-shrink: 0;
+        width: 208px;
+        min-width: 208px;
+        max-width: 208px;
+        inline-size: 208px;
+        min-inline-size: 208px;
+        max-inline-size: 208px;
+    }
+
+    .dark .liasse-ui .liasse-page-header .liasse-page-meta > span.liasse-page-meta-item {
+        border-color: #334155;
+        background-color: #1e293b;
+        color: #cbd5e1;
+    }
+
+    .liasse-ui .liasse-page-header .liasse-page-meta > span.liasse-page-meta-item > strong {
+        color: #334155;
+        font-size: inherit;
+        font-weight: 700;
+        line-height: inherit;
+    }
+
+    .dark .liasse-ui .liasse-page-header .liasse-page-meta > span.liasse-page-meta-item > strong {
+        color: #e2e8f0;
+    }
+
+    .liasse-page-badge.liasse-page-badge {
+        @apply inline-flex w-fit shrink-0 items-center rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-black uppercase tracking-wide text-blue-800 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-200;
+    }
+
     .status-pill {
         @apply inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-bold;
     }
@@ -453,6 +576,12 @@
 
     .sidebar-scroll a:hover {
         @apply translate-x-0.5;
+    }
+}
+
+@media (min-width: 640px) {
+    .liasse-ui .liasse-page-header .liasse-page-title {
+        font-size: 1.5rem;
     }
 }
 

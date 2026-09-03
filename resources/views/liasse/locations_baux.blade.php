@@ -24,14 +24,17 @@
 <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
     <form method="POST" action="{{ route('liasse.save', 'locations_baux') }}">
     @csrf
-    <div class="flex justify-between items-center mb-4 border-b pb-2">
-        <div>
-            <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">
+    <div class="liasse-page-header">
+        <div class="liasse-page-heading">
+            <h2 class="liasse-page-title">
                 Tableau T19 — TABLEAU DES LOCATIONS ET BAUX AUTRES QUE LE CREDIT-BAIL
             </h2>
-            <p class="text-sm text-slate-500 mt-1">Exercice : <strong>{{ $exercice ?? session('annee_exercice', 2025) }}</strong></p>
+            <div class="liasse-page-meta">
+                <span class="liasse-page-meta-item liasse-page-meta-exercise">Exercice : <strong>{{ $exercice ?? session('annee_exercice', 2025) }}</strong></span>
+                <span class="liasse-page-meta-item liasse-page-meta-closing">Clôture : <strong>31/12/{{ $exercice ?? session('annee_exercice', 2025) }}</strong></span>
+            </div>
         </div>
-        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau T19 — Exercice {{ $exercice ?? session('annee_exercice', 2025) }}</span>
+        <span class="liasse-page-badge">Tableau T19</span>
     </div>
 
     <p class="mb-2 text-right text-xs font-medium text-slate-500 dark:text-slate-400">

@@ -24,7 +24,7 @@ class LiasseController extends Controller
 
     public function cpc()
     {
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         ['cpcData' => $cpcData] = app(LiasseTableDataService::class)->cpc(Auth::id(), $exercice);
 
         return view('liasse.cpc', compact('cpcData', 'exercice'));
@@ -36,7 +36,7 @@ class LiasseController extends Controller
 
     public function bilanActif(BalanceService $balanceService)
     {
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         ['data' => $data, 'totaux' => $totaux] = (new LiasseTableDataService($balanceService))->bilanActif(Auth::id(), $exercice);
 
         return view('liasse.bilan_actif', compact('data', 'totaux', 'exercice'));
@@ -50,7 +50,7 @@ class LiasseController extends Controller
     {
         $balanceService ??= app(BalanceService::class);
 
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         ['immoData' => $immoData, 'totauxImmo' => $totauxImmo] = (new LiasseTableDataService($balanceService))->immobilisations(Auth::id(), $exercice);
 
         return view('liasse.immobilisations', compact('immoData', 'totauxImmo', 'exercice'));
@@ -109,14 +109,14 @@ class LiasseController extends Controller
     public function bilanPassif(?BalanceService $balanceService = null)
     {
         $balanceService ??= app(BalanceService::class);
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         ['data' => $data, 'totaux' => $totaux] = (new LiasseTableDataService($balanceService))->bilanPassif(Auth::id(), $exercice);
 
         return view('liasse.bilan_passif', compact('data', 'totaux', 'exercice'));
     }
     public function passageFiscal() 
     { 
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         $userId = Auth::id();
         $items = BalanceItem::where('user_id', $userId)->where('exercice', $exercice)->get();
         $sourceData = LiasseData::where('user_id', $userId)
@@ -233,7 +233,7 @@ class LiasseController extends Controller
     public function amortissements(?BalanceService $balanceService = null)
     { 
         $balanceService ??= app(BalanceService::class);
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         ['amortData' => $amortData, 'totauxAmort' => $totauxAmort, 'totalGeneral' => $totalGeneral] = (new LiasseTableDataService($balanceService))->amortissements(Auth::id(), $exercice);
 
         return view('liasse.amortissements', compact('amortData', 'totauxAmort', 'totalGeneral', 'exercice'));
@@ -290,7 +290,7 @@ class LiasseController extends Controller
 
     public function provisions() 
     { 
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
 
         $provisionsData = [
             'PROVISIONS DURABLES POUR RISQUES ET CHARGES' => [
@@ -356,7 +356,7 @@ class LiasseController extends Controller
     public function tva(?BalanceService $balanceService = null)
     {
         $balanceService ??= app(BalanceService::class);
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         ['tvaRows' => $tvaRows] = (new LiasseTableDataService($balanceService))->tva(Auth::id(), $exercice);
 
         return view('liasse.tva', compact('tvaRows', 'exercice'));
@@ -409,7 +409,7 @@ class LiasseController extends Controller
     public function esg(?BalanceService $balanceService = null)                                                  // T05
     {
         $balanceService ??= app(BalanceService::class);
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent(Auth::id(), $exercice);
 
         $n = $this->calculerESG($items);
@@ -466,7 +466,7 @@ class LiasseController extends Controller
     public function detailCpc(?BalanceService $balanceService = null)                                            // T06
     {
         $balanceService ??= app(BalanceService::class);
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent(Auth::id(), $exercice);
 
         // Définition : sections, postes (préfixe 3 chiffres) et lignes de détail (sous-comptes).
@@ -593,7 +593,7 @@ class LiasseController extends Controller
     public function controle(LiasseControlService $control, ?BalanceService $balanceService = null)
     {
         $balanceService ??= app(BalanceService::class);
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         $userId = Auth::id();
         [$items, $itemsPrev] = $balanceService->lignesAvecPrecedent($userId, $exercice);
         $liasseData = LiasseData::where('user_id', $userId)
@@ -629,7 +629,7 @@ class LiasseController extends Controller
     public function detailStocks(?BalanceService $balanceService = null)                                           // T20
     {
         $balanceService ??= app(BalanceService::class);
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         [
             'stockSections' => $stockSections,
             'stockTotals' => $stockTotals,
@@ -713,7 +713,7 @@ class LiasseController extends Controller
     {
         abort_unless(in_array($tableau, self::TABLEAUX_EDITABLES, true), 404);
 
-        $exercice = (int) session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         $userId = Auth::id();
         $champs = (array) $request->input('f', []);
 
@@ -745,7 +745,7 @@ class LiasseController extends Controller
      */
     private function genericEditable(string $view, string $tableau)
     {
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         $items = BalanceItem::where('user_id', Auth::id())->where('exercice', $exercice)->get();
         $data = LiasseData::where('user_id', Auth::id())
             ->where('exercice', $exercice)
@@ -759,7 +759,7 @@ class LiasseController extends Controller
     public function tableauFinancement(?BalanceService $balanceService = null)                                   // T22
     {
         $balanceService ??= app(BalanceService::class);
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         [
             'synthese' => $synthese,
             'fluxRows' => $fluxRows,
@@ -987,7 +987,7 @@ class LiasseController extends Controller
 
     private function genericView($viewName)
     {
-        $exercice = session('annee_exercice', 2025);
+        $exercice = $this->currentExercice();
         $items = BalanceItem::where('user_id', Auth::id())->where('exercice', $exercice)->get();
         return view($viewName, compact('items', 'exercice'));
     }
@@ -1267,6 +1267,17 @@ class LiasseController extends Controller
         return (object) [
             'col1' => 0.00, 'col2' => 0.00, 'col3' => 0.00, 'col4' => 0.00, 'col5' => 0.00, 'col6' => 0.00, 'col7' => 0.00,
         ];
+    }
+
+    private function currentExercice(): int
+    {
+        $exercice = (int) session('annee_exercice', 2026);
+
+        if (!session()->has('annee_exercice')) {
+            session(['annee_exercice' => $exercice]);
+        }
+
+        return $exercice;
     }
 }
 

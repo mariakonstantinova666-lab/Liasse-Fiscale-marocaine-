@@ -3,14 +3,17 @@
 @section('content')
 @php $fmt = fn ($v) => $v === null ? '&nbsp;' : number_format((float) $v, 2, ',', ' '); @endphp
 <div class="bg-white shadow-lg rounded-sm border border-slate-200 p-6">
-    <div class="flex justify-between items-center mb-4 border-b pb-2">
-        <div>
-            <h2 class="text-xl font-bold text-slate-800 uppercase tracking-wider">
+    <div class="liasse-page-header">
+        <div class="liasse-page-heading">
+            <h2 class="liasse-page-title">
                 Tableau T06 — DETAIL DES POSTES DU C.P.C.
             </h2>
-            <p class="text-sm text-slate-500 mt-1">Exercice : <strong>{{ $exercice }}</strong></p>
+            <div class="liasse-page-meta">
+                <span class="liasse-page-meta-item liasse-page-meta-exercise">Exercice : <strong>{{ $exercice }}</strong></span>
+                <span class="liasse-page-meta-item liasse-page-meta-closing">Clôture : <strong>31/12/{{ $exercice }}</strong></span>
+            </div>
         </div>
-        <span class="text-sm font-semibold bg-slate-100 px-3 py-1 rounded text-slate-600">Tableau T06 — Exercice {{ $exercice }}</span>
+        <span class="liasse-page-badge">Tableau T06</span>
     </div>
 
     <div class="overflow-x-auto">

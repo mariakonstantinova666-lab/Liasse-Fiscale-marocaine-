@@ -2,11 +2,15 @@
 
 @section('content')
 <div class="container mx-auto px-4 py-6">
-    <div class="flex justify-between items-center mb-6">
-        <div>
-            <h1 class="text-2xl font-bold text-gray-800">Tableau T08 — TABLEAU DES AMORTISSEMENTS</h1>
-            <p class="text-sm text-gray-500">Exercice : {{ $exercice }}</p>
+    <div class="liasse-page-header">
+        <div class="liasse-page-heading">
+            <h2 class="liasse-page-title">Tableau T08 — TABLEAU DES AMORTISSEMENTS</h2>
+            <div class="liasse-page-meta">
+                <span class="liasse-page-meta-item liasse-page-meta-exercise">Exercice : <strong>{{ $exercice }}</strong></span>
+                <span class="liasse-page-meta-item liasse-page-meta-closing">Clôture : <strong>31/12/{{ $exercice }}</strong></span>
+            </div>
         </div>
+        <span class="liasse-page-badge">Tableau T08</span>
     </div>
 
     <div class="bg-white rounded-xl shadow border border-gray-200 overflow-hidden">

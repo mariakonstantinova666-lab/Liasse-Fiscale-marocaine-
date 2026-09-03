@@ -2,14 +2,18 @@
 
 @section('content')
 <div class="container mx-auto p-6">
-    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 dark:border-slate-800 dark:bg-slate-900">
-        
-        <div class="mb-6 border-b pb-4 dark:border-slate-700">
-            <h2 class="text-xl font-bold text-gray-800">Tableau T03 — PASSAGE DU RESULTAT NET COMPTABLE AU RESULTAT NET FISCAL</h2>
-            <p class="text-sm text-gray-500 font-medium">EXERCICE : {{ $exercice }}</p>
+    <div class="liasse-page-header">
+        <div class="liasse-page-heading">
+            <h2 class="liasse-page-title">Tableau T03 — PASSAGE DU RESULTAT NET COMPTABLE AU RESULTAT NET FISCAL</h2>
+            <div class="liasse-page-meta">
+                <span class="liasse-page-meta-item liasse-page-meta-exercise">Exercice : <strong>{{ $exercice }}</strong></span>
+                <span class="liasse-page-meta-item liasse-page-meta-closing">Clôture : <strong>31/12/{{ $exercice }}</strong></span>
+            </div>
         </div>
+        <span class="liasse-page-badge">Tableau T03</span>
+    </div>
 
-        <div class="overflow-x-auto">
+    <div class="overflow-x-auto">
             <table class="w-full border-collapse border border-gray-300 text-sm">
                 <thead>
                     <tr class="bg-gray-100 text-gray-700 font-bold">
@@ -178,8 +182,6 @@
 
                 </tbody>
             </table>
-        </div>
-
     </div>
 </div>
 @endsection
