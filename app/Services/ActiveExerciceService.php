@@ -15,7 +15,12 @@ class ActiveExerciceService
             return (int) session('annee_exercice');
         }
 
-        $exercice = $this->available()[0] ?? now()->year;
+        $exercice = $this->available()[0] ?? null;
+
+        if ($exercice === null) {
+            return now()->year;
+        }
+
         session(['annee_exercice' => $exercice]);
 
         return $exercice;

@@ -31,6 +31,7 @@ const balances = computed(() => [
 const selectedBalance = computed(() => balances.value.find(balance => balance.key === balanceSelection.value) || balances.value[0]);
 const selectedItems = computed(() => selectedBalance.value?.rows || []);
 
+const maxImportYear = new Date().getFullYear() + 10;
 const form = useForm({ annee: props.exerciceActif || '', balance: null });
 const handleSubmit = () => form.post(route('balance.import'), { forceFormData: true });
 
@@ -122,7 +123,7 @@ const money = value => Number(value || 0).toLocaleString('fr-FR', { minimumFract
                         <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-700 dark:text-blue-300">Actions rapides</p>
                         <h2 class="mt-1 text-lg font-black text-slate-900 dark:text-slate-100">Alimenter le dossier</h2>
                         <form @submit.prevent="handleSubmit" class="mt-5 space-y-4">
-                            <div><label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-300">Année d'exercice</label><select v-model="form.annee" required class="ui-input"><option value="">Sélectionner</option><option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option></select></div>
+                            <div><label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-300">Année d'exercice</label><input v-model="form.annee" type="number" min="1900" :max="maxImportYear" step="1" required class="ui-input" /></div>
                             <div><label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-300">Fichier de la balance</label><input type="file" required @input="form.balance = $event.target.files[0]" class="ui-input file:mr-3 file:rounded-md file:border-0 file:bg-blue-50 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-blue-700 dark:file:bg-slate-700 dark:file:text-slate-100" /></div>
                             <button type="submit" :disabled="form.processing" class="ui-button-primary w-full">{{ form.processing ? 'Importation...' : 'Importer la balance' }}</button>
                         </form>

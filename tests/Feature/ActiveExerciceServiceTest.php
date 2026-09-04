@@ -54,7 +54,12 @@ class ActiveExerciceServiceTest extends TestCase
         session()->forget('annee_exercice');
 
         $this->assertSame(2031, $this->service()->current());
-        $this->assertSame(2031, session('annee_exercice'));
+        $this->assertFalse(session()->has('annee_exercice'));
+
+        $this->createBalance($user, Societe::where('user_id', $user->id)->firstOrFail(), 2025);
+
+        $this->assertSame(2025, $this->service()->current());
+        $this->assertSame(2025, session('annee_exercice'));
 
         Carbon::setTestNow();
     }

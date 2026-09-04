@@ -31,12 +31,12 @@ class CurrentExerciceTest extends TestCase
         $this->assertSame(2027, session('annee_exercice'));
     }
 
-    public function test_current_exercice_initializes_the_current_year_when_session_is_absent(): void
+    public function test_current_exercice_returns_current_year_without_persisting_it_when_no_balance_exists(): void
     {
         session()->forget('annee_exercice');
 
         $this->assertSame(now()->year, $this->currentExercice());
-        $this->assertSame(now()->year, session('annee_exercice'));
+        $this->assertFalse(session()->has('annee_exercice'));
     }
 
     public function test_liasse_uses_2026_as_n_and_requests_2025_as_n_minus_one(): void
