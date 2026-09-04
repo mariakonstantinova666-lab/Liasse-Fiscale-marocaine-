@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\BalanceItem;
 use App\Models\SourceDocument;
 use App\Services\BalanceService;
+use App\Services\ActiveExerciceService;
 use App\Services\EdiXmlGeneratorService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,15 +16,15 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class BalanceController extends Controller
 {
-    public function index(BalanceService $balanceService, EdiXmlGeneratorService $edi)
+    public function index(
+        BalanceService $balanceService,
+        EdiXmlGeneratorService $edi,
+        ActiveExerciceService $activeExercice
+    )
     {
         $userId = Auth::id();
 
-        // Si aucune année n'est en session, on met 2026 par défaut pour s'aligner avec la liasse
-        $exercice = session('annee_exercice', 2026);
-        if (!session()->has('annee_exercice')) {
-            session(['annee_exercice' => $exercice]);
-        }
+        $exercice = $activeExercice->current();
 
         // Récupère la société liée à l'utilisateur
         $societe = DB::table('societes')->where('user_id', $userId)->first();

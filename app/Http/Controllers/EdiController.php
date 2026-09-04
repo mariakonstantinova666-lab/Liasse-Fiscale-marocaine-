@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Services\EdiGenerationException;
 use App\Services\EdiXmlGeneratorService;
+use App\Services\ActiveExerciceService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class EdiController extends Controller
 {
-    public function index(EdiXmlGeneratorService $edi): \Illuminate\View\View
+    public function index(
+        EdiXmlGeneratorService $edi,
+        ActiveExerciceService $activeExercice
+    ): \Illuminate\View\View
     {
-        $exercice = (int) session('annee_exercice', 2025);
+        $exercice = $activeExercice->current();
         $context = $edi->context(Auth::id(), $exercice);
         $controles = $context['controls'];
         $bloquants = collect($controles)->filter(fn ($rule) => $rule['bloquant'] && !$rule['ok'])->values();
@@ -36,9 +40,12 @@ class EdiController extends Controller
         ]);
     }
 
-    public function generate(EdiXmlGeneratorService $edi): BinaryFileResponse|RedirectResponse
+    public function generate(
+        EdiXmlGeneratorService $edi,
+        ActiveExerciceService $activeExercice
+    ): BinaryFileResponse|RedirectResponse
     {
-        $exercice = (int) session('annee_exercice', 2025);
+        $exercice = $activeExercice->current();
 
         try {
             $result = $edi->generate(Auth::id(), $exercice);

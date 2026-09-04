@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BalanceItem;
 use App\Models\LiasseData;
 use App\Services\BalanceService;
+use App\Services\ActiveExerciceService;
 use App\Services\LiasseControlService;
 use App\Services\LiasseTableDataService;
 use Illuminate\Support\Facades\Auth;
@@ -1271,13 +1272,7 @@ class LiasseController extends Controller
 
     private function currentExercice(): int
     {
-        $exercice = (int) session('annee_exercice', 2026);
-
-        if (!session()->has('annee_exercice')) {
-            session(['annee_exercice' => $exercice]);
-        }
-
-        return $exercice;
+        return app(ActiveExerciceService::class)->current();
     }
 }
 
