@@ -1093,6 +1093,18 @@
         @apply cursor-not-allowed bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400;
     }
 
+    .exercise-selector {
+        @apply inline-flex min-w-0 items-center gap-2 rounded-lg border border-slate-200 bg-white px-2 py-1 shadow-sm dark:border-slate-700 dark:bg-slate-900;
+    }
+
+    .exercise-selector-label {
+        @apply hidden text-[10px] font-black uppercase tracking-[0.12em] text-slate-500 md:inline dark:text-slate-400;
+    }
+
+    .exercise-selector-select {
+        @apply min-h-8 max-w-28 cursor-pointer rounded-md border-0 bg-slate-50 py-1 pl-2 pr-7 text-xs font-black text-blue-800 focus:ring-2 focus:ring-blue-600 disabled:cursor-not-allowed disabled:text-slate-400 sm:max-w-44 dark:bg-slate-800 dark:text-blue-200 dark:focus:ring-blue-500 dark:disabled:text-slate-500;
+    }
+
     .status-pill {
         @apply inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-bold;
     }

@@ -143,7 +143,27 @@
                         <span class="block max-w-[55vw] truncate text-sm font-bold tracking-tight text-slate-900 dark:text-slate-100">Liasse fiscale marocaine</span>
                         <span class="hidden text-[10px] font-semibold uppercase tracking-[0.16em] text-slate-400 sm:block">Espace de production fiscale</span>
                     </div>
-                    <span class="status-pill border-blue-200 bg-blue-50 text-blue-800 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-200">Exercice {{ session('annee_exercice', 2026) }}</span>
+                    <form method="POST" action="{{ route('exercice.select') }}">
+                        @csrf
+                        <label class="exercise-selector">
+                            <span class="exercise-selector-label">Exercice</span>
+                            <select
+                                name="exercice"
+                                class="exercise-selector-select"
+                                aria-label="Exercice actif"
+                                @disabled(empty($availableExercices))
+                                onchange="this.form.submit()"
+                            >
+                                @forelse($availableExercices as $exerciceDisponible)
+                                    <option value="{{ $exerciceDisponible }}" @selected($exerciceDisponible === $activeExercice)>
+                                        {{ $exerciceDisponible }}
+                                    </option>
+                                @empty
+                                    <option value="">Aucune balance disponible</option>
+                                @endforelse
+                            </select>
+                        </label>
+                    </form>
                 </div>
             </header>
 

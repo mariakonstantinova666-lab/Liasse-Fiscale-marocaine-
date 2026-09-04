@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\ActiveExerciceService;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -34,6 +35,8 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'activeExercice' => fn () => app(ActiveExerciceService::class)->current(),
+            'availableExercices' => fn () => app(ActiveExerciceService::class)->available(),
         ];
     }
 }

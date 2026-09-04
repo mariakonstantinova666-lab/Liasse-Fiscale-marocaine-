@@ -4,9 +4,21 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import { Link, router } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
+const changingExercice = ref(false);
+
+const selectExercice = (event) => {
+    const exercice = Number(event.target.value);
+    if (!Number.isInteger(exercice) || changingExercice.value) return;
+
+    changingExercice.value = true;
+    router.post(route('exercice.select'), { exercice }, {
+        preserveScroll: true,
+        onFinish: () => { changingExercice.value = false; },
+    });
+};
 </script>
 
 <template>
@@ -35,35 +47,53 @@ const showingNavigationDropdown = ref(false);
                         </Link>
                     </div>
 
-                    <div class="hidden items-center sm:flex">
-                        <Dropdown align="right" width="48">
-                            <template #trigger>
-                                <button type="button" class="shell-user-trigger">
-                                    <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-700 text-xs font-bold uppercase text-white shadow-sm">
-                                        {{ $page.props.auth.user.name.charAt(0) }}
-                                    </span>
-                                    <span class="max-w-36 truncate">{{ $page.props.auth.user.name }}</span>
-                                    <svg class="h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                                </button>
-                            </template>
-                            <template #content>
-                                <DropdownLink :href="route('profile.edit')">Mon profil</DropdownLink>
-                                <DropdownLink :href="route('settings.index')">Paramètres</DropdownLink>
-                                <DropdownLink :href="route('logout')" method="post" as="button">Déconnexion</DropdownLink>
-                            </template>
-                        </Dropdown>
-                    </div>
+                    <div class="ml-auto flex items-center gap-2 sm:gap-3">
+                        <label class="exercise-selector">
+                            <span class="exercise-selector-label">Exercice</span>
+                            <select
+                                class="exercise-selector-select"
+                                :value="$page.props.activeExercice"
+                                :disabled="changingExercice || !($page.props.availableExercices || []).length"
+                                aria-label="Exercice actif"
+                                @change="selectExercice"
+                            >
+                                <option v-if="!($page.props.availableExercices || []).length" value="">Aucune balance disponible</option>
+                                <option v-for="exercice in ($page.props.availableExercices || [])" :key="exercice" :value="exercice">
+                                    {{ exercice }}
+                                </option>
+                            </select>
+                        </label>
 
-                    <button
-                        type="button"
-                        class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-transparent text-slate-500 transition hover:border-slate-200 hover:bg-slate-100 hover:text-slate-800 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-800 dark:hover:text-white sm:hidden"
-                        :aria-expanded="showingNavigationDropdown"
-                        aria-label="Ouvrir le menu"
-                        @click="showingNavigationDropdown = !showingNavigationDropdown"
-                    >
-                        <svg v-if="!showingNavigationDropdown" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                        <svg v-else class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
-                    </button>
+                        <div class="hidden items-center sm:flex">
+                            <Dropdown align="right" width="48">
+                                <template #trigger>
+                                    <button type="button" class="shell-user-trigger">
+                                        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-700 text-xs font-bold uppercase text-white shadow-sm">
+                                            {{ $page.props.auth.user.name.charAt(0) }}
+                                        </span>
+                                        <span class="max-w-36 truncate">{{ $page.props.auth.user.name }}</span>
+                                        <svg class="h-4 w-4 text-slate-400" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                                    </button>
+                                </template>
+                                <template #content>
+                                    <DropdownLink :href="route('profile.edit')">Mon profil</DropdownLink>
+                                    <DropdownLink :href="route('settings.index')">Paramètres</DropdownLink>
+                                    <DropdownLink :href="route('logout')" method="post" as="button">Déconnexion</DropdownLink>
+                                </template>
+                            </Dropdown>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-transparent text-slate-500 transition hover:border-slate-200 hover:bg-slate-100 hover:text-slate-800 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-800 dark:hover:text-white sm:hidden"
+                            :aria-expanded="showingNavigationDropdown"
+                            aria-label="Ouvrir le menu"
+                            @click="showingNavigationDropdown = !showingNavigationDropdown"
+                        >
+                            <svg v-if="!showingNavigationDropdown" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+                            <svg v-else class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
 

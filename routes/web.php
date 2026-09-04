@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BalanceController;
 use App\Http\Controllers\EdiController;
+use App\Http\Controllers\ExerciceController;
 use App\Http\Controllers\LiasseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SourceDocumentController;
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // --- TABLEAU DE BORD PRINCIPAL (Inertia / Vue.js) ---
     Route::get('/dashboard', [BalanceController::class, 'index'])->name('dashboard');
     Route::post('/balance/import', [BalanceController::class, 'import'])->name('balance.import');
+    Route::post('/exercice/actif', [ExerciceController::class, 'select'])->name('exercice.select');
 
     Route::get('/settings', fn () => Inertia::render('Settings/Index'))->name('settings.index');
 
