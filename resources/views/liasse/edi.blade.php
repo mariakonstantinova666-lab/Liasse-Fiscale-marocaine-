@@ -1,105 +1,178 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="mx-auto max-w-6xl space-y-6">
-    <div class="flex flex-col gap-4 rounded-lg border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-            <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-700 dark:text-blue-300">Tele-declaration</p>
-            <h2 class="mt-2 text-2xl font-black tracking-tight text-slate-900 dark:text-slate-100">Generation du fichier EDI (XML)</h2>
-            <p class="mt-2 max-w-3xl text-sm text-slate-600 dark:text-slate-300">
-                Le fichier est genere a partir des donnees de liasse disponibles pour l'exercice {{ $exercice }}.
-                Le moteur de controle est execute avant chaque generation.
+<div class="edi-page">
+    <header class="edi-header">
+        <div class="edi-header-copy">
+            <p class="edi-eyebrow">Télé-déclaration fiscale</p>
+            <h1 class="edi-title">Préparation EDI / XML</h1>
+            <p class="edi-description">
+                Préparez le fichier XML à partir des données de liasse disponibles. Le moteur de contrôle est exécuté avant chaque génération.
             </p>
         </div>
-        <span class="inline-flex w-fit items-center rounded-full bg-slate-100 px-3 py-1 text-xs font-bold text-slate-700 dark:border dark:border-slate-600 dark:bg-slate-800 dark:text-slate-200">
-            Exercice {{ $exercice }}
-        </span>
-    </div>
+        <div class="edi-header-meta">
+            <span class="edi-meta-badge">Exercice : <strong>{{ $exercice }}</strong></span>
+            <span class="edi-company-badge">{{ $societe?->nom_societe ?? 'Société non renseignée' }}</span>
+            <span class="edi-status-badge {{ $bloquantsAffiches->isEmpty() ? 'edi-status-badge-ready' : 'edi-status-badge-blocked' }}">
+                {{ $bloquantsAffiches->isEmpty() ? 'Génération autorisée' : 'Génération bloquée' }}
+            </span>
+        </div>
+    </header>
+
+    <nav class="edi-progress" aria-label="Parcours de préparation EDI">
+        <div class="edi-progress-step">
+            <span class="edi-progress-number">1</span>
+            <span>Liasse</span>
+        </div>
+        <span class="edi-progress-arrow" aria-hidden="true">→</span>
+        <div class="edi-progress-step">
+            <span class="edi-progress-number">2</span>
+            <span>Contrôles</span>
+        </div>
+        <span class="edi-progress-arrow" aria-hidden="true">→</span>
+        <div class="edi-progress-step edi-progress-step-current">
+            <span class="edi-progress-number">3</span>
+            <span>Préparation EDI</span>
+        </div>
+        <span class="edi-progress-arrow" aria-hidden="true">→</span>
+        <div class="edi-progress-step">
+            <span class="edi-progress-number">4</span>
+            <span>Génération XML</span>
+        </div>
+    </nav>
 
     @if(session('error'))
-        <div class="rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800 dark:border-red-800 dark:bg-red-500/10 dark:text-red-200">
-            <p class="font-bold">{{ session('error') }}</p>
-            <p class="mt-1">Corrigez les erreurs bloquantes listees ci-dessous, puis relancez la generation.</p>
-        </div>
+        <section class="edi-alert edi-alert-danger" role="alert">
+            <span class="edi-alert-icon" aria-hidden="true">!</span>
+            <div>
+                <p class="edi-alert-title">{{ session('error') }}</p>
+                <p class="edi-alert-text">Corrigez les erreurs bloquantes listées ci-dessous, puis relancez la génération.</p>
+            </div>
+        </section>
     @endif
 
-    <div class="grid gap-4 md:grid-cols-4">
-        <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-            <p class="text-xs font-semibold uppercase text-slate-400">Societe</p>
-            <p class="mt-2 truncate text-lg font-black text-slate-900 dark:text-slate-100">{{ $societe?->nom_societe ?? 'Non renseignee' }}</p>
+    <section class="edi-section">
+        <div class="edi-section-heading">
+            <div>
+                <p class="edi-eyebrow">Informations disponibles</p>
+                <h2 class="edi-section-title">Prérequis du dossier</h2>
+            </div>
+            <p class="edi-section-note">Ces volumes sont descriptifs et ne constituent pas une preuve de conformité.</p>
         </div>
-        <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-            <p class="text-xs font-semibold uppercase text-slate-400">Balance N</p>
-            <p class="mt-2 text-lg font-black text-slate-900 dark:text-slate-100">{{ $nombreLignesBalance }} lignes</p>
-        </div>
-        <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-            <p class="text-xs font-semibold uppercase text-slate-400">Balance N-1</p>
-            <p class="mt-2 text-lg font-black text-slate-900 dark:text-slate-100">{{ $nombreLignesBalancePrecedente }} lignes</p>
-        </div>
-        <div class="rounded-lg border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-            <p class="text-xs font-semibold uppercase text-slate-400">Champs liasse</p>
-            <p class="mt-2 text-lg font-black text-slate-900 dark:text-slate-100">{{ $nombreChamps }} champs</p>
-        </div>
-    </div>
 
-    <div class="rounded-lg border {{ $bloquantsAffiches->isEmpty() ? 'border-emerald-200 bg-emerald-50 dark:border-emerald-800 dark:bg-emerald-500/10' : 'border-red-200 bg-red-50 dark:border-red-800 dark:bg-red-500/10' }} p-5">
-        @if($bloquantsAffiches->isEmpty())
-            <p class="font-bold text-emerald-900 dark:text-emerald-200">Generation autorisee</p>
-            <p class="mt-1 text-sm text-emerald-800 dark:text-emerald-300">
-                Aucune erreur bloquante detectee. Le fichier XML peut etre cree.
-                @if($avertissements > 0)
-                    {{ $avertissements }} avertissement(s) non bloquant(s) seront conserves dans le bloc de controle du XML.
-                @endif
-            </p>
-        @else
-            <p class="font-bold text-red-900 dark:text-red-200">Generation bloquee : {{ $bloquantsAffiches->count() }} erreur(s) bloquante(s)</p>
-            <p class="mt-1 text-sm text-red-800 dark:text-red-300">
-                Le fichier EDI ne doit pas etre cree tant que ces controles ou validations XML ne sont pas corriges.
-            </p>
-        @endif
-    </div>
+        <div class="edi-info-grid">
+            <article class="edi-info-card">
+                <span class="edi-info-code">N</span>
+                <div>
+                    <p class="edi-info-label">Balance N</p>
+                    <p class="edi-info-value">{{ $nombreLignesBalance }} lignes</p>
+                </div>
+            </article>
+            <article class="edi-info-card">
+                <span class="edi-info-code">N-1</span>
+                <div>
+                    <p class="edi-info-label">Balance N-1</p>
+                    <p class="edi-info-value">{{ $nombreLignesBalancePrecedente }} lignes</p>
+                </div>
+            </article>
+            <article class="edi-info-card">
+                <span class="edi-info-code">LF</span>
+                <div>
+                    <p class="edi-info-label">Champs liasse</p>
+                    <p class="edi-info-value">{{ $nombreChamps }} champs</p>
+                </div>
+            </article>
+            <article class="edi-info-card">
+                <span class="edi-info-code">!</span>
+                <div>
+                    <p class="edi-info-label">Avertissements</p>
+                    <p class="edi-info-value">{{ $avertissements }}</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="edi-decision {{ $bloquantsAffiches->isEmpty() ? 'edi-decision-ready' : 'edi-decision-blocked' }}">
+        <span class="edi-decision-icon" aria-hidden="true">{{ $bloquantsAffiches->isEmpty() ? '✓' : '!' }}</span>
+        <div>
+            @if($bloquantsAffiches->isEmpty())
+                <h2 class="edi-decision-title">Génération autorisée</h2>
+                <p class="edi-decision-text">
+                    Aucune erreur bloquante détectée. Le fichier XML peut être créé.
+                    @if($avertissements > 0)
+                        {{ $avertissements }} avertissement(s) non bloquant(s) seront conservés dans le bloc de contrôle du XML.
+                    @endif
+                </p>
+            @else
+                <h2 class="edi-decision-title">Génération bloquée : {{ $bloquantsAffiches->count() }} erreur(s) bloquante(s)</h2>
+                <p class="edi-decision-text">
+                    Le fichier EDI ne doit pas être créé tant que ces contrôles ou validations XML ne sont pas corrigés.
+                </p>
+            @endif
+        </div>
+    </section>
 
     @if($bloquantsAffiches->isNotEmpty())
-        <div class="space-y-3">
-            @foreach($bloquantsAffiches as $regle)
-                <div class="rounded-lg border-l-4 border-red-500 bg-white p-4 shadow-sm dark:bg-slate-900">
-                    <div class="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-                        <div>
-                            <h3 class="font-bold text-slate-800 dark:text-slate-100">{{ $regle['titre'] }}</h3>
-                            <p class="mt-1 text-xs font-semibold uppercase tracking-wide text-slate-400">
-                                {{ $regle['id'] ?? 'CTRL' }}
-                                @if(!empty($regle['tableau'])) · {{ $regle['tableau'] }} @endif
-                                @if(!empty($regle['rubrique'])) · {{ $regle['rubrique'] }} @endif
-                            </p>
-                            <p class="mt-2 text-sm text-slate-600 dark:text-slate-300">{{ $regle['message'] }}</p>
-                            @if(!empty($regle['suggestion']))
-                                <p class="mt-2 text-sm text-slate-500 dark:text-slate-400"><strong>Correction :</strong> {{ $regle['suggestion'] }}</p>
+        <section class="edi-section">
+            <div class="edi-section-heading">
+                <div>
+                    <p class="edi-eyebrow edi-eyebrow-danger">Corrections requises</p>
+                    <h2 class="edi-section-title">Erreurs bloquantes</h2>
+                </div>
+                <span class="edi-blocking-count">{{ $bloquantsAffiches->count() }} blocage(s)</span>
+            </div>
+
+            <div class="edi-error-list">
+                @foreach($bloquantsAffiches as $regle)
+                    <article class="edi-error-card">
+                        <div class="edi-error-topline">
+                            <div class="edi-error-badges">
+                                <span class="edi-error-status">Bloquant</span>
+                                <span class="edi-error-id">{{ $regle['id'] ?? 'CTRL' }}</span>
+                                @if(!empty($regle['tableau']))
+                                    <span class="edi-error-table">{{ $regle['tableau'] }}</span>
+                                @endif
+                            </div>
+                            @if(!empty($regle['rubrique']))
+                                <span class="edi-error-rubrique">{{ $regle['rubrique'] }}</span>
                             @endif
                         </div>
-                        <span class="rounded-full bg-red-100 px-2.5 py-1 text-xs font-bold text-red-700 dark:bg-red-500/20 dark:text-red-200">Bloquant</span>
-                    </div>
-                </div>
-            @endforeach
-        </div>
+                        <h3 class="edi-error-title">{{ $regle['titre'] }}</h3>
+                        <p class="edi-error-message">{{ $regle['message'] }}</p>
+                        @if(!empty($regle['suggestion']))
+                            <div class="edi-error-help">
+                                <p class="edi-error-help-label">Correction suggérée</p>
+                                <p>{{ $regle['suggestion'] }}</p>
+                            </div>
+                        @endif
+                    </article>
+                @endforeach
+            </div>
+        </section>
     @endif
 
-    <div class="flex flex-col gap-3 rounded-lg border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-700 dark:bg-slate-900 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-            <p class="font-bold text-slate-900 dark:text-slate-100">Export XML</p>
-            <p class="mt-1 text-sm text-slate-500 dark:text-slate-400">Le telechargement demarre automatiquement apres generation.</p>
+    <section class="edi-generation-card">
+        <div class="edi-generation-copy">
+            <span class="edi-generation-icon" aria-hidden="true">XML</span>
+            <div>
+                <p class="edi-eyebrow">Génération du fichier</p>
+                <h2 class="edi-generation-title">Exporter la liasse au format XML</h2>
+                <p class="edi-generation-text">Après génération, le téléchargement du fichier XML démarre automatiquement.</p>
+            </div>
         </div>
+
         <form id="edi-form" method="POST" action="{{ route('liasse.edi.generate') }}">
             @csrf
             <button
                 id="edi-submit"
                 type="submit"
                 @disabled($bloquants->isNotEmpty())
-                class="inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-bold shadow-sm transition focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-blue-500 dark:focus:ring-offset-slate-900 {{ $bloquants->isEmpty() ? 'bg-blue-700 text-white hover:bg-blue-800' : 'cursor-not-allowed bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400' }}"
+                class="edi-generate-button {{ $bloquants->isEmpty() ? 'edi-generate-button-enabled' : 'edi-generate-button-disabled' }}"
             >
-                Generer le fichier EDI (XML)
+                Générer le fichier EDI (XML)
             </button>
         </form>
-    </div>
+    </section>
 </div>
 
 <script>
@@ -109,7 +182,7 @@
         form?.addEventListener('submit', () => {
             if (!button) return;
             button.disabled = true;
-            button.textContent = 'Generation en cours...';
+            button.textContent = 'Génération en cours…';
             button.classList.add('opacity-75');
         });
     })();
