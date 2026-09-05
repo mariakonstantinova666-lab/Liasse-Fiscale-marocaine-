@@ -20,7 +20,12 @@
     <p class="text-sm text-slate-600 mb-2">Montant global : <input type="text" name="f[montant_global]" value="{{ $data['montant_global'] ?? '' }}" class="inline-block w-40 bg-transparent text-right font-mono px-1 py-1 border border-slate-200 focus:bg-yellow-50 outline-none rounded"> DHS</p>
 
     <div class="overflow-x-auto">
-        <table class="w-full text-xs text-left border-collapse border border-slate-300" style="min-width: 1400px;">
+        <table class="liasse-wide-data-table liasse-table-t16 w-full text-xs text-left border-collapse border border-slate-300">
+            <colgroup>
+                @for($column = 1; $column <= 10; $column++)
+                    <col>
+                @endfor
+            </colgroup>
             <thead class="text-white text-center font-bold">
                 <tr>
                     <th class="p-2 border border-slate-300 bg-slate-800 align-middle">Type</th>

@@ -41,7 +41,12 @@
         Faites défiler horizontalement pour accéder aux colonnes 10 à 13 <span aria-hidden="true">→</span>
     </p>
     <div class="overflow-x-auto rounded-sm border border-slate-300 dark:border-slate-700" tabindex="0" aria-label="Tableau T19 à défilement horizontal">
-        <table class="w-full text-xs text-left border-collapse border border-slate-300" style="min-width: 1700px;">
+        <table class="liasse-wide-data-table liasse-table-t19 w-full text-xs text-left border-collapse border border-slate-300">
+            <colgroup>
+                @for($column = 1; $column <= 13; $column++)
+                    <col>
+                @endfor
+            </colgroup>
             <thead class="text-white text-center font-bold">
                 <tr>
                     <th rowspan="2" class="p-2 border border-slate-300 align-middle bg-slate-800">Nature du bien loué</th>
