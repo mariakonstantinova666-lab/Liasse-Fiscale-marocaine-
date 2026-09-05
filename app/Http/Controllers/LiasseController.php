@@ -155,10 +155,6 @@ class LiasseController extends Controller
         
         $montantComptable = $totalProduits - $totalCharges;
 
-        if ($items->isEmpty() && $montantComptable == 0) {
-            $montantComptable = -2665.62;
-        }
-
         $beneficeNetComptable = $montantComptable > 0 ? $montantComptable : 0.00;
         $perteNetteComptable = $montantComptable < 0 ? abs($montantComptable) : 0.00;
 

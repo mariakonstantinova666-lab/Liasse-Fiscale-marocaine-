@@ -111,6 +111,78 @@ class T03T26ManualDataTest extends TestCase
             ->assertDontSee('name="f[benefice_net_comptable]"', false);
     }
 
+    public function test_t03_without_balance_has_no_artificial_accounting_result(): void
+    {
+        [$user] = $this->userAndSociete();
+
+        $response = $this->actingAs($user)->withSession(['annee_exercice' => 2026])
+            ->get(route('liasse.passage_fiscal'))
+            ->assertOk()
+            ->assertDontSee('2665.62')
+            ->assertDontSee('2 665.62');
+
+        $response->assertViewHas('fiscalData', function (array $fiscalData): bool {
+            $resultat = $fiscalData['I. RESULTAT NET COMPTABLE'];
+
+            return (float) $resultat['Bénéfice net'] === 0.0
+                && (float) $resultat['Perte nette'] === 0.0;
+        });
+    }
+
+    public function test_t03_keeps_negative_2665_62_when_it_is_calculated_from_balance(): void
+    {
+        [$user, $societe] = $this->userAndSociete();
+        $this->balance($user, $societe, 2026, '7000', 0, 10000);
+        $this->balance($user, $societe, 2026, '6000', 12665.62, 0);
+
+        $this->actingAs($user)->withSession(['annee_exercice' => 2026])
+            ->get(route('liasse.passage_fiscal'))
+            ->assertOk()
+            ->assertViewHas('fiscalData', function (array $fiscalData): bool {
+                $resultat = $fiscalData['I. RESULTAT NET COMPTABLE'];
+                $montantComptable = (float) $resultat['Bénéfice net'] - (float) $resultat['Perte nette'];
+
+                return (float) $resultat['Bénéfice net'] === 0.0
+                    && abs((float) $resultat['Perte nette'] - 2665.62) < 0.00001
+                    && abs($montantComptable - (-2665.62)) < 0.00001;
+            });
+    }
+
+    public function test_t03_accounting_result_is_calculated_exclusively_from_accounts_six_and_seven(): void
+    {
+        [$user, $societe] = $this->userAndSociete();
+        $this->balance($user, $societe, 2026, '7000', 0, 2000);
+        $this->balance($user, $societe, 2026, '6000', 350, 0);
+        $this->balance($user, $societe, 2026, '3000', 99999, 0);
+
+        $this->actingAs($user)->withSession(['annee_exercice' => 2026])
+            ->get(route('liasse.passage_fiscal'))
+            ->assertOk()
+            ->assertViewHas('fiscalData', function (array $fiscalData): bool {
+                $resultat = $fiscalData['I. RESULTAT NET COMPTABLE'];
+
+                return (float) $resultat['Bénéfice net'] === 1650.0
+                    && (float) $resultat['Perte nette'] === 0.0;
+            });
+    }
+
+    public function test_t03_empty_exercise_does_not_reuse_another_exercise_accounting_result(): void
+    {
+        [$user, $societe] = $this->userAndSociete();
+        $this->balance($user, $societe, 2025, '7000', 0, 1000);
+        $this->balance($user, $societe, 2025, '6000', 223, 0);
+
+        $this->actingAs($user)->withSession(['annee_exercice' => 2026])
+            ->get(route('liasse.passage_fiscal'))
+            ->assertOk()
+            ->assertViewHas('fiscalData', function (array $fiscalData): bool {
+                $resultat = $fiscalData['I. RESULTAT NET COMPTABLE'];
+
+                return (float) $resultat['Bénéfice net'] === 0.0
+                    && (float) $resultat['Perte nette'] === 0.0;
+            });
+    }
+
     public function test_t03_save_is_isolated_to_the_active_exercise(): void
     {
         [$user] = $this->userAndSociete();
