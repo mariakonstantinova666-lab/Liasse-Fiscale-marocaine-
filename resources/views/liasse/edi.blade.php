@@ -13,8 +13,8 @@
         <div class="edi-header-meta">
             <span class="edi-meta-badge">Exercice : <strong>{{ $exercice }}</strong></span>
             <span class="edi-company-badge">{{ $societe?->nom_societe ?? 'Société non renseignée' }}</span>
-            <span class="edi-status-badge {{ $bloquantsAffiches->isEmpty() ? 'edi-status-badge-ready' : 'edi-status-badge-blocked' }}">
-                {{ $bloquantsAffiches->isEmpty() ? 'Génération autorisée' : 'Génération bloquée' }}
+            <span class="edi-status-badge {{ $bloquants->isEmpty() ? 'edi-status-badge-ready' : 'edi-status-badge-blocked' }}">
+                {{ $bloquants->isEmpty() ? 'Génération autorisée' : 'Génération bloquée' }}
             </span>
         </div>
     </header>
@@ -92,10 +92,10 @@
         </div>
     </section>
 
-    <section class="edi-decision {{ $bloquantsAffiches->isEmpty() ? 'edi-decision-ready' : 'edi-decision-blocked' }}">
-        <span class="edi-decision-icon" aria-hidden="true">{{ $bloquantsAffiches->isEmpty() ? '✓' : '!' }}</span>
+    <section class="edi-decision {{ $bloquants->isEmpty() ? 'edi-decision-ready' : 'edi-decision-blocked' }}">
+        <span class="edi-decision-icon" aria-hidden="true">{{ $bloquants->isEmpty() ? '✓' : '!' }}</span>
         <div>
-            @if($bloquantsAffiches->isEmpty())
+            @if($bloquants->isEmpty())
                 <h2 class="edi-decision-title">Génération autorisée</h2>
                 <p class="edi-decision-text">
                     Aucune erreur bloquante détectée. Le fichier XML peut être créé.
@@ -104,7 +104,7 @@
                     @endif
                 </p>
             @else
-                <h2 class="edi-decision-title">Génération bloquée : {{ $bloquantsAffiches->count() }} erreur(s) bloquante(s)</h2>
+                <h2 class="edi-decision-title">Génération bloquée : {{ $bloquants->count() }} erreur(s) bloquante(s)</h2>
                 <p class="edi-decision-text">
                     Le fichier EDI ne doit pas être créé tant que ces contrôles ou validations XML ne sont pas corrigés.
                 </p>
@@ -112,23 +112,66 @@
         </div>
     </section>
 
-    @if($bloquantsAffiches->isNotEmpty())
+    @if($bloquants->isNotEmpty())
         <section class="edi-section">
             <div class="edi-section-heading">
                 <div>
                     <p class="edi-eyebrow edi-eyebrow-danger">Corrections requises</p>
                     <h2 class="edi-section-title">Erreurs bloquantes</h2>
                 </div>
-                <span class="edi-blocking-count">{{ $bloquantsAffiches->count() }} blocage(s)</span>
+                <span class="edi-blocking-count">{{ $bloquants->count() }} blocage(s)</span>
             </div>
 
             <div class="edi-error-list">
-                @foreach($bloquantsAffiches as $regle)
+                @foreach($bloquants as $regle)
                     <article class="edi-error-card">
                         <div class="edi-error-topline">
                             <div class="edi-error-badges">
                                 <span class="edi-error-status">Bloquant</span>
                                 <span class="edi-error-id">{{ $regle['id'] ?? 'CTRL' }}</span>
+                                @if(!empty($regle['tableau']))
+                                    <span class="edi-error-table">{{ $regle['tableau'] }}</span>
+                                @endif
+                            </div>
+                            @if(!empty($regle['rubrique']))
+                                <span class="edi-error-rubrique">{{ $regle['rubrique'] }}</span>
+                            @endif
+                        </div>
+                        <h3 class="edi-error-title">{{ $regle['titre'] }}</h3>
+                        <p class="edi-error-message">{{ $regle['message'] }}</p>
+                        @if(!empty($regle['suggestion']))
+                            <div class="edi-error-help">
+                                <p class="edi-error-help-label">Correction suggérée</p>
+                                <p>{{ $regle['suggestion'] }}</p>
+                            </div>
+                        @endif
+                    </article>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
+    @if($erreursGeneration->isNotEmpty())
+        <section class="edi-section">
+            <div class="edi-section-heading">
+                <div>
+                    <p class="edi-eyebrow edi-eyebrow-danger">Dernière génération</p>
+                    <h2 class="edi-section-title">Erreurs de la dernière tentative</h2>
+                </div>
+                <span class="edi-blocking-count">{{ $erreursGeneration->count() }} erreur(s)</span>
+            </div>
+
+            <p class="edi-section-note">
+                Ces erreurs correspondent à la dernière tentative. L’autorisation actuelle est déterminée séparément par les contrôles recalculés ci-dessus.
+            </p>
+
+            <div class="edi-error-list">
+                @foreach($erreursGeneration as $regle)
+                    <article class="edi-error-card">
+                        <div class="edi-error-topline">
+                            <div class="edi-error-badges">
+                                <span class="edi-error-status">Dernière tentative</span>
+                                <span class="edi-error-id">{{ $regle['id'] ?? 'EDI' }}</span>
                                 @if(!empty($regle['tableau']))
                                     <span class="edi-error-table">{{ $regle['tableau'] }}</span>
                                 @endif

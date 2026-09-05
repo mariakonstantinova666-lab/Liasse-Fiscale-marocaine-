@@ -21,9 +21,6 @@ class EdiController extends Controller
         $controles = $context['controls'];
         $bloquants = collect($controles)->filter(fn ($rule) => $rule['bloquant'] && !$rule['ok'])->values();
         $erreursGeneration = collect(session('edi_blocking_errors', []))->values();
-        $bloquantsAffiches = $erreursGeneration->isNotEmpty()
-            ? $erreursGeneration
-            : $bloquants;
         $avertissements = collect($controles)->filter(fn ($rule) => !$rule['ok'] && !$rule['bloquant'])->count();
 
         return view('liasse.edi', [
@@ -31,7 +28,6 @@ class EdiController extends Controller
             'societe' => $context['societe'],
             'controles' => $controles,
             'bloquants' => $bloquants,
-            'bloquantsAffiches' => $bloquantsAffiches,
             'erreursGeneration' => $erreursGeneration,
             'avertissements' => $avertissements,
             'nombreChamps' => $context['liasseData']->count(),
