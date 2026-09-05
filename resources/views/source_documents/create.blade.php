@@ -26,8 +26,13 @@
 
         <div class="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(320px,420px)]">
             <div class="space-y-5">
-                <label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-300">Exercice fiscal</label>
-                <input type="number" name="exercice" value="{{ old('exercice', session('annee_exercice', 2026)) }}" required class="w-full rounded-lg border-slate-300 bg-white text-sm text-slate-900 shadow-sm focus:border-blue-600 focus:ring-blue-600 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:focus:border-blue-500 dark:focus:ring-blue-500">
+                <div>
+                    <p class="mb-1.5 text-sm font-semibold text-slate-700 dark:text-slate-300">Exercice fiscal</p>
+                    <div class="rounded-lg border border-slate-300 bg-slate-50 px-3 py-2 text-sm font-bold text-slate-900 shadow-sm dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100">
+                        Exercice : {{ $exercice }}
+                    </div>
+                    <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">Pour changer d'exercice, utilisez le sélecteur global.</p>
+                </div>
 
                 <div>
                     <label class="mb-1.5 block text-sm font-semibold text-slate-700 dark:text-slate-300">Fichier source</label>

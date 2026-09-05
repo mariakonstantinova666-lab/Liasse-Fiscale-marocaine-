@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use RuntimeException;
 use Throwable;
 
 class DocumentExtractionService
@@ -44,7 +45,7 @@ class DocumentExtractionService
     private function extractSpreadsheet(SourceDocument $document): SourceDocumentExtraction
     {
         $path = Storage::disk('local')->path($document->stored_path);
-        $mapped = $this->mapDossierFiscalD3Soft($path);
+        $mapped = $this->mapDossierFiscalD3Soft($path, $document->exercice);
         $sheets = Excel::toArray([], $path);
         $firstSheet = $sheets[0] ?? [];
         $rows = $this->normalizeRows($firstSheet);
@@ -135,13 +136,27 @@ class DocumentExtractionService
         return $mapped;
     }
 
-    private function mapDossierFiscalD3Soft(string $path): array
+    private function mapDossierFiscalD3Soft(string $path, int $exercice): array
     {
         $spreadsheet = IOFactory::load($path);
         $sheets = [];
 
         foreach ($spreadsheet->getWorksheetIterator() as $sheet) {
             $sheets[$sheet->getTitle()] = $sheet;
+        }
+
+        $decisionAg = isset($sheets['Décision AG'])
+            ? $this->readKeyValueSheet($sheets['Décision AG'])
+            : null;
+        $detectedExercice = $decisionAg === null
+            ? null
+            : $this->detectAffectationExercice($decisionAg);
+
+        if ($detectedExercice !== null && $detectedExercice !== $exercice) {
+            throw new RuntimeException(
+                "Le document indique clairement l'exercice {$detectedExercice}, "
+                . "mais il est rattaché à l'exercice {$exercice}. Aucune donnée n'a été importée."
+            );
         }
 
         if (!isset($sheets['Fiche société'], $sheets['Registre des immobilisations'])) {
@@ -151,12 +166,15 @@ class DocumentExtractionService
         }
 
         $reglesFiscales = $spreadsheet->getSheetCount() > 3 ? $spreadsheet->getSheet(3) : null;
+        $affectationResultats = $decisionAg === null
+            ? []
+            : $this->mapAffectationResultats($decisionAg, $exercice);
 
         return array_values(array_filter(array_merge(
             $this->mapRepartitionCapital($this->readKeyValueSheet($sheets['Fiche société'])),
             $this->mapDotationsAmortissements($sheets['Registre des immobilisations']),
             $reglesFiscales ? $this->mapReglesFiscales($reglesFiscales) : [],
-            isset($sheets['Décision AG']) ? $this->mapAffectationResultats($this->readKeyValueSheet($sheets['Décision AG'])) : [],
+            $affectationResultats,
             isset($sheets['Informations complémentaires']) ? $this->mapLocationsBaux($sheets['Informations complémentaires']) : [],
             isset($sheets['Modules conditionnels']) ? $this->mapLocationsBaux($sheets['Modules conditionnels']) : [],
             isset($sheets['Politique comptable']) ? $this->mapPolitiqueComptable($this->readKeyValueSheet($sheets['Politique comptable'])) : []
@@ -321,9 +339,9 @@ class DocumentExtractionService
             'reports_deficitaires_total' => $reports,
         ]);
     }
-    private function mapAffectationResultats(array $ag): array
+    private function mapAffectationResultats(array $ag, int $exercice): array
     {
-        $resultat = $ag["Résultat net de l'exercice 2025 (perte)"] ?? '';
+        $resultat = $ag["Résultat net de l'exercice {$exercice} (perte)"] ?? '';
         $reserve = $ag['Réserve légale'] ?? '0';
         $dividendes = $ag['Dividendes distribués'] ?? '0';
         $report = $ag['Report à nouveau (perte reportée)'] ?? $resultat;
@@ -337,6 +355,21 @@ class DocumentExtractionService
             'total_A' => $resultat,
             'total_B' => $this->formatNumber($this->numberValue($reserve) + $this->numberValue($dividendes) + $this->numberValue($report)),
         ]);
+    }
+
+    private function detectAffectationExercice(array $ag): ?int
+    {
+        $exercices = [];
+
+        foreach (array_keys($ag) as $label) {
+            if (preg_match('/^Résultat net de l[\'’]exercice\s+(\d{4})\s+\(perte\)$/iu', (string) $label, $matches) === 1) {
+                $exercices[] = (int) $matches[1];
+            }
+        }
+
+        $exercices = array_values(array_unique($exercices));
+
+        return count($exercices) === 1 ? $exercices[0] : null;
     }
 
     private function mapLocationsBaux($sheet): array

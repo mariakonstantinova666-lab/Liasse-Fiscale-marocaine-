@@ -6,7 +6,7 @@
         <div>
             <p class="text-xs font-bold uppercase tracking-[0.18em] text-blue-700">Documents sources</p>
             <h1 class="mt-1 text-2xl font-black tracking-tight text-slate-950">Pieces complementaires de la liasse</h1>
-            <p class="mt-2 max-w-3xl text-sm text-slate-600">Centralisez les etats externes necessaires aux tableaux fiscaux, suivez leur traitement et preparez la validation des donnees extraites.</p>
+            <p class="mt-2 max-w-3xl text-sm text-slate-600">Exercice {{ $exercice }} — centralisez les etats externes necessaires aux tableaux fiscaux, suivez leur traitement et preparez la validation des donnees extraites.</p>
         </div>
         <a href="{{ route('source-documents.create') }}" class="inline-flex items-center justify-center rounded-lg bg-blue-700 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-800">
             Importer un document
@@ -25,11 +25,7 @@
         </div>
     @endif
 
-    <form method="GET" action="{{ route('source-documents.index') }}" class="grid gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-4 md:items-end">
-        <div>
-            <label class="mb-1.5 block text-sm font-semibold text-slate-700">Exercice</label>
-            <input type="number" name="exercice" value="{{ $filters['exercice'] ?? '' }}" class="w-full rounded-lg border-slate-300 text-sm shadow-sm focus:border-blue-600 focus:ring-blue-600" placeholder="{{ session('annee_exercice', 2026) }}">
-        </div>
+    <form method="GET" action="{{ route('source-documents.index') }}" class="grid gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm md:grid-cols-3 md:items-end">
         <div>
             <label class="mb-1.5 block text-sm font-semibold text-slate-700">Portee fiscale</label>
             <select name="tableau_code" class="w-full rounded-lg border-slate-300 text-sm shadow-sm focus:border-blue-600 focus:ring-blue-600">

@@ -7,6 +7,7 @@ use App\Models\LiasseData;
 use App\Models\BalanceItem;
 use App\Models\SourceDocument;
 use App\Models\Societe;
+use App\Services\ActiveExerciceService;
 use App\Services\DocumentExtractionService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -39,16 +40,14 @@ class SourceDocumentController extends Controller
         'autre' => 'Autre tableau fiscal',
     ];
 
-    public function index(Request $request)
+    public function index(Request $request, ActiveExerciceService $activeExercice)
     {
+        $exercice = $activeExercice->current();
         $query = SourceDocument::query()
             ->with(['user', 'societe'])
             ->where('user_id', Auth::id())
+            ->where('exercice', $exercice)
             ->latest();
-
-        if ($request->filled('exercice')) {
-            $query->where('exercice', (int) $request->input('exercice'));
-        }
 
         if ($request->filled('tableau_code')) {
             $query->where('tableau_code', $request->input('tableau_code'));
@@ -63,26 +62,32 @@ class SourceDocumentController extends Controller
             'documentTypes' => self::DOCUMENT_TYPES,
             'tableaux' => self::TABLEAUX,
             'statuses' => SourceDocument::statusLabels(),
-            'filters' => $request->only(['exercice', 'tableau_code', 'status']),
+            'filters' => $request->only(['tableau_code', 'status']),
+            'exercice' => $exercice,
         ]);
     }
 
-    public function create()
+    public function create(ActiveExerciceService $activeExercice)
     {
         return view('source_documents.create', [
             'documentTypes' => self::DOCUMENT_TYPES,
             'tableaux' => self::TABLEAUX,
+            'exercice' => $activeExercice->current(),
         ]);
     }
 
-    public function store(Request $request, DocumentExtractionService $extractor)
+    public function store(
+        Request $request,
+        DocumentExtractionService $extractor,
+        ActiveExerciceService $activeExercice
+    )
     {
         $validated = $request->validate([
             'document' => 'required|file|mimes:xlsx,xls,csv,txt,pdf|max:10240',
-            'exercice' => 'required|integer|min:2000|max:2100',
             'document_type' => 'required|string|max:100',
             'tableau_code' => 'required|string|max:100',
         ]);
+        $exercice = $activeExercice->current();
 
         $societe = Societe::where('user_id', Auth::id())->first();
 
@@ -91,12 +96,12 @@ class SourceDocumentController extends Controller
         }
 
         $file = $request->file('document');
-        $path = $file->store("source-documents/{$societe->id}/{$validated['exercice']}", 'local');
+        $path = $file->store("source-documents/{$societe->id}/{$exercice}", 'local');
 
         $document = SourceDocument::create([
             'user_id' => Auth::id(),
             'societe_id' => $societe->id,
-            'exercice' => (int) $validated['exercice'],
+            'exercice' => $exercice,
             'document_type' => $validated['document_type'],
             'tableau_code' => $validated['tableau_code'],
             'original_name' => $file->getClientOriginalName(),
@@ -108,6 +113,13 @@ class SourceDocumentController extends Controller
         ]);
 
         $extraction = $extractor->extract($document);
+        if ($extraction->status === SourceDocument::STATUS_ERROR) {
+            return redirect()
+                ->route('source-documents.show', $document)
+                ->with('error', collect($extraction->errors)->filter()->implode(' ')
+                    ?: 'Le document n a pas pu etre analyse. Aucune donnee n a ete importee.');
+        }
+
         $mappedData = $this->enrichMappedData($document, $extraction->mapped_data ?? []);
         $extraction->update(['mapped_data' => $mappedData]);
         $appliedCount = $this->persistMappedData($document, $mappedData, 'needs_validation');
@@ -137,6 +149,13 @@ class SourceDocumentController extends Controller
         $this->authorizeDocument($sourceDocument);
 
         $extraction = $extractor->extract($sourceDocument);
+        if ($extraction->status === SourceDocument::STATUS_ERROR) {
+            return redirect()
+                ->route('source-documents.show', $sourceDocument)
+                ->with('error', collect($extraction->errors)->filter()->implode(' ')
+                    ?: 'Le document n a pas pu etre analyse. Aucune donnee n a ete importee.');
+        }
+
         $mappedData = $this->enrichMappedData($sourceDocument, $extraction->mapped_data ?? []);
         $extraction->update(['mapped_data' => $mappedData]);
         $appliedCount = $this->persistMappedData($sourceDocument, $mappedData, 'needs_validation');
