@@ -1,5 +1,4 @@
 <script setup>
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import { Link } from '@inertiajs/vue3';
 </script>
 
@@ -12,10 +11,10 @@ import { Link } from '@inertiajs/vue3';
 
         <div class="relative text-center">
             <Link href="/">
-                <ApplicationLogo class="mx-auto h-16 w-16 fill-current text-white" />
+                <span class="mx-auto flex h-16 w-16 items-center justify-center rounded-xl bg-indigo-600 text-sm font-black text-white">LX</span>
             </Link>
-            <p class="mt-4 text-xs font-bold uppercase tracking-[0.28em] text-indigo-300">Liasse Expert</p>
-            <p class="mt-2 text-sm text-slate-400">Gestion fiscale marocaine</p>
+            <p class="mt-4 text-xs font-bold uppercase tracking-[0.28em] text-indigo-300">LIASSE EXPERT</p>
+            <p class="mt-2 text-sm font-bold uppercase text-slate-400">GESTION &amp; AUTOMATISATION FISCALE</p>
         </div>
 
         <div class="relative mt-8 w-full overflow-hidden rounded-2xl border border-white/10 bg-white px-6 py-7 shadow-2xl shadow-black/30 sm:max-w-md sm:px-8">

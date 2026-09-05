@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
@@ -29,11 +28,11 @@ const selectExercice = (event) => {
                     <div class="flex min-w-0 items-center gap-6 lg:gap-8">
                         <Link :href="route('dashboard')" class="shell-brand">
                             <span class="shell-brand-mark">
-                                <ApplicationLogo class="h-7 w-7 fill-current text-white" />
+                                <span class="text-sm font-black tracking-tight text-white">LX</span>
                             </span>
                             <span class="hidden sm:block">
-                                <span class="shell-brand-title">LIASSE FISCALE</span>
-                                <span class="shell-brand-subtitle">Gestion fiscale</span>
+                                <span class="shell-brand-title">LIASSE EXPERT</span>
+                                <span class="shell-brand-subtitle">GESTION &amp; AUTOMATISATION FISCALE</span>
                             </span>
                         </Link>
 

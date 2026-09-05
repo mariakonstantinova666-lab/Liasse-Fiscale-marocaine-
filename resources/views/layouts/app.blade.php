@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liasse Expert - Maria Data</title>
+    <title>Liasse Expert</title>
     <script>
         (() => {
             let theme = 'system';
@@ -34,8 +34,8 @@
             <div class="flex h-[72px] items-center gap-3 border-b border-slate-800 bg-slate-900/40 px-5">
                 <div class="shell-brand-mark"><span class="text-sm font-black tracking-tight">LX</span></div>
                 <div>
-                    <h1 class="text-[15px] font-black tracking-tight text-white">LIASSE FISCALE</h1>
-                    <p class="mt-0.5 text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">Gestion fiscale</p>
+                    <h1 class="text-[15px] font-black tracking-tight text-white">LIASSE EXPERT</h1>
+                    <p class="mt-0.5 text-[9px] font-bold uppercase tracking-[0.2em] text-slate-400">GESTION &amp; AUTOMATISATION FISCALE</p>
                 </div>
                 <button id="sidebar-close" type="button" class="ml-auto rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-white lg:hidden" aria-label="Fermer le menu">✕</button>
             </div>
