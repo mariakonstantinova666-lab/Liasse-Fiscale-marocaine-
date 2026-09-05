@@ -42,10 +42,10 @@
             </div>
 
             <div class="rounded-lg border border-blue-100 bg-blue-50 p-4 dark:border-blue-800 dark:bg-blue-500/10">
-                <p class="text-sm font-bold text-blue-950 dark:text-blue-200">Detection automatique</p>
-                <p class="mt-1 text-sm text-blue-800 dark:text-blue-300">Un seul import peut alimenter plusieurs tableaux de la liasse.</p>
+                <p class="text-sm font-bold text-blue-950 dark:text-blue-200">Tableaux pouvant être alimentés par des documents sources</p>
+                <p class="mt-1 text-sm text-blue-800 dark:text-blue-300">Selon le tableau, les données peuvent être extraites automatiquement, vérifiées ou complétées manuellement.</p>
                 <div class="mt-4 grid grid-cols-2 gap-2 text-xs font-semibold text-blue-900 dark:text-blue-200">
-                    @foreach(['T03', 'T13', 'T14', 'T16', 'T19', 'T23', 'T24', 'T25'] as $code)
+                    @foreach(['T03', 'T07', 'T10', 'T11', 'T13', 'T14', 'T15', 'T16', 'T17', 'T18', 'T19', 'T21', 'T23', 'T24', 'T25', 'T26'] as $code)
                         <span class="rounded-md border border-blue-200 bg-white px-2.5 py-2 text-center dark:border-blue-700 dark:bg-slate-800">{{ $code }}</span>
                     @endforeach
                 </div>

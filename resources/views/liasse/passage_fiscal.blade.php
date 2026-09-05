@@ -13,6 +13,8 @@
         <span class="liasse-page-badge">Tableau T03</span>
     </div>
 
+    <form method="POST" action="{{ route('liasse.save', 'passage_fiscal') }}">
+        @csrf
     <div class="overflow-x-auto">
             <table class="w-full border-collapse border border-gray-300 text-sm">
                 <thead>
@@ -48,38 +50,34 @@
                     <tr>
                         <td class="border border-gray-300 p-2 pl-6">1. Courantes</td>
                         <td class="border border-gray-300 p-2 text-right font-mono">
-                            {{ number_format($fiscalData['II. REINTEGRATIONS FISCALES']['1. Courantes'], 2, '.', ' ') }}
+                            <input type="text" inputmode="decimal" name="f[reintegrations_courantes_total]" value="{{ $sourceData['reintegrations_courantes_total'] ?? $fiscalData['II. REINTEGRATIONS FISCALES']['1. Courantes'] }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded">
                         </td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
                     </tr>
                     @foreach($fiscalData['DETAIL_REINTEGRATIONS']['Courantes'] ?? [] as $detail)
-                        @if(($detail['montant'] ?? 0) > 0)
                             <tr class="bg-yellow-50 dark:[&>td]:!border-slate-700 dark:[&>td]:!bg-slate-800 dark:[&>td]:!text-slate-100">
-                                <td class="border border-gray-300 p-2 pl-10 text-sm">{{ $detail['label'] }}</td>
+                                <td class="border border-gray-300 p-2 pl-10 text-sm"><input type="text" name="f[reintegration_courante_0_label]" value="{{ $sourceData['reintegration_courante_0_label'] ?? $detail['label'] }}" class="w-full bg-transparent text-left px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
                                 <td class="border border-gray-300 p-2 text-right font-mono">
-                                    {{ number_format($detail['montant'], 2, '.', ' ') }}
+                                    <input type="text" inputmode="decimal" name="f[reintegration_courante_0_montant]" value="{{ $sourceData['reintegration_courante_0_montant'] ?? $detail['montant'] }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded">
                                 </td>
                                 <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
                             </tr>
-                        @endif
                     @endforeach
                     <tr>
                         <td class="border border-gray-300 p-2 pl-6">2. Non courantes</td>
                         <td class="border border-gray-300 p-2 text-right font-mono">
-                            {{ number_format($fiscalData['II. REINTEGRATIONS FISCALES']['2. Non courantes'], 2, '.', ' ') }}
+                            <input type="text" inputmode="decimal" name="f[reintegrations_non_courantes_total]" value="{{ $sourceData['reintegrations_non_courantes_total'] ?? $fiscalData['II. REINTEGRATIONS FISCALES']['2. Non courantes'] }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded">
                         </td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
                     </tr>
                     @foreach($fiscalData['DETAIL_REINTEGRATIONS']['Non courantes'] ?? [] as $detail)
-                        @if(($detail['montant'] ?? 0) > 0)
                             <tr class="bg-yellow-50 dark:[&>td]:!border-slate-700 dark:[&>td]:!bg-slate-800 dark:[&>td]:!text-slate-100">
-                                <td class="border border-gray-300 p-2 pl-10 text-sm">{{ $detail['label'] }}</td>
+                                <td class="border border-gray-300 p-2 pl-10 text-sm"><input type="text" name="f[reintegration_non_courante_0_label]" value="{{ $sourceData['reintegration_non_courante_0_label'] ?? $detail['label'] }}" class="w-full bg-transparent text-left px-1 py-1 focus:bg-yellow-50 outline-none rounded"></td>
                                 <td class="border border-gray-300 p-2 text-right font-mono">
-                                    {{ number_format($detail['montant'], 2, '.', ' ') }}
+                                    <input type="text" inputmode="decimal" name="f[reintegration_non_courante_0_montant]" value="{{ $sourceData['reintegration_non_courante_0_montant'] ?? $detail['montant'] }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded">
                                 </td>
                                 <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
                             </tr>
-                        @endif
                     @endforeach
 
                     <tr class="bg-gray-50 font-bold text-gray-900">
@@ -89,14 +87,14 @@
                         <td class="border border-gray-300 p-2 pl-6">1. Courantes</td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
                         <td class="border border-gray-300 p-2 text-right font-mono">
-                            {{ number_format($fiscalData['III. DEDUCTIONS FISCALES']['1. Courantes'], 2, '.', ' ') }}
+                            <input type="text" inputmode="decimal" name="f[deductions_courantes_total]" value="{{ $sourceData['deductions_courantes_total'] ?? $fiscalData['III. DEDUCTIONS FISCALES']['1. Courantes'] }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded">
                         </td>
                     </tr>
                     <tr>
                         <td class="border border-gray-300 p-2 pl-6">2. Non courantes</td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
                         <td class="border border-gray-300 p-2 text-right font-mono">
-                            {{ number_format($fiscalData['III. DEDUCTIONS FISCALES']['2. Non courantes'], 2, '.', ' ') }}
+                            <input type="text" inputmode="decimal" name="f[deductions_non_courantes_total]" value="{{ $sourceData['deductions_non_courantes_total'] ?? $fiscalData['III. DEDUCTIONS FISCALES']['2. Non courantes'] }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded">
                         </td>
                     </tr>
 
@@ -136,7 +134,11 @@
                         <td class="border border-gray-300 p-2 pl-6">Exercice {{ $key }}</td>
                         <td class="border border-gray-300 p-2 bg-gray-50 text-center text-gray-400">---</td>
                         <td class="border border-gray-300 p-2 text-right font-mono">
-                            {{ number_format($fiscalData['V. REPORTS DEFICITAIRES IMPUTES (C)']['Exercice ' . $key . ' (' . ($exercice - intval(substr($key, 2))) . ')'], 2, '.', ' ') }}
+                            @if($key === 'n-1')
+                                <input type="text" inputmode="decimal" name="f[reports_deficitaires_total]" value="{{ $sourceData['reports_deficitaires_total'] ?? $fiscalData['V. REPORTS DEFICITAIRES IMPUTES (C)']['Exercice ' . $key . ' (' . ($exercice - intval(substr($key, 2))) . ')'] }}" class="w-full bg-transparent text-right font-mono px-1 py-1 focus:bg-yellow-50 outline-none rounded">
+                            @else
+                                {{ number_format($fiscalData['V. REPORTS DEFICITAIRES IMPUTES (C)']['Exercice ' . $key . ' (' . ($exercice - intval(substr($key, 2))) . ')'], 2, '.', ' ') }}
+                            @endif
                         </td>
                     </tr>
                     @endforeach
@@ -183,6 +185,10 @@
                 </tbody>
             </table>
     </div>
+        <div class="mt-6 flex justify-end">
+            <button type="submit" class="px-5 py-2 bg-blue-600 text-white font-semibold rounded hover:bg-blue-700">💾 Enregistrer le tableau</button>
+        </div>
+    </form>
 </div>
 @endsection
 

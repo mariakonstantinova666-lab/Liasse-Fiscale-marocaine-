@@ -16,11 +16,25 @@ class LiasseController extends Controller
 {
     /** Tableaux déclaratifs éditables (saisie manuelle persistée dans liasse_data). */
     private const TABLEAUX_EDITABLES = [
+        'passage_fiscal',
         'credit_bail', 'plus_values', 'titres_participation', 'repartition_capital',
         'affectation_resultats', 'calcul_impot_encouragement', 'dotations_amortissements',
         'plus_values_fusion', 'interets_emprunts', 'locations_baux', 'detail_stocks',
         'operations_devises', 'methodes_evaluation', 'derogations', 'changements_methodes',
         'calcul_is_encouragees',
+    ];
+
+    /** Champs T03 explicitement ouverts à la saisie manuelle. */
+    private const PASSAGE_FISCAL_EDITABLE_KEYS = [
+        'reintegration_courante_0_label',
+        'reintegration_courante_0_montant',
+        'reintegrations_courantes_total',
+        'reintegration_non_courante_0_label',
+        'reintegration_non_courante_0_montant',
+        'reintegrations_non_courantes_total',
+        'deductions_courantes_total',
+        'deductions_non_courantes_total',
+        'reports_deficitaires_total',
     ];
 
     public function cpc()
@@ -228,7 +242,7 @@ class LiasseController extends Controller
             ]
         ];
 
-        return view('liasse.passage_fiscal', compact('fiscalData', 'exercice'));
+        return view('liasse.passage_fiscal', compact('fiscalData', 'sourceData', 'exercice'));
     }
 
     public function amortissements(?BalanceService $balanceService = null)
@@ -714,6 +728,10 @@ class LiasseController extends Controller
     {
         abort_unless(in_array($tableau, self::TABLEAUX_EDITABLES, true), 404);
 
+        if ($tableau === 'passage_fiscal') {
+            return $this->savePassageFiscalData($request);
+        }
+
         $exercice = $this->currentExercice();
         $userId = Auth::id();
         $champs = (array) $request->input('f', []);
@@ -735,6 +753,37 @@ class LiasseController extends Controller
                     'cle'          => (string) $cle,
                     'valeur'       => is_array($valeur) ? json_encode($valeur) : (string) $valeur,
                 ]);
+            }
+        });
+
+        return redirect()->back()->with('success', 'Tableau enregistré avec succès.');
+    }
+
+    /** Enregistre uniquement les compléments manuels autorisés de T03. */
+    private function savePassageFiscalData(Request $request)
+    {
+        $exercice = $this->currentExercice();
+        $userId = Auth::id();
+        $champs = array_intersect_key(
+            (array) $request->input('f', []),
+            array_flip(self::PASSAGE_FISCAL_EDITABLE_KEYS)
+        );
+
+        DB::transaction(function () use ($champs, $userId, $exercice) {
+            foreach ($champs as $cle => $valeur) {
+                if (is_array($valeur)) {
+                    continue;
+                }
+
+                LiasseData::updateOrCreate(
+                    [
+                        'user_id' => $userId,
+                        'exercice' => $exercice,
+                        'tableau_code' => 'passage_fiscal',
+                        'cle' => $cle,
+                    ],
+                    ['valeur' => (string) ($valeur ?? '')]
+                );
             }
         });
 
@@ -900,7 +949,7 @@ class LiasseController extends Controller
     public function methodesEvaluation()     { return $this->genericEditable('liasse.methodes_evaluation', 'methodes_evaluation'); }      // T23
     public function derogations()            { return $this->genericEditable('liasse.derogations', 'derogations'); }              // T24
     public function changementsMethodes()    { return $this->genericEditable('liasse.changements_methodes', 'changements_methodes'); }     // T25
-    public function calculIsEncouragees()    { return $this->genericView('liasse.calcul_is_encouragees'); }    // T26
+    public function calculIsEncouragees()    { return $this->genericEditable('liasse.calcul_is_encouragees', 'calcul_is_encouragees'); }    // T26
 
     /**
      * Somme nette d'un ou plusieurs préfixes de comptes pour une collection.
