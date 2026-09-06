@@ -45,6 +45,11 @@ class LiasseFieldSource extends Model
         return $this->belongsTo(Societe::class);
     }
 
+    public function fiscalExercise()
+    {
+        return $this->belongsTo(FiscalExercise::class);
+    }
+
     public function modifier()
     {
         return $this->belongsTo(User::class, 'modified_by');

@@ -24,4 +24,24 @@ class FiscalExercise extends Model
     {
         return $this->belongsTo(Societe::class);
     }
+
+    public function liasseData()
+    {
+        return $this->hasMany(LiasseData::class);
+    }
+
+    public function sourceDocuments()
+    {
+        return $this->hasMany(SourceDocument::class);
+    }
+
+    public function fieldSources()
+    {
+        return $this->hasMany(LiasseFieldSource::class);
+    }
+
+    public function tableValidations()
+    {
+        return $this->hasMany(LiasseTableValidation::class);
+    }
 }

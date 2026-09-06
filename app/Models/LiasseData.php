@@ -26,4 +26,14 @@ class LiasseData extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function societe()
+    {
+        return $this->belongsTo(Societe::class);
+    }
+
+    public function fiscalExercise()
+    {
+        return $this->belongsTo(FiscalExercise::class);
+    }
 }

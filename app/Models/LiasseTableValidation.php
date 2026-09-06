@@ -36,6 +36,11 @@ class LiasseTableValidation extends Model
         return $this->belongsTo(Societe::class);
     }
 
+    public function fiscalExercise()
+    {
+        return $this->belongsTo(FiscalExercise::class);
+    }
+
     public function validator()
     {
         return $this->belongsTo(User::class, 'validated_by');

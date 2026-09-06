@@ -47,6 +47,11 @@ class SourceDocument extends Model
         return $this->belongsTo(Societe::class);
     }
 
+    public function fiscalExercise()
+    {
+        return $this->belongsTo(FiscalExercise::class);
+    }
+
     public function extraction()
     {
         return $this->hasOne(SourceDocumentExtraction::class);
