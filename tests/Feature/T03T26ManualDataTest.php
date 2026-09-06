@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\BalanceItem;
+use App\Models\FiscalExercise;
 use App\Models\LiasseData;
 use App\Models\LiasseFieldSource;
 use App\Models\Societe;
@@ -171,6 +172,7 @@ class T03T26ManualDataTest extends TestCase
         [$user, $societe] = $this->userAndSociete();
         $this->balance($user, $societe, 2025, '7000', 0, 1000);
         $this->balance($user, $societe, 2025, '6000', 223, 0);
+        FiscalExercise::create(['user_id' => $user->id, 'societe_id' => $societe->id, 'exercice' => 2026]);
 
         $this->actingAs($user)->withSession(['annee_exercice' => 2026])
             ->get(route('liasse.passage_fiscal'))

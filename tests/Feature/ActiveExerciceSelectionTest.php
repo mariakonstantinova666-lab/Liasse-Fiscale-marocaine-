@@ -6,6 +6,7 @@ use App\Models\BalanceItem;
 use App\Models\LiasseData;
 use App\Models\Societe;
 use App\Models\User;
+use App\Services\ActiveExerciceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
@@ -133,6 +134,27 @@ class ActiveExerciceSelectionTest extends TestCase
 
         $this->assertStringContainsString('Aucune balance disponible', $html);
         $this->assertMatchesRegularExpression('/<select[^>]*disabled[^>]*>/', $html);
+    }
+
+    public function test_blade_layout_receives_balance_exercises_before_fiscal_exercises_migration(): void
+    {
+        [$user, $societe] = $this->userAndSociete();
+        $this->createBalances($user, $societe, [2025, 2026]);
+        $this->actingAs($user);
+        session(['annee_exercice' => 2026]);
+        $this->app->instance(ActiveExerciceService::class, new class extends ActiveExerciceService
+        {
+            protected function tableExists(string $table): bool
+            {
+                return $table !== 'fiscal_exercises';
+            }
+        });
+
+        $view = view('layouts.app');
+        $view->render();
+
+        $this->assertSame(2026, $view->getData()['activeExercice']);
+        $this->assertSame([2026, 2025], $view->getData()['availableExercices']);
     }
 
     private function userAndSociete(): array

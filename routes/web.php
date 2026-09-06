@@ -31,8 +31,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [BalanceController::class, 'index'])->name('dashboard');
     Route::post('/balance/import', [BalanceController::class, 'import'])->name('balance.import');
     Route::post('/exercice/actif', [ExerciceController::class, 'select'])->name('exercice.select');
+    Route::post('/settings/fiscal-exercises', [ExerciceController::class, 'store'])->name('fiscal-exercises.store');
 
-    Route::get('/settings', fn () => Inertia::render('Settings/Index'))->name('settings.index');
+    Route::get('/settings', fn () => Inertia::render('Settings/Index', [
+        'success' => session('success'),
+    ]))->name('settings.index');
 
     Route::resource('source-documents', SourceDocumentController::class)
         ->only(['index', 'create', 'store', 'show', 'destroy']);

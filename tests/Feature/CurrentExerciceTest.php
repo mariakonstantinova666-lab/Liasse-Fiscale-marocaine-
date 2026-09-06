@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\LiasseController;
 use App\Models\BalanceItem;
+use App\Models\FiscalExercise;
+use App\Models\Societe;
 use App\Models\User;
 use App\Services\BalanceService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -17,6 +19,8 @@ class CurrentExerciceTest extends TestCase
 
     public function test_current_exercice_uses_the_session_value_for_2026(): void
     {
+        $user = $this->userWithFiscalExercise(2026);
+        $this->actingAs($user);
         session(['annee_exercice' => 2026]);
 
         $this->assertSame(2026, $this->currentExercice());
@@ -25,6 +29,8 @@ class CurrentExerciceTest extends TestCase
 
     public function test_current_exercice_preserves_a_future_session_value(): void
     {
+        $user = $this->userWithFiscalExercise(2027);
+        $this->actingAs($user);
         session(['annee_exercice' => 2027]);
 
         $this->assertSame(2027, $this->currentExercice());
@@ -73,7 +79,7 @@ class CurrentExerciceTest extends TestCase
 
     public function test_save_uses_the_active_2026_exercice_and_not_2025(): void
     {
-        $user = User::factory()->create();
+        $user = $this->userWithFiscalExercise(2026);
 
         $this->actingAs($user)
             ->withSession(['annee_exercice' => 2026])
@@ -99,7 +105,7 @@ class CurrentExerciceTest extends TestCase
 
     public function test_save_preserves_a_future_2027_exercice(): void
     {
-        $user = User::factory()->create();
+        $user = $this->userWithFiscalExercise(2027);
 
         $this->actingAs($user)
             ->withSession(['annee_exercice' => 2027])
@@ -128,5 +134,18 @@ class CurrentExerciceTest extends TestCase
         $method = new ReflectionMethod(LiasseController::class, 'currentExercice');
 
         return $method->invoke(new LiasseController());
+    }
+
+    private function userWithFiscalExercise(int $exercice): User
+    {
+        $user = User::factory()->create();
+        $societe = Societe::create(['user_id' => $user->id, 'nom_societe' => 'Societe test']);
+        FiscalExercise::create([
+            'user_id' => $user->id,
+            'societe_id' => $societe->id,
+            'exercice' => $exercice,
+        ]);
+
+        return $user;
     }
 }

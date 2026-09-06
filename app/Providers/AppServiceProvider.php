@@ -5,7 +5,6 @@ namespace App\Providers;
 use App\Services\ActiveExerciceService;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,13 +26,10 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('layouts.app', function ($view) {
             $activeExercice = app(ActiveExerciceService::class);
-            $availableExercices = Schema::hasTable('societes') && Schema::hasTable('balance_items')
-                ? $activeExercice->available()
-                : [];
 
             $view->with([
                 'activeExercice' => $activeExercice->current(),
-                'availableExercices' => $availableExercices,
+                'availableExercices' => $activeExercice->available(),
             ]);
         });
     }

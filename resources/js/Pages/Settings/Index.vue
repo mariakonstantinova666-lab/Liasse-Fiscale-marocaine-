@@ -1,11 +1,23 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, useForm, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { applyTheme, getStoredTheme, setTheme, systemPrefersDark } from '@/theme';
 
 const currentTheme = ref('system');
 const resolvedTheme = ref('light');
+const page = usePage();
+const props = defineProps({
+    success: { type: String, default: null },
+});
+const availableExercices = computed(() => page.props.availableExercices || []);
+const activeExercice = computed(() => page.props.activeExercice);
+const maxExerciseYear = new Date().getFullYear() + 10;
+const exerciseForm = useForm({ exercice: new Date().getFullYear() });
+
+const createExercise = () => exerciseForm.post(route('fiscal-exercises.store'), {
+    preserveScroll: true,
+});
 
 const options = [
     {
@@ -78,7 +90,41 @@ onUnmounted(() => {
 
         <div class="min-h-screen bg-slate-50 py-6 transition-colors dark:bg-slate-950 sm:py-8">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div v-if="props.success" class="mb-6 rounded-lg border border-emerald-200 bg-emerald-50 p-4 text-sm font-semibold text-emerald-800 dark:border-emerald-800 dark:bg-emerald-500/10 dark:text-emerald-300">
+                    {{ props.success }}
+                </div>
+
                 <section class="rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900 sm:p-6">
+                    <div class="border-b border-slate-200 pb-5 dark:border-slate-800">
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-300">Dossiers fiscaux</p>
+                        <h2 class="mt-2 text-xl font-black tracking-tight text-slate-950 dark:text-white">Gestion des exercices</h2>
+                        <p class="mt-2 text-sm text-slate-600 dark:text-slate-400">Créez un exercice fiscal, même avant l’import de sa balance.</p>
+                    </div>
+
+                    <div class="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(280px,0.55fr)]">
+                        <div>
+                            <p class="text-sm font-bold text-slate-800 dark:text-slate-100">Exercices disponibles</p>
+                            <div v-if="availableExercices.length" class="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                                <div v-for="exercice in availableExercices" :key="exercice" class="flex items-center justify-between rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 dark:border-slate-700 dark:bg-slate-800">
+                                    <span class="font-black text-slate-900 dark:text-white">{{ exercice }}</span>
+                                    <span v-if="Number(exercice) === Number(activeExercice)" class="rounded-full bg-blue-700 px-2.5 py-1 text-[10px] font-black uppercase tracking-wide text-white dark:bg-blue-400 dark:text-slate-950">Actif</span>
+                                </div>
+                            </div>
+                            <p v-else class="mt-3 rounded-lg border border-dashed border-slate-300 p-4 text-sm text-slate-500 dark:border-slate-700 dark:text-slate-400">Aucun exercice fiscal n’est encore disponible.</p>
+                        </div>
+
+                        <form class="rounded-lg border border-slate-200 p-4 dark:border-slate-700" @submit.prevent="createExercise">
+                            <label for="fiscal-exercise-year" class="block text-sm font-bold text-slate-800 dark:text-slate-100">Nouvel exercice</label>
+                            <input id="fiscal-exercise-year" v-model="exerciseForm.exercice" type="number" min="1900" :max="maxExerciseYear" required class="ui-input mt-2" />
+                            <p v-if="exerciseForm.errors.exercice" class="mt-2 text-xs font-semibold text-rose-600 dark:text-rose-400">{{ exerciseForm.errors.exercice }}</p>
+                            <button type="submit" :disabled="exerciseForm.processing" class="ui-button-primary mt-4 w-full">
+                                {{ exerciseForm.processing ? 'Ajout en cours…' : 'Ajouter un exercice' }}
+                            </button>
+                        </form>
+                    </div>
+                </section>
+
+                <section class="mt-6 rounded-lg border border-slate-200 bg-white p-5 shadow-sm transition-colors dark:border-slate-800 dark:bg-slate-900 sm:p-6">
                     <div class="border-b border-slate-200 pb-5 dark:border-slate-800">
                         <p class="text-xs font-bold uppercase tracking-[0.2em] text-indigo-600 dark:text-indigo-300">Apparence</p>
                         <h2 class="mt-2 text-xl font-black tracking-tight text-slate-950 dark:text-white">Thème de l'application</h2>

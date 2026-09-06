@@ -3,21 +3,36 @@
 namespace App\Services;
 
 use App\Models\BalanceItem;
+use App\Models\FiscalExercise;
 use App\Models\Societe;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Validation\ValidationException;
 
 class ActiveExerciceService
 {
     public function current(): int
     {
-        if (session()->has('annee_exercice')) {
-            return (int) session('annee_exercice');
+        if (!$this->tableExists('fiscal_exercises')) {
+            return session()->has('annee_exercice')
+                ? (int) session('annee_exercice')
+                : now()->year;
         }
 
-        $exercice = $this->available()[0] ?? null;
+        $available = $this->available();
+        $sessionExercice = session()->has('annee_exercice')
+            ? (int) session('annee_exercice')
+            : null;
+
+        if ($sessionExercice !== null && in_array($sessionExercice, $available, true)) {
+            return $sessionExercice;
+        }
+
+        $exercice = $available[0] ?? null;
 
         if ($exercice === null) {
+            session()->forget('annee_exercice');
+
             return now()->year;
         }
 
@@ -29,6 +44,10 @@ class ActiveExerciceService
     /** @return int[] */
     public function available(): array
     {
+        if (!$this->tableExists('societes')) {
+            return [];
+        }
+
         $userId = Auth::id();
         if ($userId === null) {
             return [];
@@ -42,13 +61,27 @@ class ActiveExerciceService
             return [];
         }
 
-        return BalanceItem::query()
-            ->where('user_id', $userId)
-            ->where('societe_id', $societeId)
-            ->distinct()
-            ->orderByDesc('exercice')
-            ->pluck('exercice')
+        $fiscalExercices = $this->tableExists('fiscal_exercises')
+            ? FiscalExercise::query()
+                ->where('user_id', $userId)
+                ->where('societe_id', $societeId)
+                ->pluck('exercice')
+            : collect();
+
+        $balanceExercices = $this->tableExists('balance_items')
+            ? BalanceItem::query()
+                ->where('user_id', $userId)
+                ->where('societe_id', $societeId)
+                ->distinct()
+                ->pluck('exercice')
+            : collect();
+
+        return $fiscalExercices
+            ->merge($balanceExercices)
             ->map(fn ($exercice) => (int) $exercice)
+            ->unique()
+            ->sortDesc()
+            ->values()
             ->all();
     }
 
@@ -61,5 +94,10 @@ class ActiveExerciceService
         }
 
         session(['annee_exercice' => $exercice]);
+    }
+
+    protected function tableExists(string $table): bool
+    {
+        return Schema::hasTable($table);
     }
 }

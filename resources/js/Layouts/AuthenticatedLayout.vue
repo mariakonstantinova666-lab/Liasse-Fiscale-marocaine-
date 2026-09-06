@@ -56,7 +56,7 @@ const selectExercice = (event) => {
                                 aria-label="Exercice actif"
                                 @change="selectExercice"
                             >
-                                <option v-if="!($page.props.availableExercices || []).length" value="">Aucune balance disponible</option>
+                                <option v-if="!($page.props.availableExercices || []).length" value="">Aucun exercice disponible</option>
                                 <option v-for="exercice in ($page.props.availableExercices || [])" :key="exercice" :value="exercice">
                                     {{ exercice }}
                                 </option>
