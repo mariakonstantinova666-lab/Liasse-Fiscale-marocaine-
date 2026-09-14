@@ -41,6 +41,7 @@
             </div>
             
             <div id="sidebar-scroll" class="sidebar-scroll flex-grow space-y-5 overflow-y-auto px-3 py-4">
+                <a href="{{ route('accounting-anomaly.index') }}" class="sidebar-link"><span class="sidebar-code">IA</span><span>Analyse IA</span></a>
                 <a href="{{ route('dashboard') }}" class="sidebar-link {{ request()->routeIs('dashboard') ? 'sidebar-link-active' : '' }}">
                     <span class="sidebar-code" aria-hidden="true">DB</span> <span>Tableau de bord</span>
                 </a>

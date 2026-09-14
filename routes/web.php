@@ -26,6 +26,8 @@ Route::get('/', function () {
 
 // 2. ESPACE SÉCURISÉ (Authentifié et Vérifié)
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/analyse-ia', [\App\Http\Controllers\AccountingAnomalyController::class, 'index'])->name('accounting-anomaly.index');
+    Route::post('/analyse-ia', [\App\Http\Controllers\AccountingAnomalyController::class, 'analyze'])->middleware('throttle:10,1')->name('accounting-anomaly.analyze');
     
     // --- TABLEAU DE BORD PRINCIPAL (Inertia / Vue.js) ---
     Route::get('/dashboard', [BalanceController::class, 'index'])->name('dashboard');

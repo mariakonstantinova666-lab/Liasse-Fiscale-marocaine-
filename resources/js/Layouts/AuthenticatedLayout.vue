@@ -46,6 +46,7 @@ const selectExercice = (event) => {
                         </Link>
                     </div>
 
+                    <Link :href="route('accounting-anomaly.index')" class="shell-nav-link hidden sm:flex" :class="{ 'shell-nav-link-active': route().current('accounting-anomaly.*') }">Analyse IA</Link>
                     <div class="ml-auto flex items-center gap-2 sm:gap-3">
                         <label class="exercise-selector">
                             <span class="exercise-selector-label">Exercice</span>
@@ -98,6 +99,7 @@ const selectExercice = (event) => {
 
             <div v-show="showingNavigationDropdown" class="border-t border-slate-200 bg-white sm:hidden dark:border-slate-800 dark:bg-slate-950">
                 <div class="space-y-1 px-3 py-3">
+                    <ResponsiveNavLink :href="route('accounting-anomaly.index')" :active="route().current('accounting-anomaly.*')">Analyse IA</ResponsiveNavLink>
                     <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">Tableau de bord</ResponsiveNavLink>
                     <ResponsiveNavLink :href="route('profile.edit')">Mon profil</ResponsiveNavLink>
                     <ResponsiveNavLink :href="route('settings.index')" :active="route().current('settings.index')">Paramètres</ResponsiveNavLink>

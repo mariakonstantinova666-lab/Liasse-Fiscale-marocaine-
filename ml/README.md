@@ -1,6 +1,38 @@
 # Local experimental Isolation Forest
 
-No web integration, business writes or fiscal decisions. PHP owns all feature formulas.
+## Experimental web integration (Phases 4A + 4B)
+Disabled by default. Configure ACCOUNTING_ANOMALY_ENABLED, PYTHON_PATH,
+MODEL_PATH, METADATA_PATH, MODEL_VERSION, MODEL_SHA256 and TIMEOUT with the
+ACCOUNTING_ANOMALY_ prefix. Approve SHA-256 through a trusted server channel.
+Only phase3b_v1 artifacts in the fixed private directory are accepted.
+The service invokes infer_web.py using stdin/stdout, never training or DB writes.
+GET /analyse-ia displays the Vue/Inertia page
+resources/js/Pages/AccountingAnomaly/Index.vue without running inference.
+POST /analyse-ia manually starts the analysis through
+app/Http/Controllers/AccountingAnomalyController.php. Laravel prepares the
+observations with AccountingAnomalyFeatureService, then
+app/Services/AccountingAnomalyInferenceService.php invokes the local Python
+script through Symfony Process. JSON results return to Laravel and the Analyse IA
+page. The frozen phase3b_v1 model is used for inference only, with the unchanged
+custom threshold -0.6969656813184024. No training runs from the interface.
+
+Pipeline: Vue/Inertia -> AccountingAnomalyController ->
+AccountingAnomalyFeatureService -> AccountingAnomalyInferenceService ->
+Symfony Process -> ml/infer_web.py -> phase3b_v1/model.joblib -> JSON ->
+Laravel -> Analyse IA page.
+
+The controlled local model is SHA-256 checked before deserialization.
+Input/output use stdin/stdout: no temporary accounting file. Timeout, size limits
+and strict JSON validation protect the inference boundary. No Flask/FastAPI,
+network call or database persistence of IA results is used. Dependency/model
+errors fail this analysis only. Statistical atypies are exploratory,
+non-decision-making assistance; this analysis does not participate in fiscal
+controls and never blocks EDI/XML.
+Run Python tests with `python -B -m unittest discover -s ml -p 'test_*.py'`.
+
+The experimental web integration makes no business writes or fiscal decisions.
+PHP owns all feature formulas. The following CLI workflow remains for local experiments,
+not for execution from the web interface.
 Install Python 3.12 and `requirements.txt` in `.venv`. Artifacts and JSON live only in
 `storage/app/private/ml/accounting_anomaly/<run>/`, never `public/`.
 
