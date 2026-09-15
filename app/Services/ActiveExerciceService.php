@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\BalanceItem;
+use App\Models\ActiveExercicePreference;
 use App\Models\FiscalExercise;
 use App\Models\Societe;
 use Illuminate\Support\Facades\Auth;
@@ -26,6 +27,18 @@ class ActiveExerciceService
 
         if ($sessionExercice !== null && in_array($sessionExercice, $available, true)) {
             return $sessionExercice;
+        }
+
+        $societeId = $this->societeId();
+        $preference = $societeId !== null && $this->tableExists('active_exercice_preferences')
+            ? ActiveExercicePreference::where('user_id', Auth::id())
+                ->where('societe_id', $societeId)->value('exercice')
+            : null;
+
+        if ($preference !== null && in_array((int) $preference, $available, true)) {
+            session(['annee_exercice' => (int) $preference]);
+
+            return (int) $preference;
         }
 
         $exercice = $available[0] ?? null;
@@ -53,9 +66,7 @@ class ActiveExerciceService
             return [];
         }
 
-        $societeId = Societe::query()
-            ->where('user_id', $userId)
-            ->value('id');
+        $societeId = $this->societeId();
 
         if ($societeId === null) {
             return [];
@@ -93,7 +104,26 @@ class ActiveExerciceService
             ]);
         }
 
+        $societeId = $this->societeId();
+        if ($societeId !== null && $this->tableExists('active_exercice_preferences')) {
+            ActiveExercicePreference::updateOrCreate([
+                'user_id' => Auth::id(),
+                'societe_id' => $societeId,
+            ], ['exercice' => $exercice]);
+        }
+
         session(['annee_exercice' => $exercice]);
+    }
+
+    private function societeId(): ?int
+    {
+        if (Auth::id() === null || !$this->tableExists('societes')) {
+            return null;
+        }
+
+        $id = Societe::where('user_id', Auth::id())->value('id');
+
+        return $id === null ? null : (int) $id;
     }
 
     protected function tableExists(string $table): bool
