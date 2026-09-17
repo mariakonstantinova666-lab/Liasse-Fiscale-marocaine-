@@ -4,9 +4,11 @@ namespace Tests\Feature;
 
 use App\Models\BalanceItem;
 use App\Models\LiasseData;
+use App\Models\LiasseFieldSource;
 use App\Models\Societe;
 use App\Models\SourceDocument;
 use App\Models\User;
+use App\Services\DocumentExtractionService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -112,7 +114,7 @@ class SourceDocumentMultiExerciceTest extends TestCase
 
         $this->actingAs($user)
             ->withSession(['annee_exercice' => 2025])
-            ->post(route('source-documents.store'), $this->uploadPayload($this->workbook(2025)))
+            ->post(route('source-documents.store'), $this->uploadPayload($this->workbook(2025, affectationExercice: 2024)))
             ->assertRedirect();
 
         $document = SourceDocument::query()->firstOrFail();
@@ -162,6 +164,137 @@ class SourceDocumentMultiExerciceTest extends TestCase
         $this->assertStringContainsString('exercice 2025', $document->extraction->errors[0]);
         $this->assertStringContainsString('exercice 2026', $document->extraction->errors[0]);
         $this->assertDatabaseMissing('liasse_data', ['user_id' => $user->id, 'exercice' => 2026]);
+        $this->assertDatabaseCount('liasse_field_sources', 0);
+    }
+
+    public function test_current_dossier_accepts_previous_year_ag_and_historical_references(): void
+    {
+        [$user, $societe] = $this->userAndSociete();
+        $this->balance($user, $societe, 2026, 'BALANCE-2026');
+        $file = $this->workbook(2026, 'nom-trompeur-2025.xlsx', 2025, function ($book) {
+            $book->getSheetByName('Fiche société')->setCellValue('A5', 'Exercice antérieur')->setCellValue('B5', 2025);
+            $book->getSheetByName('Registre des immobilisations')->setCellValue('B2', '01/06/2025');
+            $comparatif = $book->createSheet()->setTitle('Comparatif N N-1');
+            $comparatif->fromArray([['EXERCICE 2025', 'EXERCICE 2026'], [100, 200]]);
+        });
+
+        $this->actingAs($user)->withSession(['annee_exercice' => 2026])
+            ->post(route('source-documents.store'), $this->uploadPayload($file))
+            ->assertRedirect()->assertSessionHasNoErrors()->assertSessionMissing('error');
+
+        $document = SourceDocument::query()->firstOrFail();
+        $this->assertSame(SourceDocument::STATUS_NEEDS_VALIDATION, $document->status);
+        $this->assertSame([], $document->extraction->errors);
+        $this->assertNotEmpty($document->extraction->mapped_data);
+        $this->assertDatabaseHas('liasse_data', [
+            'user_id' => $user->id, 'exercice' => 2026,
+            'tableau_code' => 'affectation_resultats', 'cle' => 'ligne4_montantA', 'valeur' => '300',
+        ]);
+        $this->assertDatabaseHas('liasse_field_sources', [
+            'source_document_id' => $document->id, 'exercice' => 2026,
+            'tableau_code' => 'affectation_resultats', 'cle' => 'ligne4_montantA', 'valeur' => '300',
+        ]);
+        $this->assertDatabaseMissing('liasse_data', ['user_id' => $user->id, 'exercice' => 2025]);
+    }
+
+    public function test_ag_year_alone_does_not_define_the_dossier_year(): void
+    {
+        [$user, $societe] = $this->userAndSociete();
+        $this->balance($user, $societe, 2026, 'BALANCE-2026');
+        $this->actingAs($user)->withSession(['annee_exercice' => 2026])
+            ->post(route('source-documents.store'), $this->uploadPayload($this->workbook(null, affectationExercice: 2025)))
+            ->assertRedirect()->assertSessionMissing('error');
+        $this->assertSame(SourceDocument::STATUS_NEEDS_VALIDATION, SourceDocument::query()->firstOrFail()->status);
+        $this->assertDatabaseHas('liasse_data', [
+            'exercice' => 2026, 'tableau_code' => 'affectation_resultats',
+            'cle' => 'ligne4_montantA', 'valeur' => '300',
+        ]);
+    }
+
+    public function test_title_or_period_mismatch_preserves_existing_data_and_provenance(): void
+    {
+        [$user, $societe] = $this->userAndSociete();
+        $this->balance($user, $societe, 2026, 'BALANCE-2026');
+        $this->actingAs($user)->withSession(['annee_exercice' => 2026])
+            ->post(route('source-documents.store'), $this->uploadPayload($this->workbook(2026)))
+            ->assertSessionMissing('error');
+        $dataBefore = LiasseData::query()->orderBy('id')->get()->toArray();
+        $sourcesBefore = LiasseFieldSource::query()->orderBy('id')->get()->toArray();
+
+        foreach (['title', 'period'] as $evidence) {
+            $file = $this->workbook(2025, 'dossier-2026.xlsx', 2026, function ($book) use ($evidence) {
+                if ($evidence === 'title') {
+                    $book->getSheetByName('Fiche société')->setCellValue('B3', null);
+                } else {
+                    $book->getSheetByName('Registre des immobilisations')->setCellValue('A1', null);
+                }
+            });
+            $this->post(route('source-documents.store'), $this->uploadPayload($file))
+                ->assertRedirect()->assertSessionHas('error', fn ($message) => str_contains($message, 'exercice 2025'));
+            $document = SourceDocument::query()->latest('id')->firstOrFail();
+            $this->assertSame(SourceDocument::STATUS_ERROR, $document->status);
+            $this->assertSame([], $document->extraction->mapped_data);
+            $this->assertSame($dataBefore, LiasseData::query()->orderBy('id')->get()->toArray());
+            $this->assertSame($sourcesBefore, LiasseFieldSource::query()->orderBy('id')->get()->toArray());
+        }
+    }
+
+    public function test_conflicting_principal_years_are_rejected_before_fiscal_writes(): void
+    {
+        [$user, $societe] = $this->userAndSociete();
+        $this->balance($user, $societe, 2026, 'BALANCE-2026');
+        $file = $this->workbook(2026, customize: function ($book) {
+            $book->getSheetByName('Fiche société')->setCellValue('B3', 'Du 01/01/2025 au 31/12/2025');
+        });
+        $this->actingAs($user)->withSession(['annee_exercice' => 2026])
+            ->post(route('source-documents.store'), $this->uploadPayload($file))
+            ->assertRedirect()->assertSessionHas('error', fn ($message) => str_contains($message, 'contradictoires'));
+        $this->assertDatabaseCount('liasse_data', 0);
+        $this->assertDatabaseCount('liasse_field_sources', 0);
+    }
+
+    public function test_real_2026_dossier_extracts_previous_year_result_with_provenance(): void
+    {
+        [$user, $societe] = $this->userAndSociete();
+        $this->balance($user, $societe, 2026, 'BALANCE-2026');
+        $name = 'Dossier_Fiscal_D3Soft_2026_2 (2).xlsx';
+        $file = UploadedFile::fake()->createWithContent($name, file_get_contents(base_path('docs/'.$name)));
+        $this->actingAs($user)->withSession(['annee_exercice' => 2026])
+            ->post(route('source-documents.store'), $this->uploadPayload($file))
+            ->assertRedirect()->assertSessionHasNoErrors()->assertSessionMissing('error');
+        $document = SourceDocument::query()->firstOrFail();
+        $this->assertSame(SourceDocument::STATUS_NEEDS_VALIDATION, $document->status);
+        $this->assertSame([], $document->extraction->errors);
+        $this->assertNotEmpty($document->extraction->mapped_data);
+        foreach (['ligne4_montantA', 'total_A'] as $key) {
+            $this->assertDatabaseHas('liasse_data', [
+                'user_id' => $user->id, 'exercice' => 2026,
+                'tableau_code' => 'affectation_resultats', 'cle' => $key, 'valeur' => '38000',
+            ]);
+            $this->assertDatabaseHas('liasse_field_sources', [
+                'source_document_id' => $document->id, 'exercice' => 2026,
+                'tableau_code' => 'affectation_resultats', 'cle' => $key, 'valeur' => '38000',
+            ]);
+        }
+        $this->assertDatabaseMissing('liasse_data', ['user_id' => $user->id, 'exercice' => 2025]);
+    }
+
+    public function test_period_detection_uses_valid_closing_year_and_ignores_invalid_periods(): void
+    {
+        $service = new DocumentExtractionService();
+        $detect = new \ReflectionMethod($service, 'detectDossierExercice');
+        foreach ([
+            'Du 01/07/2025 au 30/06/2026' => 2026,
+            'Du 01/01/2026 au 31/12/2026' => 2026,
+            'Du 01/01/2026 au 31/02/2026' => null,
+            'Du 01/01/2026 au 31/12/2025' => null,
+        ] as $period => $expected) {
+            $book = new Spreadsheet();
+            $fiche = $book->getActiveSheet()->setTitle('Fiche société');
+            $fiche->setCellValue('A1', 'Exercice social')->setCellValue('B1', $period);
+            $this->assertSame($expected, $detect->invoke($service, ['Fiche société' => $fiche]), $period);
+            $book->disconnectWorksheets();
+        }
     }
 
     public function test_absence_of_reliable_year_does_not_block_extraction(): void
@@ -282,7 +415,7 @@ class SourceDocumentMultiExerciceTest extends TestCase
         ];
     }
 
-    private function workbook(?int $exercice, string $originalName = 'dossier.xlsx'): UploadedFile
+    private function workbook(?int $exercice, string $originalName = 'dossier.xlsx', ?int $affectationExercice = null, ?\Closure $customize = null): UploadedFile
     {
         $spreadsheet = new Spreadsheet();
         $fiche = $spreadsheet->getActiveSheet();
@@ -292,13 +425,22 @@ class SourceDocumentMultiExerciceTest extends TestCase
 
         $registre = $spreadsheet->createSheet();
         $registre->setTitle('Registre des immobilisations');
+        if ($exercice !== null) {
+            $registre->setCellValue('A1', "REGISTRE DES IMMOBILISATIONS — EXERCICE {$exercice}");
+            $fiche->setCellValue('A3', 'Exercice social');
+            $fiche->setCellValue('B3', "Du 01/01/{$exercice} au 31/12/{$exercice}");
+        }
 
         $decision = $spreadsheet->createSheet();
         $decision->setTitle('Décision AG');
-        $decision->setCellValue('A1', $exercice === null
+        $affectationExercice ??= $exercice;
+        $decision->setCellValue('A1', $affectationExercice === null
             ? "Résultat net de l'exercice (perte)"
-            : "Résultat net de l'exercice {$exercice} (perte)");
+            : "Résultat net de l'exercice {$affectationExercice} (perte)");
         $decision->setCellValue('B1', 300);
+        if ($customize !== null) {
+            $customize($spreadsheet);
+        }
 
         $path = tempnam(sys_get_temp_dir(), 'source-document-');
         (new Xlsx($spreadsheet))->save($path);

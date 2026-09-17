@@ -148,9 +148,7 @@ class DocumentExtractionService
         $decisionAg = isset($sheets['Décision AG'])
             ? $this->readKeyValueSheet($sheets['Décision AG'])
             : null;
-        $detectedExercice = $decisionAg === null
-            ? null
-            : $this->detectAffectationExercice($decisionAg);
+        $detectedExercice = $this->detectDossierExercice($sheets);
 
         if ($detectedExercice !== null && $detectedExercice !== $exercice) {
             throw new RuntimeException(
@@ -179,6 +177,44 @@ class DocumentExtractionService
             isset($sheets['Modules conditionnels']) ? $this->mapLocationsBaux($sheets['Modules conditionnels']) : [],
             isset($sheets['Politique comptable']) ? $this->mapPolitiqueComptable($this->readKeyValueSheet($sheets['Politique comptable'])) : []
         ), fn ($field) => ($field['cle'] ?? '') !== ''));
+    }
+
+    private function detectDossierExercice(array $sheets): ?int
+    {
+        $exercices = [];
+
+        // Only document/module headings identify the dossier year. AG labels and
+        // historical values elsewhere in the workbook are not document metadata.
+        foreach (['Sommaire', 'Fiche société', 'Registre des immobilisations', 'Règles fiscales',
+            'Informations complémentaires', 'Politique comptable', 'Modules conditionnels'] as $title) {
+            if (!isset($sheets[$title])) {
+                continue;
+            }
+
+            $heading = $this->stringValue($sheets[$title]->getCell('A1')->getCalculatedValue());
+            if (preg_match('/^(?:.+[—–-]\s*)?EXERCICE\s+(\d{4})$/iu', $heading, $matches) === 1) {
+                $exercices[] = (int) $matches[1];
+            }
+        }
+
+        if (isset($sheets['Fiche société'])) {
+            $fiche = $this->readKeyValueSheet($sheets['Fiche société']);
+            $period = $fiche['Exercice social'] ?? '';
+            if (preg_match('/^Du\s+(\d{2})\/(\d{2})\/(\d{4})\s+au\s+(\d{2})\/(\d{2})\/(\d{4})$/iu', $period, $dates) === 1
+                && checkdate((int) $dates[2], (int) $dates[1], (int) $dates[3])
+                && checkdate((int) $dates[5], (int) $dates[4], (int) $dates[6])
+                && ($dates[3].$dates[2].$dates[1]) <= ($dates[6].$dates[5].$dates[4])) {
+                // For a period spanning two calendar years, use the closing year.
+                $exercices[] = (int) $dates[6];
+            }
+        }
+
+        $exercices = array_values(array_unique($exercices));
+        if (count($exercices) > 1) {
+            throw new RuntimeException("Les indications de l'exercice principal du document sont contradictoires. Aucune donnée n'a été importée.");
+        }
+
+        return $exercices[0] ?? null;
     }
 
     private function readKeyValueSheet($sheet): array
@@ -341,6 +377,12 @@ class DocumentExtractionService
     }
     private function mapAffectationResultats(array $ag, int $exercice): array
     {
+        // An AG held in N can allocate the result of N-1. This local year must
+        // never determine the principal year of the dossier.
+        $affectationExercice = $this->detectAffectationExercice($ag);
+        if ($affectationExercice === $exercice - 1) {
+            $exercice = $affectationExercice;
+        }
         $resultat = $ag["Résultat net de l'exercice {$exercice} (perte)"] ?? '';
         $reserve = $ag['Réserve légale'] ?? '0';
         $dividendes = $ag['Dividendes distribués'] ?? '0';

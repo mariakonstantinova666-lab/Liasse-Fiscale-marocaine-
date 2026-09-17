@@ -93,16 +93,16 @@
             <table class="min-w-full divide-y divide-slate-200 text-sm dark:divide-slate-700">
                 <thead class="bg-slate-900 text-xs uppercase tracking-wide text-white">
                     <tr>
-                        <th class="px-4 py-3 text-left">Cle proposee</th>
-                        <th class="px-4 py-3 text-left">Position</th>
+                        <th class="px-4 py-3 text-left">Champ / information</th>
+                        <th class="px-4 py-3 text-left">Tableau concerné</th>
                         <th class="px-4 py-3 text-left">Valeur extraite</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                     @forelse(array_slice($mappedData, 0, 80) as $field)
                         <tr class="hover:bg-blue-50/40 dark:hover:bg-blue-500/10">
-                            <td class="px-4 py-3 font-mono text-xs font-bold text-slate-800 dark:text-slate-200">{{ $field['cle'] ?? '' }}</td>
-                            <td class="px-4 py-3 text-slate-600 dark:text-slate-300">Ligne {{ $field['ligne'] ?? '-' }} - {{ $field['colonne'] ?? '-' }}</td>
+                            <td class="px-4 py-3 font-semibold text-slate-800 dark:text-slate-200">{{ \App\Presenters\SourceDocumentFieldPresenter::fieldLabel($field['tableau_code'] ?? '', $field['cle'] ?? '') }}</td>
+                            <td class="px-4 py-3 text-slate-600 dark:text-slate-300">{{ \App\Presenters\SourceDocumentFieldPresenter::tableLabel($field['tableau_code'] ?? '') }}</td>
                             <td class="px-4 py-3 text-slate-900 dark:text-slate-100">{{ $field['valeur'] ?? '' }}</td>
                         </tr>
                     @empty
@@ -114,7 +114,7 @@
             </table>
         </div>
         @if(count($mappedData) > 80)
-            <div class="border-t border-slate-200 px-5 py-3 text-xs font-medium text-slate-500 dark:border-slate-700 dark:text-slate-400">Apercu limite aux 80 premiers champs extraits.</div>
+            <div class="border-t border-slate-200 px-5 py-3 text-xs font-medium text-slate-500 dark:border-slate-700 dark:text-slate-400">80 premiers champs affichés sur {{ count($mappedData) }} extraits. La validation porte sur l'ensemble des données extraites.</div>
         @endif
     </section>
 
