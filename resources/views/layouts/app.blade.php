@@ -19,7 +19,7 @@
             document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
         })();
     </script>
-    @vite('resources/js/app.js')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         .sidebar-scroll::-webkit-scrollbar { width: 4px; }
         .sidebar-scroll::-webkit-scrollbar-track { background: #0f172a; }
