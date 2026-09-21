@@ -363,6 +363,44 @@ class SourceDocumentMultiExerciceTest extends TestCase
         $this->assertSame($balancesBefore, BalanceItem::query()->orderBy('id')->get()->toArray());
     }
 
+    public function test_imported_document_can_be_reopened_from_list_without_reimport(): void
+    {
+        [$user, $societe] = $this->userAndSociete();
+        $this->balance($user, $societe, 2026, 'BALANCE-2026');
+        $this->actingAs($user)->withSession(['annee_exercice' => 2026])
+            ->post(route('source-documents.store'), $this->uploadPayload($this->workbook(2026)))
+            ->assertRedirect();
+        $document = SourceDocument::query()->firstOrFail();
+        $extractionBefore = $document->extraction->getAttributes();
+        $dataBefore = LiasseData::all()->toArray();
+        $sourcesBefore = LiasseFieldSource::all()->toArray();
+        $fileBefore = Storage::disk('local')->get($document->stored_path);
+
+        $this->get(route('source-documents.index'))->assertOk()
+            ->assertSee($document->original_name)
+            ->assertSee(route('source-documents.show', $document))
+            ->assertSee(route('source-documents.create'));
+        $this->get(route('source-documents.show', $document))->assertOk()
+            ->assertSee($document->original_name);
+        $this->get(route('source-documents.create'))->assertOk()
+            ->assertSee('Retour aux documents sources')
+            ->assertSee(route('source-documents.index'))
+            ->assertSee(route('source-documents.store'));
+
+        $this->assertDatabaseCount('source_documents', 1);
+        $this->assertSame($extractionBefore, $document->extraction->fresh()->getAttributes());
+        $this->assertSame($dataBefore, LiasseData::all()->toArray());
+        $this->assertSame($sourcesBefore, LiasseFieldSource::all()->toArray());
+        $this->assertSame($fileBefore, Storage::disk('local')->get($document->stored_path));
+    }
+
+    public function test_dashboard_links_to_document_list_and_keeps_separate_import_action(): void
+    {
+        $source = file_get_contents(resource_path('js/Pages/Dashboard.vue'));
+        $this->assertMatchesRegularExpression('/<a[^>]*:href="route\(\x27source-documents.index\x27\)"[^>]*>(?:(?!<\/a>)[\s\S])*Documents source(?:(?!<\/a>)[\s\S])*<\/a>/', $source);
+        $this->assertMatchesRegularExpression('/<a[^>]*:href="route\(\x27source-documents.create\x27\)"[^>]*>Importer un document source<\/a>/', $source);
+    }
+
     /** @return array{User, Societe} */
     private function userAndSociete(): array
     {
