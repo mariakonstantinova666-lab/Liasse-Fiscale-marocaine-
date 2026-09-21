@@ -174,7 +174,22 @@
                         {{ session('success') }}
                     </div>
                 @endif
-                <div class="liasse-ui">
+                {{-- Explicit T01–T26 scope: other Blade tables keep their sticky headers. --}}
+                <div @class([
+                    'liasse-ui',
+                    'liasse-fiscal-tables' => request()->routeIs(
+                        'liasse.bilan_actif', 'liasse.bilan_passif', 'liasse.cpc',
+                        'liasse.passage_fiscal', 'liasse.immobilisations', 'liasse.esg',
+                        'liasse.detail_cpc', 'liasse.credit_bail', 'liasse.amortissements',
+                        'liasse.provisions', 'liasse.plus_values', 'liasse.titres_participation',
+                        'liasse.tva', 'liasse.repartition_capital', 'liasse.affectation_resultats',
+                        'liasse.calcul_impot_encouragement', 'liasse.dotations_amortissements',
+                        'liasse.plus_values_fusion', 'liasse.interets_emprunts', 'liasse.locations_baux',
+                        'liasse.detail_stocks', 'liasse.operations_devises', 'liasse.tableau_financement',
+                        'liasse.methodes_evaluation', 'liasse.derogations', 'liasse.changements_methodes',
+                        'liasse.calcul_is_encouragees'
+                    ),
+                ])>
                     @yield('content')
                 </div>
             </div>
